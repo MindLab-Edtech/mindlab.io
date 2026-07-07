@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MindLab — Direction 3 · Product Cinema</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@200..700&family=Spline+Sans+Mono:wght@400..600&display=swap">
+<style>
+:root{
+  --bg:#0B0D0C;
+  --bg-raise:#111413;
+  --panel:#141817;
+  --panel-2:#181D1B;
+  --line:rgba(236,239,234,.08);
+  --line-2:rgba(236,239,234,.14);
+  --ink:#ECEFEA;
+  --ink-2:#A8B0A9;
+  --ink-3:#7E867F;
+  --green:#4CC896;        /* text/icon accent on dark · 8.9:1 on bg */
+  --green-btn:#3ECF96;    /* button fill, dark text */
+  --green-btn-ink:#07130D;
+  --green-deep:#12805C;
+  --gold:#C9A452;
+  --amber:#D9A83C;
+  --flag:#E06A5A;
+  --font:'Archivo',-apple-system,'Helvetica Neue',Arial,sans-serif;
+  --mono:'Spline Sans Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.5;overflow-x:hidden}
+img,svg{max-width:100%;display:block}
+h1,h2,h3{text-wrap:balance}
+p{text-wrap:pretty}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--green);outline-offset:3px}
+.frame{max-width:1240px;margin:0 auto;padding-inline:clamp(22px,4.5vw,56px)}
+
+/* top glow, Linear-style but green-tinted */
+.glow{position:absolute;inset:0 0 auto 0;height:820px;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(58% 46% at 50% -6%, rgba(76,200,150,.16), transparent 62%),
+    radial-gradient(34% 30% at 74% 4%, rgba(201,164,82,.05), transparent 70%);
+}
+main{position:relative;z-index:1}
+
+/* ---------- nav ---------- */
+.nav{display:flex;align-items:center;gap:32px;padding-block:22px}
+.lockup{display:flex;align-items:center;gap:10px;text-decoration:none}
+.lockup svg{width:28px;height:28px;color:var(--ink)}
+.wordmark{font-weight:600;font-size:17px;letter-spacing:-.01em}
+.nav-links{display:flex;gap:28px;margin-left:auto;list-style:none}
+.nav-links a{font-size:14px;font-weight:500;color:var(--ink-2);text-decoration:none}
+.nav-links a:hover{color:var(--ink)}
+.btn{
+  display:inline-flex;align-items:center;gap:.5em;
+  font-family:var(--font);font-size:15px;font-weight:650;line-height:1;
+  background:var(--green-btn);color:var(--green-btn-ink);
+  border:none;border-radius:8px;padding:14px 22px;text-decoration:none;cursor:pointer;
+  transition:filter .16s cubic-bezier(.22,1,.36,1), transform .16s cubic-bezier(.22,1,.36,1);
+}
+.btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.btn.small{font-size:13.5px;padding:10px 16px}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line-2)}
+.btn.ghost:hover{border-color:rgba(236,239,234,.3);filter:none}
+.link-2{font-size:15px;font-weight:550;color:var(--ink-2);text-decoration:none}
+.link-2:hover{color:var(--ink)}
+.link-2 .ar{color:var(--green)}
+
+/* ---------- hero ---------- */
+.hero{padding-block:clamp(56px,8vw,110px) 0;position:relative}
+.hero h1{
+  font-weight:550;font-size:clamp(2.3rem,4.9vw,4.15rem);line-height:1.05;
+  letter-spacing:-.025em;max-width:21ch;
+}
+.hero h1 em{font-style:normal;color:var(--green)}
+.subhead{font-size:1.11rem;line-height:1.65;color:var(--ink-2);max-width:56ch;margin-top:26px}
+.subhead b{color:var(--ink);font-weight:600}
+.cta-row{display:flex;align-items:center;gap:22px;margin-top:38px;flex-wrap:wrap}
+.hero-kicker{
+  font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--green);margin-bottom:26px;
+}
+
+/* ---------- the product monument ---------- */
+.monument{margin-top:clamp(56px,7vw,92px);position:relative}
+.monument::after{ /* fold fade, Linear-style */
+  content:"";position:absolute;inset:auto 0 0 0;height:90px;
+  background:linear-gradient(to bottom, transparent, var(--bg) 92%);
+  pointer-events:none;
+}
+.app{
+  background:var(--bg-raise);border:1px solid var(--line-2);border-bottom:none;
+  border-radius:14px 14px 0 0;overflow:hidden;
+  box-shadow:0 -1px 0 rgba(236,239,234,.05), 0 -30px 120px -40px rgba(76,200,150,.14);
+  display:grid;grid-template-columns:220px minmax(0,1fr);
+}
+.side{border-right:1px solid var(--line);padding:16px 0;background:rgba(0,0,0,.25)}
+.side .lockup{padding:4px 18px 16px}
+.side .lockup svg{width:22px;height:22px}
+.side .wordmark{font-size:14.5px}
+.snav{list-style:none;font-size:13px}
+.snav li{display:flex;align-items:center;gap:10px;padding:8px 18px;color:var(--ink-2)}
+.snav li.on{color:var(--ink);background:rgba(76,200,150,.09)}
+.snav li.on .dot{background:var(--green)}
+.snav .dot{width:5px;height:5px;border-radius:50%;background:var(--ink-3);flex:none}
+.snav .count{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--green)}
+.snav .sec{padding:16px 18px 6px;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;color:var(--ink-3);text-transform:uppercase}
+.workarea{display:grid;grid-template-rows:auto 1fr;min-width:0}
+.topbar{display:flex;align-items:center;gap:16px;padding:12px 20px;border-bottom:1px solid var(--line)}
+.topbar .crumb{font-size:13px;color:var(--ink-2)}
+.topbar .crumb b{color:var(--ink);font-weight:600}
+.topbar .cmdk{
+  margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ink-3);
+  border:1px solid var(--line);border-radius:6px;padding:5px 10px;
+}
+.topbar .avatar{width:26px;height:26px;border-radius:50%;background:var(--green-deep);
+  color:#fff;font-size:10.5px;font-weight:650;display:grid;place-items:center}
+.split{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);min-height:0}
+.queue{border-right:1px solid var(--line);padding-top:6px;min-width:0}
+.q-h{display:flex;justify-content:space-between;align-items:baseline;padding:12px 20px 10px}
+.q-h .t{font-size:14px;font-weight:650}
+.q-h .m{font-family:var(--mono);font-size:10px;color:var(--ink-3)}
+.q-row{padding:12px 20px;border-top:1px solid var(--line);cursor:default}
+.q-row .t{font-size:13px;font-weight:600;display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.q-row .m{font-size:11.5px;color:var(--ink-3);margin-top:3px}
+.q-row.on{background:rgba(76,200,150,.07)}
+.pill{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;
+  border:1px solid var(--line-2);border-radius:5px;padding:2.5px 7px;color:var(--ink-2);white-space:nowrap}
+.pill.ok{color:var(--green);border-color:rgba(76,200,150,.4)}
+.pill.warn{color:var(--amber);border-color:rgba(217,168,60,.4)}
+.detail{padding:18px 22px;display:flex;flex-direction:column;min-width:0}
+.d-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+.d-title{font-size:16px;font-weight:650;letter-spacing:-.01em}
+.d-sub{font-size:12px;color:var(--ink-3);margin-top:3px}
+.d-rows{margin-top:16px;border-top:1px solid var(--line)}
+.d-row{display:flex;justify-content:space-between;gap:14px;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px}
+.d-row dt{color:var(--ink-2)}
+.d-row dd{font-family:var(--mono);font-size:12px;display:flex;gap:10px;align-items:baseline;white-space:nowrap}
+.chip{font-family:var(--mono);font-size:9px;color:var(--green);
+  border:1px solid rgba(76,200,150,.35);border-radius:5px;padding:2px 7px;white-space:nowrap}
+.d-gap{display:flex;gap:10px;align-items:baseline;font-size:12px;color:var(--ink-2);padding:12px 0 0}
+.gap-tag{font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;color:var(--amber);
+  border:1px solid rgba(217,168,60,.4);border-radius:5px;padding:2.5px 7px;white-space:nowrap}
+.d-approve{margin-top:20px;padding-top:18px;display:flex;align-items:center;gap:14px;border-top:1px solid var(--line)}
+.d-sign{margin-left:auto;text-align:right;font-size:11.5px;color:var(--ink-2);line-height:1.5}
+.d-sign .t{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);display:block}
+
+/* ---------- workflow (R3 visualized) ---------- */
+.how{padding-block:clamp(90px,11vw,150px) clamp(80px,9vw,120px)}
+.how h2{font-weight:550;font-size:clamp(1.9rem,3.3vw,2.8rem);letter-spacing:-.022em;max-width:22ch}
+.how .h-sub{color:var(--ink-2);margin-top:14px;max-width:60ch;font-size:1.02rem}
+.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:18px;align-items:stretch;margin-top:clamp(40px,5vw,64px)}
+.stage{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px 20px 22px;min-width:0}
+.stage .cap{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.stage h3{font-size:15.5px;font-weight:650;margin-top:10px}
+.stage .mantra{color:var(--green);font-weight:600;font-size:13px;margin-top:4px}
+.stage .body{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.srcchip{font-family:var(--mono);font-size:11px;color:var(--ink-2);
+  border:1px solid var(--line-2);border-radius:6px;padding:6px 10px;width:max-content;max-width:100%;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.draftline{font-size:12.5px;color:var(--ink-2);display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.recline{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);line-height:1.7}
+.recline b{color:var(--ink);font-weight:600}
+.arrow{display:grid;place-items:center;color:var(--ink-3);font-size:18px}
+.gatewrap{position:relative}
+.stage.gate{border-color:rgba(76,200,150,.45);background:linear-gradient(180deg, rgba(76,200,150,.08), rgba(76,200,150,.02))}
+.stage.gate .cap{color:var(--green)}
+.gate-actions{display:flex;gap:10px;margin-top:14px}
+.gate-sign{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);font-size:11.5px;color:var(--ink-2)}
+.gate-sign .t{font-family:var(--mono);color:var(--ink-3)}
+.flow-note{margin-top:26px;font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:.05em}
+.flow-note b{color:var(--green);font-weight:500}
+
+/* ---------- stat ---------- */
+.stat{border-block:1px solid var(--line)}
+.stat-inner{display:flex;align-items:center;gap:clamp(28px,6vw,90px);padding-block:clamp(56px,7vw,96px);flex-wrap:wrap}
+.stat-fig{font-weight:200;font-size:clamp(4.6rem,10vw,8.5rem);line-height:.9;letter-spacing:-.03em;
+  font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--ink)}
+.stat-body{max-width:46ch}
+.stat-body .lead{font-size:clamp(1.1rem,1.6vw,1.35rem);line-height:1.5;font-weight:300;color:var(--ink)}
+.stat-body .kick{font-size:1rem;font-weight:650;margin-top:14px;color:var(--green)}
+.stat-body .src{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-top:12px}
+
+/* ---------- close ---------- */
+.close{padding-block:clamp(90px,11vw,150px)}
+.close h2{font-weight:550;font-size:clamp(2rem,3.8vw,3.2rem);letter-spacing:-.022em;max-width:24ch}
+.close p{color:var(--ink-2);margin-top:16px;max-width:52ch}
+.close .cta-row{margin-top:34px}
+.foot{border-top:1px solid var(--line);padding-block:30px 54px}
+.foot-inner{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.foot .mantra{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--ink-3)}
+.foot .links{margin-left:auto;display:flex;gap:22px;font-size:13px;color:var(--ink-2)}
+.foot .links a{text-decoration:none}
+.foot .links a:hover{color:var(--ink)}
+
+/* ---------- responsive ---------- */
+@media (max-width:1024px){
+  .app{grid-template-columns:1fr}
+  .side{display:none}
+  .flow{grid-template-columns:1fr;gap:12px}
+  .arrow{transform:rotate(90deg);padding:2px 0}
+}
+@media (max-width:760px){
+  .nav-links{display:none}
+  .split{grid-template-columns:1fr}
+  .queue{display:none}
+  .app{min-height:0}
+  .stat-fig{font-size:clamp(4rem,15vw,6.5rem)}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+<div class="glow" aria-hidden="true"></div>
+<main>
+
+<div class="frame">
+  <nav class="nav" aria-label="Site">
+    <a class="lockup" href="#" aria-label="MindLab home">
+      <svg viewBox="0 0 500 500" fill="currentColor" aria-hidden="true"><path d="M115.71,222.28c8.77-3.98,17.36-1.26,26.27-5.96,23.42-12.35,10.68-31.61,23.52-46.81,15.02-17.78,41.88-13.37,51.13,7.84,3.62,8.3,1.21,16.44,5.29,24.89,11.07,22.93,43.96,23.42,55.82.92,7.07-13.42-.78-24.45,14.03-37.37,24.5-21.37,60.72,7.41,46.99,35.52-12.36,25.33-34.16,10.87-49.66,26.37-12.2,12.2-5.55,24.83-12.99,37.24-13.13,21.89-43.74,19.66-53.92-3.69-3.62-8.3-1.21-16.44-5.29-24.89-12.65-26.2-51.84-22.05-58.51,6.45-.84,3.6-.33,7.6-.9,11.06-4.35,26.64-37.11,35.78-53.97,14.29-12.33-15.71-5.67-37.78,12.19-45.87ZM164.81,329.45c25.44,32.41,72.07-6.77,47.56-36.87-25.51-31.34-71.21,6.75-47.56,36.87ZM348.63,231.05c-24.51,30.11,22.13,69.28,47.56,36.87,23.64-30.13-22.05-68.21-47.56-36.87ZM287.61,292.57c-24.38,30.06,21.78,69.22,47.57,36.87,23.7-29.72-22.03-68.36-47.57-36.87Z"/></svg>
+      <span class="wordmark">MindLab</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#">How it works</a></li>
+      <li><a href="#">Security</a></li>
+      <li><a href="#">FAQ</a></li>
+    </ul>
+    <a class="btn small" href="#">Bring one live deal</a>
+  </nav>
+
+  <header class="hero">
+    <p class="hero-kicker">For private equity deal teams</p>
+    <h1>The <em>human-approved</em> research system for private equity.</h1>
+    <p class="subhead">Point MindLab at a data room. It returns an IC-ready draft in your firm’s memo format, every claim cited. <b>Nothing becomes firm record until a named person approves it.</b> Every approved deal makes the next one faster.</p>
+    <div class="cta-row">
+      <a class="btn" href="#">Bring one live deal <span aria-hidden="true">→</span></a>
+      <a class="link-2" href="#">See the workflow <span class="ar" aria-hidden="true">→</span></a>
+    </div>
+
+    <div class="monument">
+      <div class="app" role="img" aria-label="The MindLab approvals workspace: a sidebar with firm navigation, a review queue of drafts, and a target brief with cited claims, one flagged source gap, and an Approve action awaiting a named reviewer.">
+        <aside class="side">
+          <span class="lockup"><svg viewBox="0 0 500 500" fill="currentColor" aria-hidden="true"><path d="M115.71,222.28c8.77-3.98,17.36-1.26,26.27-5.96,23.42-12.35,10.68-31.61,23.52-46.81,15.02-17.78,41.88-13.37,51.13,7.84,3.62,8.3,1.21,16.44,5.29,24.89,11.07,22.93,43.96,23.42,55.82.92,7.07-13.42-.78-24.45,14.03-37.37,24.5-21.37,60.72,7.41,46.99,35.52-12.36,25.33-34.16,10.87-49.66,26.37-12.2,12.2-5.55,24.83-12.99,37.24-13.13,21.89-43.74,19.66-53.92-3.69-3.62-8.3-1.21-16.44-5.29-24.89-12.65-26.2-51.84-22.05-58.51,6.45-.84,3.6-.33,7.6-.9,11.06-4.35,26.64-37.11,35.78-53.97,14.29-12.33-15.71-5.67-37.78,12.19-45.87ZM164.81,329.45c25.44,32.41,72.07-6.77,47.56-36.87-25.51-31.34-71.21,6.75-47.56,36.87ZM348.63,231.05c-24.51,30.11,22.13,69.28,47.56,36.87,23.64-30.13-22.05-68.21-47.56-36.87ZM287.61,292.57c-24.38,30.06,21.78,69.22,47.57,36.87,23.7-29.72-22.03-68.36-47.57-36.87Z"/></svg><span class="wordmark">MindLab</span></span>
+          <ul class="snav">
+            <li><span class="dot"></span>Home</li>
+            <li class="on"><span class="dot"></span>Approvals <span class="count">3</span></li>
+            <li><span class="dot"></span>Companies</li>
+            <li><span class="dot"></span>Targets</li>
+            <li><span class="dot"></span>Portfolio</li>
+            <li><span class="dot"></span>Firm Memory</li>
+            <li class="sec">Workspace</li>
+            <li><span class="dot"></span>Documents</li>
+            <li><span class="dot"></span>Reports</li>
+            <li><span class="dot"></span>Monitoring</li>
+          </ul>
+        </aside>
+        <div class="workarea">
+          <div class="topbar">
+            <span class="crumb"><b>Approvals</b> · Harborline Capital Partners</span>
+            <span class="cmdk">⌘K</span>
+            <span class="avatar" aria-hidden="true">JT</span>
+          </div>
+          <div class="split">
+            <div class="queue">
+              <div class="q-h"><span class="t">Review queue</span><span class="m">3 awaiting</span></div>
+              <div class="q-row on">
+                <p class="t">Screening brief — first pass <span class="pill warn">In review</span></p>
+                <p class="m">Meridian Componentry · Target Brief · J. Tran</p>
+              </div>
+              <div class="q-row">
+                <p class="t">Covenant analysis <span class="pill ok">Approved 14:32</span></p>
+                <p class="m">Cascara Foods · Report · D. Pham</p>
+              </div>
+              <div class="q-row">
+                <p class="t">What changed — weekly <span class="pill">Draft</span></p>
+                <p class="m">Alto Logistics · Monitoring</p>
+              </div>
+              <div class="q-row">
+                <p class="t">Q2 portfolio update <span class="pill">Draft</span></p>
+                <p class="m">Cascara Foods · Portfolio Pulse</p>
+              </div>
+            </div>
+            <div class="detail">
+              <div class="d-head">
+                <div>
+                  <p class="d-title">Meridian Componentry Pte Ltd</p>
+                  <p class="d-sub">Target Brief · precision manufacturing, Singapore · drafted from 14 sources</p>
+                </div>
+                <span class="pill warn">Awaiting approval</span>
+              </div>
+              <dl class="d-rows">
+                <div class="d-row"><dt>Revenue FY25</dt><dd>$42.0M <span class="chip">CIM p.34</span></dd></div>
+                <div class="d-row"><dt>EBITDA · margin</dt><dd>$8.1M · 19.3% <span class="chip">Q3-model.xlsx · B14</span></dd></div>
+                <div class="d-row"><dt>Guide price</dt><dd>7.2× <span class="chip">Banker call, 12 May</span></dd></div>
+                <div class="d-row"><dt>Founded · FTE</dt><dd>2009 · 310 <span class="chip">CIM p.6</span></dd></div>
+              </dl>
+              <p class="d-gap"><span class="gap-tag">SOURCE GAP</span> Churn: no cohort data — added to diligence questions.</p>
+              <div class="d-approve">
+                <button class="btn small" type="button">Approve</button>
+                <button class="btn small ghost" type="button">Edit</button>
+                <p class="d-sign">Reviewer — J. Tran<span class="t">today, 14:32 · logged to record</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+
+<!-- R3 workflow, visualized -->
+<section class="how">
+  <div class="frame">
+    <h2>One pipeline. No black box.</h2>
+    <p class="h-sub">Everything moves the same way: your sources become a cited draft, a named human signs it, and only then does it become firm record.</p>
+    <div class="flow">
+      <div class="stage">
+        <p class="cap">01 · Resources</p>
+        <h3>Your sources, untouched</h3>
+        <p class="mantra">AI prepares.</p>
+        <div class="body">
+          <span class="srcchip">CIM_Meridian_2026.pdf</span>
+          <span class="srcchip">data room /financials/</span>
+          <span class="srcchip">Q3-model.xlsx</span>
+          <span class="srcchip">Mgmt call notes · 12 May</span>
+        </div>
+      </div>
+      <div class="arrow" aria-hidden="true">→</div>
+      <div class="stage gate gatewrap">
+        <p class="cap">02 · Reports · the gate</p>
+        <h3>Draft, cited, reviewed</h3>
+        <p class="mantra">Humans approve.</p>
+        <div class="body">
+          <p class="draftline">Revenue $42.0M <span class="chip">CIM p.34</span></p>
+          <p class="draftline">Margin 19.3% <span class="chip">Q3-model.xlsx</span></p>
+          <p class="draftline"><span class="gap-tag">SOURCE GAP</span> flagged, not papered over</p>
+        </div>
+        <div class="gate-actions">
+          <button class="btn small" type="button">Approve</button>
+          <button class="btn small ghost" type="button">Edit</button>
+        </div>
+        <p class="gate-sign">Reviewed by J. Tran <span class="t">· 14:32 · logged</span></p>
+      </div>
+      <div class="arrow" aria-hidden="true">→</div>
+      <div class="stage">
+        <p class="cap">03 · Records</p>
+        <h3>Firm memory, compounding</h3>
+        <p class="mantra">MindLab remembers.</p>
+        <div class="body recline">
+          <b>Nov 2024</b> · screened, passed (valuation gap)<br>
+          <b>Jun 2026</b> · returned via Harborline; brief pre-loaded<br>
+          <b>What changed</b> · revenue +18%, guide 7.2× vs 8.5×
+        </div>
+      </div>
+    </div>
+    <p class="flow-note">AI never writes to your records. <b>Only an approved report can.</b> Every approval is logged.</p>
+  </div>
+</section>
+
+<!-- stat -->
+<section class="stat">
+  <div class="frame stat-inner">
+    <p class="stat-fig">59%</p>
+    <div class="stat-body">
+      <p class="lead">of finance professionals still manually re&#8209;verify or re&#8209;do AI outputs.</p>
+      <p class="kick">That’s not an AI problem. It’s a workflow problem.</p>
+      <p class="src">Hebbia “Diligence Paradox” survey · 510 US finance professionals · Apr–May 2026</p>
+    </div>
+  </div>
+</section>
+
+<!-- close -->
+<section class="close">
+  <div class="frame">
+    <h2>Bring one live deal. Leave with a brief your team can judge.</h2>
+    <p>A free 30-minute workflow diagnosis: pick the workflow that hurts, map your sources and memo format, and see what MindLab returns on a deal you’re actually working.</p>
+    <div class="cta-row">
+      <a class="btn" href="#">Bring one live deal <span aria-hidden="true">→</span></a>
+      <a class="link-2" href="#">See the workflow <span class="ar" aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="frame foot-inner">
+    <span class="mantra">AI PREPARES · HUMANS APPROVE · MINDLAB REMEMBERS</span>
+    <nav class="links" aria-label="Footer">
+      <a href="#">Security</a><a href="#">FAQ</a><a href="#">Contact</a>
+    </nav>
+  </div>
+</footer>
+
+</main>
+</body>
+</html>

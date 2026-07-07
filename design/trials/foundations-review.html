@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="en" data-pairing="a" data-accent="green">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MindLab — Foundations Review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400..700&family=Schibsted+Grotesk:wght@400..900&family=Besley:wght@400..800&family=Archivo:wght@400..700&family=Newsreader:opsz,wght@6..72,400..700&family=Hanken+Grotesk:wght@400..700&family=Spline+Sans+Mono:wght@400..600&display=swap">
+<style>
+/* ================= tokens ================= */
+:root{
+  --ink:#141413;          /* 17.1:1 on paper */
+  --ink-2:#4A4A45;        /* 8.3:1 */
+  --ink-3:#565651;        /* 6.9:1 — floor for captions/source lines */
+  --rule:rgba(20,20,19,.16);
+  --rule-strong:rgba(20,20,19,.55);
+  --flag:#9E1F2E;         /* 7.2:1 — vignette-internal only */
+  --watch:#7A5300;        /* 6.4:1 — vignette-internal only */
+  --font-data:'Spline Sans Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --radius:2px;
+}
+:root[data-accent="green"]{
+  --paper:#F7FAF8;        /* off-white, chroma toward the accent hue — not cream */
+  --accent:#0E5940;       /* 7.7:1 on paper; paper text on it 7.7:1 */
+  --accent-hover:#1A6B4F;
+}
+:root[data-accent="oxblood"]{
+  --paper:#FBF8F7;
+  --accent:#6E1423;       /* 10.9:1 on paper; paper text on it 10.9:1 */
+  --accent-hover:#84202F;
+}
+:root[data-pairing="a"]{
+  --font-display:'Source Serif 4',Georgia,'Times New Roman',serif;
+  --font-text:'Schibsted Grotesk',-apple-system,'Helvetica Neue',Arial,sans-serif;
+  --display-max:3.85rem;
+}
+:root[data-pairing="b"]{
+  --font-display:'Besley',Georgia,'Times New Roman',serif;
+  --font-text:'Archivo',-apple-system,'Helvetica Neue',Arial,sans-serif;
+  --display-max:3.3rem;   /* Besley runs much wider; same measure, compensated size */
+}
+:root[data-pairing="c"]{
+  --font-display:'Newsreader',Georgia,'Times New Roman',serif;
+  --font-text:'Hanken Grotesk',-apple-system,'Helvetica Neue',Arial,sans-serif;
+  --display-max:3.6rem;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:#EBEBE8;color:var(--ink);font-family:var(--font-text);line-height:1.5}
+img,svg{max-width:100%;display:block}
+h1,h2,h3{text-wrap:balance}
+p{text-wrap:pretty}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* ================= review chrome (not the design) ================= */
+.chrome{
+  font-family:-apple-system,system-ui,'Helvetica Neue',Arial,sans-serif;
+  background:#1E1E1C;color:#E8E8E4;
+  position:sticky;top:0;z-index:10;
+  padding:10px 20px;display:flex;flex-wrap:wrap;gap:8px 28px;align-items:center;
+  font-size:12.5px;
+}
+.chrome b{font-weight:600;letter-spacing:.06em}
+.chrome .note{color:#9c9c96}
+.chrome fieldset{border:0;display:flex;gap:2px;align-items:center}
+.chrome legend{float:left;margin-right:8px;color:#9c9c96;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.chrome label{
+  cursor:pointer;padding:4px 10px;border:1px solid #4a4a46;color:#d2d2cc;
+  border-radius:2px;user-select:none
+}
+.chrome label:has(input:checked){background:#E8E8E4;color:#1E1E1C;border-color:#E8E8E4}
+.chrome input{position:absolute;opacity:0;pointer-events:none}
+.chrome label:has(input:focus-visible){outline:2px solid #E8E8E4;outline-offset:2px}
+.section-label{
+  font-family:-apple-system,system-ui,sans-serif;font-size:12px;letter-spacing:.1em;
+  text-transform:uppercase;color:#6b6b66;padding:34px 20px 10px;max-width:1360px;margin:0 auto;
+}
+.section-label span{color:#9a9a94;text-transform:none;letter-spacing:0}
+
+/* ================= the design surface ================= */
+.stage{background:var(--paper);border-block:1px solid var(--rule)}
+.frame{max-width:1280px;margin:0 auto;padding-inline:clamp(20px,4vw,56px)}
+
+/* --- nav --- */
+.site-nav{display:flex;align-items:center;gap:32px;padding-block:18px;border-bottom:1px solid var(--rule)}
+.lockup{display:flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none}
+.lockup svg{width:30px;height:30px}
+.wordmark{font-family:var(--font-text);font-weight:650;font-size:17px;letter-spacing:-.01em}
+.nav-links{display:flex;gap:26px;margin-left:auto;list-style:none}
+.nav-links a{font-size:14px;color:var(--ink-2);text-decoration:none}
+.nav-links a:hover{color:var(--ink)}
+.btn{
+  display:inline-flex;align-items:center;gap:.5em;
+  font-family:var(--font-text);font-size:15px;font-weight:600;line-height:1;
+  background:var(--accent);color:var(--paper);border:1px solid var(--accent);
+  padding:13px 20px;border-radius:var(--radius);text-decoration:none;cursor:pointer;
+  transition:background-color .15s cubic-bezier(.22,1,.36,1)
+}
+.btn:hover{background:var(--accent-hover);border-color:var(--accent-hover)}
+.btn.small{font-size:13.5px;padding:10px 16px}
+.link-2{font-size:15px;font-weight:500;color:var(--ink);text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px}
+.link-2:hover{color:var(--accent)}
+
+/* --- hero --- */
+.hero{display:grid;grid-template-columns:minmax(0,6.7fr) minmax(0,5.3fr);gap:clamp(32px,5vw,72px);padding-block:clamp(48px,7vw,92px) clamp(56px,7vw,96px)}
+.eyebrow{font-size:12.5px;font-weight:600;letter-spacing:.14em;color:var(--ink-2);margin-bottom:26px}
+.hero h1{
+  font-family:var(--font-display);font-weight:600;
+  font-size:clamp(2.35rem,4.6vw,var(--display-max,3.85rem));line-height:1.07;letter-spacing:-.018em;
+  font-variation-settings:'opsz' 60;
+}
+.hero h1 span{display:block}
+.hero h1 .gate{color:var(--accent)}
+.subhead{font-size:1.13rem;line-height:1.62;color:var(--ink-2);max-width:50ch;margin-top:26px}
+.cta-row{display:flex;align-items:center;gap:26px;margin-top:36px;flex-wrap:wrap}
+
+/* --- hero vignette composition --- */
+.hero-visual{display:flex;flex-direction:column;font-family:var(--font-text)}
+.panel{
+  position:relative;background:var(--paper);border:1px solid var(--rule-strong);
+  border-radius:var(--radius);
+}
+.panel-h{
+  display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+  padding:10px 14px;border-bottom:1px solid var(--rule);
+  font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)
+}
+.panel-h .count{font-family:var(--font-data);font-weight:500;letter-spacing:0}
+.panel-queue{width:74%;align-self:flex-start;z-index:1}
+.q-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 14px;padding:9px 14px;border-bottom:1px solid var(--rule);font-size:12.5px}
+.q-row:last-child{border-bottom:0}
+.q-title{grid-column:1;grid-row:1;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.q-meta{grid-column:1;grid-row:2;color:var(--ink-3);font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.status{grid-column:2;grid-row:1/3;align-self:center;font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:var(--radius);border:1px solid var(--rule-strong);color:var(--ink-2);white-space:nowrap}
+.status.ok{border-color:var(--accent);color:var(--accent)}
+.status .t{font-family:var(--font-data);font-weight:500;letter-spacing:0}
+.panel-brief{width:80%;align-self:flex-end;margin-top:-38px;z-index:2}
+.b-title{padding:12px 16px 2px;font-size:14.5px;font-weight:650;letter-spacing:-.005em}
+.b-sub{padding:0 16px 10px;font-size:11.5px;color:var(--ink-3);border-bottom:1px solid var(--rule)}
+.b-row{display:flex;justify-content:space-between;gap:14px;align-items:baseline;padding:9px 16px;border-bottom:1px solid var(--rule);font-size:12.5px}
+.b-row dt{color:var(--ink-2);white-space:nowrap}
+.b-row dd{font-family:var(--font-data);font-size:12px;font-weight:500;display:flex;gap:8px;align-items:baseline;white-space:nowrap}
+.chip{
+  font-family:var(--font-data);font-size:9.5px;font-weight:500;color:var(--accent);
+  border:1px solid var(--accent);border-radius:var(--radius);padding:1.5px 5px;white-space:nowrap;
+  position:relative;top:-1px
+}
+.gap{display:flex;gap:9px;align-items:baseline;padding:10px 16px;font-size:11.5px;color:var(--ink-2)}
+.gap-tag{font-size:9.5px;font-weight:700;letter-spacing:.08em;color:var(--watch);border:1px solid var(--watch);border-radius:var(--radius);padding:1.5px 5px;white-space:nowrap}
+.panel-approve{width:68%;align-self:flex-start;margin-left:5%;margin-top:-10px;z-index:3}
+.a-body{padding:14px 16px 6px}
+.a-item{font-size:14px;font-weight:650}
+.a-meta{font-size:11.5px;color:var(--ink-3);margin-top:3px}
+.a-sign{display:flex;justify-content:space-between;align-items:baseline;margin:12px 16px 0;padding:10px 0;border-top:1px solid var(--rule);font-size:12px;color:var(--ink-2)}
+.a-sign .t{font-family:var(--font-data);font-size:11.5px}
+.a-actions{display:flex;align-items:center;gap:18px;padding:0 16px 16px}
+.quiet{font-size:13px;font-weight:500;color:var(--ink-2);text-decoration:underline;text-underline-offset:3px;background:none;border:none;cursor:pointer;font-family:var(--font-text)}
+.quiet:hover{color:var(--ink)}
+
+/* --- stat bar --- */
+.statbar{border-top:1px solid var(--rule);padding-block:clamp(48px,6vw,80px);text-align:center}
+.stat-fig{
+  font-family:var(--font-display);font-weight:600;font-variant-numeric:tabular-nums;
+  font-size:clamp(4rem,9vw,6rem);line-height:1;letter-spacing:-.01em;
+  font-variation-settings:'opsz' 60;
+}
+.stat-copy{font-family:var(--font-display);font-size:clamp(1.25rem,2.4vw,1.7rem);line-height:1.35;max-width:34ch;margin:14px auto 0;font-weight:400}
+.stat-kicker{font-size:1.02rem;font-weight:600;margin-top:22px}
+.stat-src{font-size:13px;color:var(--ink-3);margin-top:10px}
+
+/* ================= accent comparison ================= */
+.compare{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;max-width:1360px;margin:0 auto;padding:0 20px 8px}
+.acc-card{border:1px solid var(--rule);background:var(--paper);border-radius:2px;padding:26px 26px 30px}
+.acc-card.t-green{--paper:#F7FAF8;--accent:#0E5940;--accent-hover:#1A6B4F}
+.acc-card.t-ox{--paper:#FBF8F7;--accent:#6E1423;--accent-hover:#84202F}
+.acc-h{display:flex;justify-content:space-between;align-items:baseline;padding-bottom:14px;border-bottom:1px solid var(--rule);margin-bottom:20px}
+.acc-name{font-weight:650;font-size:15px}
+.acc-hex{font-family:var(--font-data);font-size:11.5px;color:var(--ink-3)}
+.acc-line{font-family:var(--font-display);font-size:clamp(1.9rem,3.4vw,2.6rem);font-weight:600;letter-spacing:-.015em;color:var(--accent);font-variation-settings:'opsz' 60}
+.acc-row{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-top:22px}
+.acc-ratios{font-size:12px;color:var(--ink-3);margin-top:20px;line-height:1.7}
+.acc-ratios b{color:var(--ink-2);font-weight:600}
+.mini-approve{border:1px solid var(--rule-strong);border-radius:2px;margin-top:22px}
+
+/* ================= specimens ================= */
+.specimen{max-width:1360px;margin:0 auto 20px;padding:0 20px}
+.spec-inner{background:var(--paper);border:1px solid var(--rule);border-radius:2px;padding:clamp(26px,4vw,48px)}
+.spec-a{--font-display:'Source Serif 4',Georgia,serif;--font-text:'Schibsted Grotesk',Arial,sans-serif}
+.spec-b{--font-display:'Besley',Georgia,serif;--font-text:'Archivo',Arial,sans-serif}
+.spec-c{--font-display:'Newsreader',Georgia,serif;--font-text:'Hanken Grotesk',Arial,sans-serif}
+.spec-head{display:flex;flex-wrap:wrap;gap:6px 24px;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--rule-strong);padding-bottom:14px}
+.spec-title{font-family:var(--font-text);font-weight:650;font-size:16px}
+.spec-rationale{font-family:var(--font-text);font-size:13.5px;color:var(--ink-2);max-width:72ch;margin-top:10px;line-height:1.6}
+.spec-display{font-family:var(--font-display);font-weight:600;font-size:clamp(2.2rem,4.6vw,3.9rem);line-height:1.07;letter-spacing:-.018em;margin-top:34px;font-variation-settings:'opsz' 60}
+.spec-display .gate{color:var(--accent)}
+.spec-h2{font-family:var(--font-display);font-weight:600;font-size:clamp(1.5rem,2.6vw,2.1rem);line-height:1.2;letter-spacing:-.012em;margin-top:30px;font-variation-settings:'opsz' 40;max-width:30ch}
+.spec-body{font-family:var(--font-text);font-size:1.06rem;line-height:1.66;color:var(--ink-2);max-width:68ch;margin-top:22px}
+.spec-cap{font-family:var(--font-text);font-size:13px;color:var(--ink-3);margin-top:14px}
+.spec-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:26px;margin-top:34px;padding-top:22px;border-top:1px solid var(--rule)}
+.spec-cell h4{font-family:var(--font-text);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:12px}
+.weights{font-family:var(--font-text);font-size:15px;display:flex;flex-direction:column;gap:6px}
+.tab-test{font-size:15px;display:inline-flex;flex-direction:column}
+.tab-test span{font-feature-settings:'tnum' 1;font-variant-numeric:tabular-nums;width:max-content;border-right:2px solid var(--accent);padding-right:6px;line-height:1.6}
+.tab-note{font-family:var(--font-text);font-size:11.5px;color:var(--ink-3);margin-top:10px;max-width:26ch}
+.data-line{font-family:var(--font-data);font-size:13px;line-height:1.8}
+
+.wrapup{max-width:1360px;margin:0 auto;padding:10px 20px 70px;font-family:-apple-system,system-ui,sans-serif;font-size:13.5px;color:#4b4b47;line-height:1.7;max-width:860px}
+.wrapup b{color:#1E1E1C}
+
+/* ================= responsive ================= */
+@media (max-width:960px){
+  .hero{grid-template-columns:1fr}
+  .hero-visual{max-width:620px}
+  .nav-links{display:none}
+}
+@media (max-width:640px){
+  .panel-queue{display:none}
+  .panel-brief{width:100%;max-width:440px;align-self:flex-start;margin-top:0}
+  .panel-approve{width:min(88%,380px);margin-left:8%;margin-top:-10px}
+}
+@media (max-width:420px){
+  .panel-brief{display:none}
+  .panel-approve{width:100%;margin:0}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+
+<header class="chrome">
+  <b>MINDLAB · FOUNDATIONS REVIEW</b>
+  <fieldset>
+    <legend>Pairing</legend>
+    <label><input type="radio" name="pairing" value="a" checked>A · Source Serif 4 + Schibsted</label>
+    <label><input type="radio" name="pairing" value="b">B · Besley + Archivo</label>
+    <label><input type="radio" name="pairing" value="c">C · Newsreader + Hanken</label>
+  </fieldset>
+  <fieldset>
+    <legend>Accent</legend>
+    <label><input type="radio" name="accent" value="green" checked>Ledger green</label>
+    <label><input type="radio" name="accent" value="oxblood">Oxblood</label>
+  </fieldset>
+  <span class="note">Review chrome — not part of the design. Also view at 390px width.</span>
+</header>
+
+<p class="section-label">1 · Hero + stat bar — live trial <span>(re-renders with the toggles above)</span></p>
+
+<div class="stage">
+  <div class="frame">
+
+    <nav class="site-nav" aria-label="Site">
+      <a class="lockup" href="#" aria-label="MindLab home">
+        <svg viewBox="0 0 500 500" fill="currentColor" aria-hidden="true"><path d="M115.71,222.28c8.77-3.98,17.36-1.26,26.27-5.96,23.42-12.35,10.68-31.61,23.52-46.81,15.02-17.78,41.88-13.37,51.13,7.84,3.62,8.3,1.21,16.44,5.29,24.89,11.07,22.93,43.96,23.42,55.82.92,7.07-13.42-.78-24.45,14.03-37.37,24.5-21.37,60.72,7.41,46.99,35.52-12.36,25.33-34.16,10.87-49.66,26.37-12.2,12.2-5.55,24.83-12.99,37.24-13.13,21.89-43.74,19.66-53.92-3.69-3.62-8.3-1.21-16.44-5.29-24.89-12.65-26.2-51.84-22.05-58.51,6.45-.84,3.6-.33,7.6-.9,11.06-4.35,26.64-37.11,35.78-53.97,14.29-12.33-15.71-5.67-37.78,12.19-45.87ZM164.81,329.45c25.44,32.41,72.07-6.77,47.56-36.87-25.51-31.34-71.21,6.75-47.56,36.87ZM348.63,231.05c-24.51,30.11,22.13,69.28,47.56,36.87,23.64-30.13-22.05-68.21-47.56-36.87ZM287.61,292.57c-24.38,30.06,21.78,69.22,47.57,36.87,23.7-29.72-22.03-68.36-47.57-36.87Z"/></svg>
+        <span class="wordmark">MindLab</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#">How it works</a></li>
+        <li><a href="#">Security</a></li>
+        <li><a href="#">FAQ</a></li>
+      </ul>
+      <a class="btn small" href="#">Bring one live deal <span aria-hidden="true">→</span></a>
+    </nav>
+
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">FOR PRIVATE EQUITY DEAL TEAMS</p>
+        <h1>
+          <span>AI prepares.</span>
+          <span class="gate">Humans approve.</span>
+          <span>MindLab remembers.</span>
+        </h1>
+        <p class="subhead">MindLab turns CIMs, data rooms, spreadsheets, and portfolio updates into source-backed research your team reviews, approves, and reuses — so the next deal starts from everything the firm already knows.</p>
+        <div class="cta-row">
+          <a class="btn" href="#">Bring one live deal <span aria-hidden="true">→</span></a>
+          <a class="link-2" href="#">See the workflow</a>
+        </div>
+      </div>
+
+      <div class="hero-visual" role="img" aria-label="MindLab product composition: a review queue of drafts, a target brief with cited claims and a flagged source gap, and an approve action signed by a named reviewer.">
+        <div class="panel panel-queue">
+          <div class="panel-h">Approvals · review queue <span class="count">3</span></div>
+          <div class="q-row">
+            <span class="q-title">Screening brief — first pass</span>
+            <span class="status">In review</span>
+            <span class="q-meta">Meridian Componentry · Target Brief · J. Tran</span>
+          </div>
+          <div class="q-row">
+            <span class="q-title">Covenant analysis</span>
+            <span class="status ok">Approved <span class="t">14:32</span></span>
+            <span class="q-meta">Cascara Foods · Report · D. Pham</span>
+          </div>
+          <div class="q-row">
+            <span class="q-title">What changed — weekly</span>
+            <span class="status">Draft</span>
+            <span class="q-meta">Alto Logistics · Monitoring</span>
+          </div>
+        </div>
+
+        <div class="panel panel-brief">
+          <p class="b-title">Meridian Componentry Pte Ltd</p>
+          <p class="b-sub">Target Brief · precision manufacturing, Singapore · sourced via banker CIM</p>
+          <dl>
+            <div class="b-row"><dt>Revenue FY25</dt><dd>$42.0M <span class="chip">CIM p.34</span></dd></div>
+            <div class="b-row"><dt>EBITDA · margin</dt><dd>$8.1M · 19.3% <span class="chip">Q3-model.xlsx · B14</span></dd></div>
+            <div class="b-row"><dt>Founded · FTE</dt><dd>2009 · 310 <span class="chip">CIM p.6</span></dd></div>
+          </dl>
+          <p class="gap"><span class="gap-tag">SOURCE GAP</span> Churn: no cohort data — added to diligence questions.</p>
+        </div>
+
+        <div class="panel panel-approve">
+          <div class="a-body">
+            <p class="a-item">Screening brief — first pass</p>
+            <p class="a-meta">Drafted from 14 sources · 2 gaps flagged · calibrated to Harborline memo format</p>
+          </div>
+          <div class="a-sign"><span>Reviewer — J. Tran</span><span class="t">Today, 14:32</span></div>
+          <div class="a-actions">
+            <button class="btn small" type="button">Approve</button>
+            <button class="quiet" type="button">Edit</button>
+            <button class="quiet" type="button">Reject</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+  </div>
+
+  <section class="statbar">
+    <div class="frame">
+      <p class="stat-fig">59%</p>
+      <p class="stat-copy">of finance professionals still manually re&#8209;verify or re&#8209;do AI outputs.</p>
+      <p class="stat-kicker">That’s not an AI problem. It’s a workflow problem.</p>
+      <p class="stat-src">Hebbia “Diligence Paradox” survey of 510 US finance professionals, Apr–May 2026.</p>
+    </div>
+  </section>
+</div>
+
+<p class="section-label">2 · Accent, side by side <span>(same components, both candidates — pairing toggle applies here too)</span></p>
+
+<div class="compare">
+  <div class="acc-card t-green">
+    <div class="acc-h"><span class="acc-name">Ledger green</span><span class="acc-hex">#0E5940 · paper #F7FAF8</span></div>
+    <p class="acc-line" style="font-family:var(--font-display)">Humans approve.</p>
+    <div class="acc-row">
+      <a class="btn" href="#">Bring one live deal <span aria-hidden="true">→</span></a>
+      <span class="chip">CIM p.34</span>
+    </div>
+    <div class="mini-approve">
+      <div class="a-sign" style="margin-top:0"><span>Reviewer — J. Tran</span><span class="t">14:32</span></div>
+      <div class="a-actions"><button class="btn small" type="button">Approve</button><button class="quiet" type="button">Edit</button></div>
+    </div>
+    <p class="acc-ratios"><b>Contrast:</b> accent text on paper 7.7:1 · paper text on accent 7.7:1 — AA at every size used.<br><b>Read:</b> ledger, sign-off, «approved». The gate’s own color.</p>
+  </div>
+
+  <div class="acc-card t-ox">
+    <div class="acc-h"><span class="acc-name">Oxblood</span><span class="acc-hex">#6E1423 · paper #FBF8F7</span></div>
+    <p class="acc-line" style="font-family:var(--font-display)">Humans approve.</p>
+    <div class="acc-row">
+      <a class="btn" href="#">Bring one live deal <span aria-hidden="true">→</span></a>
+      <span class="chip">CIM p.34</span>
+    </div>
+    <div class="mini-approve">
+      <div class="a-sign" style="margin-top:0"><span>Reviewer — J. Tran</span><span class="t">14:32</span></div>
+      <div class="a-actions"><button class="btn small" type="button">Approve</button><button class="quiet" type="button">Edit</button></div>
+    </div>
+    <p class="acc-ratios"><b>Contrast:</b> accent text on paper 10.9:1 · paper text on accent 10.9:1 — AA at every size used.<br><b>Read:</b> law-library, letterpress, private bank. Note: red family will fight the vignette-internal flag color.</p>
+  </div>
+</div>
+
+<p class="section-label">3 · Type specimens <span>(all three pairings, static — accent toggle applies)</span></p>
+
+<section class="specimen spec-a">
+  <div class="spec-inner">
+    <div class="spec-head"><span class="spec-title">Pairing A · Source Serif 4 (display) + Schibsted Grotesk</span><span class="acc-hex">both SIL OFL, Google Fonts</span></div>
+    <p class="spec-rationale">Transitional serif with newsroom bones and a true display optical size (Frank Grießhammer, Adobe) over a grotesque drawn for Nordic news group Schibsted. The most even-tempered of the three: quietly serious, nothing to prove.</p>
+    <p class="spec-display"><span>AI prepares.</span> <span class="gate">Humans approve.</span> <span>MindLab remembers.</span></p>
+    <p class="spec-h2">Nothing becomes a record until a human approves it.</p>
+    <p class="spec-body">MindLab turns CIMs, data rooms, spreadsheets, and portfolio updates into source-backed research your team reviews, approves, and reuses — so the next deal starts from everything the firm already knows.</p>
+    <p class="spec-cap">Hebbia “Diligence Paradox” survey of 510 US finance professionals, Apr–May 2026.</p>
+    <div class="spec-grid">
+      <div class="spec-cell"><h4>Text weights</h4><div class="weights"><span style="font-weight:400">Regular · review queue</span><span style="font-weight:500">Medium · labels, links</span><span style="font-weight:600">Semibold · actions</span><span style="font-weight:700">Bold · sparingly</span></div></div>
+      <div class="spec-cell"><h4>Tabular test · grotesque</h4><div class="tab-test" style="font-family:var(--font-text)"><span>$1,111,111.11</span><span>$8,047,020.45</span></div><p class="tab-note">If both right edges meet the accent rule, tabular figures are real.</p></div>
+      <div class="spec-cell"><h4>Data face · Spline Sans Mono</h4><p class="data-line">EBITDA $8.1M · 19.3%<br>headroom 1.4× / min 2.0×<br>MOIC 2.4× · IRR 21.4%</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="specimen spec-b">
+  <div class="spec-inner">
+    <div class="spec-head"><span class="spec-title">Pairing B · Besley + Archivo</span><span class="acc-hex">both SIL OFL, Google Fonts</span></div>
+    <p class="spec-rationale">A Clarendon revival with British-newspaper ancestry (sturdier shoulders, more idiosyncratic and ownable) over Archivo, a plain-spoken workhorse grotesque. The most opinionated of the three; furthest from the current AI-default look.</p>
+    <p class="spec-display"><span>AI prepares.</span> <span class="gate">Humans approve.</span> <span>MindLab remembers.</span></p>
+    <p class="spec-h2">Nothing becomes a record until a human approves it.</p>
+    <p class="spec-body">MindLab turns CIMs, data rooms, spreadsheets, and portfolio updates into source-backed research your team reviews, approves, and reuses — so the next deal starts from everything the firm already knows.</p>
+    <p class="spec-cap">Hebbia “Diligence Paradox” survey of 510 US finance professionals, Apr–May 2026.</p>
+    <div class="spec-grid">
+      <div class="spec-cell"><h4>Text weights</h4><div class="weights"><span style="font-weight:400">Regular · review queue</span><span style="font-weight:500">Medium · labels, links</span><span style="font-weight:600">Semibold · actions</span><span style="font-weight:700">Bold · sparingly</span></div></div>
+      <div class="spec-cell"><h4>Tabular test · grotesque</h4><div class="tab-test" style="font-family:var(--font-text)"><span>$1,111,111.11</span><span>$8,047,020.45</span></div><p class="tab-note">If both right edges meet the accent rule, tabular figures are real.</p></div>
+      <div class="spec-cell"><h4>Data face · Spline Sans Mono</h4><p class="data-line">EBITDA $8.1M · 19.3%<br>headroom 1.4× / min 2.0×<br>MOIC 2.4× · IRR 21.4%</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="specimen spec-c">
+  <div class="spec-inner">
+    <div class="spec-head"><span class="spec-title">Pairing C · Newsreader (display) + Hanken Grotesk</span><span class="acc-hex">both SIL OFL, Google Fonts</span></div>
+    <p class="spec-rationale">Production Type’s news face with a true display axis, culturally the closest open cousin to Financier’s FT register, over the warm, disciplined Hanken Grotesk. Honest flag: Newsreader is heavily used by AI-generated pages in 2026; it earns its place here only if it clearly beats A and B.</p>
+    <p class="spec-display"><span>AI prepares.</span> <span class="gate">Humans approve.</span> <span>MindLab remembers.</span></p>
+    <p class="spec-h2">Nothing becomes a record until a human approves it.</p>
+    <p class="spec-body">MindLab turns CIMs, data rooms, spreadsheets, and portfolio updates into source-backed research your team reviews, approves, and reuses — so the next deal starts from everything the firm already knows.</p>
+    <p class="spec-cap">Hebbia “Diligence Paradox” survey of 510 US finance professionals, Apr–May 2026.</p>
+    <div class="spec-grid">
+      <div class="spec-cell"><h4>Text weights</h4><div class="weights"><span style="font-weight:400">Regular · review queue</span><span style="font-weight:500">Medium · labels, links</span><span style="font-weight:600">Semibold · actions</span><span style="font-weight:700">Bold · sparingly</span></div></div>
+      <div class="spec-cell"><h4>Tabular test · grotesque</h4><div class="tab-test" style="font-family:var(--font-text)"><span>$1,111,111.11</span><span>$8,047,020.45</span></div><p class="tab-note">If both right edges meet the accent rule, tabular figures are real.</p></div>
+      <div class="spec-cell"><h4>Data face · Spline Sans Mono</h4><p class="data-line">EBITDA $8.1M · 19.3%<br>headroom 1.4× / min 2.0×<br>MOIC 2.4× · IRR 21.4%</p></div>
+    </div>
+  </div>
+</section>
+
+<footer class="wrapup">
+  <p><b>How to decide:</b> toggle pairing and accent on the hero until one combination feels like a serious research publication that happens to sell a product. Check it at phone width. Then reply with a pairing letter (A/B/C) and an accent (green/oxblood); the full 11-section production build proceeds from that pick with no further gates. Tokens keep a later upgrade to licensed Financier Display + Söhne a two-line change.</p>
+</footer>
+
+<script>
+  for (const name of ['pairing','accent']) {
+    document.querySelectorAll(`input[name=${name}]`).forEach(r =>
+      r.addEventListener('change', e => { document.documentElement.dataset[name] = e.target.value; })
+    );
+  }
+</script>
+</body>
+</html>

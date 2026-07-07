@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MindLab — Direction 2 · The Ledger Vein</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@100..700&family=Spline+Sans+Mono:wght@400..600&display=swap">
+<style>
+:root{
+  --paper:#F8FAF8;
+  --ink:#151715;
+  --ink-2:#474B47;
+  --ink-3:#5A5F5A;
+  --rule:rgba(21,23,21,.13);
+  --green:#0E5940;
+  --green-deep:#0A4732;
+  --green-hover:#166448;
+  --gold:#B8892E;
+  --font:'Archivo',-apple-system,'Helvetica Neue',Arial,sans-serif;
+  --mono:'Spline Sans Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--paper);color:var(--ink);font-family:var(--font);line-height:1.5;
+  overflow-x:hidden;
+}
+img,svg{max-width:100%;display:block}
+h1,h2,h3{text-wrap:balance}
+p{text-wrap:pretty}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--green);outline-offset:3px}
+.frame{max-width:1360px;margin:0 auto;padding-inline:clamp(22px,4.5vw,64px)}
+
+/* faint paper grain over everything */
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.35;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='11'/%3E%3CfeColorMatrix values='0 0 0 0 0.08 0 0 0 0 0.10 0 0 0 0 0.08 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+main{position:relative;z-index:2}
+
+/* ---------- nav ---------- */
+.nav{display:flex;align-items:center;gap:34px;padding-block:26px}
+.lockup{display:flex;align-items:center;gap:11px;text-decoration:none}
+.lockup svg{width:32px;height:32px}
+.wordmark{font-weight:600;font-size:17.5px;letter-spacing:-.01em}
+.nav-links{display:flex;gap:30px;margin-left:auto;list-style:none}
+.nav-links a{font-size:14.5px;font-weight:500;color:var(--ink-2);text-decoration:none}
+.nav-links a:hover{color:var(--ink)}
+.btn{
+  display:inline-flex;align-items:center;gap:.55em;
+  font-family:var(--font);font-size:15px;font-weight:600;line-height:1;
+  background:var(--green);color:#fff;border:none;border-radius:7px;
+  padding:15px 24px;text-decoration:none;cursor:pointer;
+  box-shadow:0 1px 2px rgba(10,71,50,.25);
+  transition:background-color .16s cubic-bezier(.22,1,.36,1), transform .16s cubic-bezier(.22,1,.36,1);
+}
+.btn:hover{background:var(--green-hover);transform:translateY(-1px)}
+.btn.small{font-size:13.5px;padding:11px 18px}
+.link-2{font-size:15px;font-weight:550;color:var(--ink);text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1.5px;text-decoration-color:rgba(21,23,21,.35)}
+.link-2:hover{text-decoration-color:var(--green);color:var(--green)}
+
+/* ---------- hero ---------- */
+.hero{
+  position:relative;display:grid;grid-template-columns:minmax(0,6.5fr) minmax(0,5.5fr);
+  gap:48px;align-items:start;
+  padding-block:clamp(40px,6vw,84px) clamp(90px,10vw,150px);
+}
+.hero-copy{position:relative;z-index:5}
+.kicker{
+  font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--green);margin-bottom:34px;
+}
+.hero h1{
+  font-weight:200;font-size:clamp(2.9rem,6.2vw,5.4rem);line-height:1.04;
+  letter-spacing:-.022em;
+}
+.hero h1 .gate{color:var(--green);font-weight:300}
+.subhead{
+  font-size:1.16rem;line-height:1.68;color:var(--ink-2);
+  max-width:47ch;margin-top:34px;
+}
+.cta-row{display:flex;align-items:center;gap:30px;margin-top:44px;flex-wrap:wrap}
+.hero-note{
+  font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--ink-3);
+  margin-top:56px;display:flex;flex-direction:column;gap:11px;
+}
+.hero-note span{display:inline-flex;align-items:center;gap:8px}
+.hero-note i{width:5px;height:5px;border-radius:50%;background:var(--gold);display:inline-block}
+
+/* ---------- the vein (generative art band) ---------- */
+.vein{
+  position:absolute;top:278px;right:-300px;width:1050px;height:560px;
+  z-index:1;pointer-events:none;
+}
+.vein svg{width:100%;height:100%}
+/* survey marks live in page space */
+.marks{position:absolute;inset:0;z-index:2;pointer-events:none;font-family:var(--mono)}
+.mark-line{position:absolute;border-top:1px dashed rgba(21,23,21,.28)}
+.mark-cross{position:absolute;width:13px;height:13px}
+.mark-cross::before,.mark-cross::after{content:"";position:absolute;background:rgba(21,23,21,.4)}
+.mark-cross::before{left:6px;top:0;width:1px;height:13px}
+.mark-cross::after{top:6px;left:0;height:1px;width:13px}
+.mark-label{
+  position:absolute;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-3);white-space:nowrap;
+}
+
+/* ---------- floating product window ---------- */
+.window{
+  position:relative;z-index:4;grid-column:2;margin-top:6px;
+  width:calc(100% + clamp(40px,6vw,110px));
+  margin-right:calc(-1 * clamp(40px,6vw,110px));
+  background:#FDFEFD;border-radius:10px;
+  box-shadow:0 1px 0 rgba(21,23,21,.04), 0 2px 6px rgba(21,23,21,.06),
+             0 28px 70px -18px rgba(10,47,36,.35);
+  border:1px solid rgba(21,23,21,.08);
+  overflow:hidden;
+}
+.win-chrome{
+  display:flex;align-items:center;gap:14px;padding:11px 16px;
+  background:#F2F5F2;border-bottom:1px solid rgba(21,23,21,.07);
+}
+.win-dots{display:flex;gap:6px}
+.win-dots i{width:10px;height:10px;border-radius:50%;background:rgba(21,23,21,.14)}
+.win-url{
+  font-family:var(--mono);font-size:11px;color:var(--ink-3);
+  background:#FDFEFD;border:1px solid rgba(21,23,21,.08);border-radius:6px;
+  padding:4.5px 14px;margin-inline:auto;
+}
+.win-body{display:grid;grid-template-columns:5fr 7fr;min-height:330px}
+.win-queue{border-right:1px solid rgba(21,23,21,.08);padding:14px 0 10px}
+.wq-h{
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-3);padding:0 18px 10px;
+}
+.wq-row{padding:11px 18px;font-size:12.5px;border-top:1px solid rgba(21,23,21,.055)}
+.wq-row .t{font-weight:600;display:block}
+.wq-row .m{color:var(--ink-3);font-size:11px;margin-top:2px;display:block}
+.wq-row.active{background:rgba(14,89,64,.065)}
+.wq-status{
+  display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3);margin-top:6px;
+  border:1px solid rgba(21,23,21,.16);border-radius:4px;padding:2px 7px;
+}
+.wq-row.active .wq-status{color:var(--green);border-color:rgba(14,89,64,.4)}
+.win-detail{padding:18px 20px 16px;display:flex;flex-direction:column}
+.wd-title{font-size:14.5px;font-weight:650;letter-spacing:-.005em}
+.wd-sub{font-size:11.5px;color:var(--ink-3);margin-top:3px}
+.wd-rows{margin-top:14px;border-top:1px solid rgba(21,23,21,.07)}
+.wd-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:8.5px 0;border-bottom:1px solid rgba(21,23,21,.07);font-size:12.5px}
+.wd-row dt{color:var(--ink-2)}
+.wd-row dd{font-family:var(--mono);font-size:11.5px;display:flex;gap:8px;align-items:baseline;white-space:nowrap}
+.chip{
+  font-family:var(--mono);font-size:9px;color:var(--green);
+  border:1px solid rgba(14,89,64,.38);border-radius:4px;padding:1.5px 6px;white-space:nowrap;
+}
+.wd-gap{display:flex;gap:8px;align-items:baseline;font-size:11px;color:var(--ink-2);padding:10px 0 2px}
+.gap-tag{
+  font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;color:#7A5300;
+  border:1px solid rgba(122,83,0,.4);border-radius:4px;padding:2px 6px;white-space:nowrap;
+}
+.wd-approve{
+  margin-top:auto;padding-top:14px;display:flex;align-items:center;gap:14px;
+}
+.wd-sign{font-size:11px;color:var(--ink-2);margin-left:auto;text-align:right;line-height:1.45}
+.wd-sign .t{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);display:block}
+
+/* ---------- stat ---------- */
+.stat{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);position:relative}
+.stat-inner{
+  display:flex;align-items:center;gap:clamp(28px,6vw,90px);
+  padding-block:clamp(52px,7vw,96px);flex-wrap:wrap;
+}
+.stat-fig{
+  font-weight:150;font-size:clamp(5rem,11vw,9.5rem);line-height:.9;
+  letter-spacing:-.03em;font-variant-numeric:tabular-nums;white-space:nowrap;
+}
+.stat-body{max-width:44ch}
+.stat-body .lead{font-size:clamp(1.15rem,1.7vw,1.4rem);line-height:1.5;font-weight:300}
+.stat-body .kick{font-size:1rem;font-weight:650;margin-top:16px}
+.stat-body .src{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-top:12px;letter-spacing:.02em}
+
+/* ---------- scenes cascade ---------- */
+.scenes{padding-block:clamp(80px,10vw,140px)}
+.scenes h2{
+  font-weight:200;font-size:clamp(2rem,3.6vw,3.1rem);line-height:1.12;letter-spacing:-.018em;
+  max-width:24ch;
+}
+.scenes h2 b{font-weight:500}
+.scene-grid{
+  display:grid;grid-template-columns:repeat(3,minmax(240px,1fr));
+  gap:clamp(20px,2.6vw,34px);margin-top:clamp(44px,5vw,72px);align-items:start;
+}
+.scene{
+  background:#FDFEFD;border:1px solid rgba(21,23,21,.09);border-radius:12px;
+  padding:26px 26px 30px;
+  box-shadow:0 1px 2px rgba(21,23,21,.04), 0 14px 34px -18px rgba(21,23,21,.18);
+}
+.scene:nth-child(2){transform:translateY(30px)}
+.scene:nth-child(3){transform:translateY(60px)}
+.scene h3{font-size:15.5px;font-weight:650;letter-spacing:-.005em}
+.scene h3 .sc{color:var(--green);font-weight:600}
+.scene p{font-size:13.5px;line-height:1.6;color:var(--ink-2);margin-top:9px}
+.scene .echo{font-family:var(--mono);font-size:10px;color:var(--ink-3);margin-top:16px;letter-spacing:.05em}
+.scenes .coda{
+  margin-top:clamp(70px,7vw,110px);font-weight:300;font-size:clamp(1.25rem,2vw,1.6rem);
+  color:var(--ink);
+}
+.scenes .coda b{font-weight:600;color:var(--green)}
+
+/* ---------- footer strip ---------- */
+.foot{border-top:1px solid var(--rule);padding-block:34px 60px}
+.foot-inner{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.foot .mantra{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--ink-3)}
+.foot .btn{margin-left:auto}
+
+/* ---------- responsive ---------- */
+@media (max-width:1120px){
+  .hero{grid-template-columns:1fr}
+  .window{grid-column:1;width:min(640px,100%);margin:60px 0 0}
+  .vein{top:auto;bottom:-50px;right:-380px;width:960px;height:520px}
+  .marks{display:none}
+  .hero{padding-bottom:clamp(60px,7vw,90px)}
+}
+@media (max-width:820px){
+  .nav-links{display:none}
+  .scene-grid{grid-template-columns:1fr;max-width:460px}
+  .scene:nth-child(2),.scene:nth-child(3){transform:none}
+  .stat-fig{font-size:clamp(4.4rem,16vw,7rem)}
+}
+@media (max-width:560px){
+  .win-body{grid-template-columns:1fr}
+  .win-queue{display:none}
+  .vein{width:740px;height:420px;right:-360px;bottom:-30px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+<main>
+
+<div class="hero-wrap" style="position:relative;overflow:clip">
+  <!-- generative art: the ledger vein -->
+  <div class="vein" aria-hidden="true">
+    <svg viewBox="0 0 1050 560" fill="none">
+      <defs>
+        <!-- irregular band mask -->
+        <filter id="rough" x="-20%" y="-20%" width="140%" height="140%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.013 0.024" numOctaves="3" seed="4" result="n"/>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="44"/>
+        </filter>
+        <!-- deep mineral field -->
+        <filter id="mineral" x="-20%" y="-20%" width="140%" height="140%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.007 0.013" numOctaves="4" seed="19" result="t"/>
+          <feColorMatrix in="t" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  1.6 0 0 0 -0.25" result="alpha"/>
+          <feFlood flood-color="#0A3D2D" result="c1"/>
+          <feComposite in="c1" in2="alpha" operator="in"/>
+        </filter>
+        <filter id="mineral2" x="-20%" y="-20%" width="140%" height="140%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.015 0.023" numOctaves="4" seed="42" result="t"/>
+          <feColorMatrix in="t" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  2 0 0 0 -0.62" result="alpha"/>
+          <feFlood flood-color="#166448" result="c1"/>
+          <feComposite in="c1" in2="alpha" operator="in"/>
+        </filter>
+        <filter id="wobble" x="-30%" y="-30%" width="160%" height="160%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.018 0.03" numOctaves="3" seed="23" result="n"/>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="22"/>
+        </filter>
+        <!-- crackle -->
+        <filter id="crackle" x="-20%" y="-20%" width="140%" height="140%">
+          <feTurbulence type="turbulence" baseFrequency="0.06 0.08" numOctaves="2" seed="31" result="t"/>
+          <feColorMatrix in="t" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 3.2 0 0 -1.35" result="alpha"/>
+          <feFlood flood-color="#D9C08A" result="c"/>
+          <feComposite in="c" in2="alpha" operator="in"/>
+        </filter>
+        <mask id="band">
+          <g filter="url(#rough)">
+            <path d="M 60 300 C 200 268, 380 296, 560 248 C 740 200, 920 168, 1090 150 L 1090 400 C 900 402, 720 430, 540 470 C 370 506, 170 476, 60 470 Z" fill="#fff"/>
+          </g>
+        </mask>
+      </defs>
+
+      <g mask="url(#band)">
+        <rect width="1050" height="560" fill="#0C4B37"/>
+        <rect width="1050" height="560" filter="url(#mineral)"/>
+        <rect width="1050" height="560" filter="url(#mineral2)" opacity=".8"/>
+        <!-- gold veins: layered strokes, bright core over dark bed -->
+        <g filter="url(#wobble)">
+          <g stroke-linecap="round" fill="none">
+            <path d="M 60 400 C 260 352, 480 382, 660 330 C 840 282, 960 276, 1090 258" stroke="#7A5A1C" stroke-width="15" opacity=".75"/>
+            <path d="M 60 398 C 260 350, 480 380, 660 328 C 840 280, 960 274, 1090 256" stroke="#C99B3F" stroke-width="8" opacity=".95"/>
+            <path d="M 60 396 C 260 348, 480 378, 660 326 C 840 278, 960 272, 1090 254" stroke="#EBCB7A" stroke-width="2.6"/>
+            <path d="M 150 310 C 330 282, 520 306, 700 264 C 860 227, 980 222, 1090 210" stroke="#8A6420" stroke-width="7" opacity=".8"/>
+            <path d="M 150 308 C 330 280, 520 304, 700 262 C 860 225, 980 220, 1090 208" stroke="#E0B65A" stroke-width="2.2" opacity=".95"/>
+            <path d="M 460 462 C 640 438, 820 420, 1010 408" stroke="#A87E28" stroke-width="5" opacity=".7"/>
+            <path d="M 460 460 C 640 436, 820 418, 1010 406" stroke="#D9B45C" stroke-width="1.8" opacity=".9"/>
+          </g>
+        </g>
+        <rect width="1050" height="560" filter="url(#crackle)" opacity=".22"/>
+      </g>
+    </svg>
+  </div>
+
+  <!-- survey marks -->
+  <div class="marks" aria-hidden="true">
+    <div class="mark-line" style="top:872px;right:0;width:min(25vw,360px)"></div>
+    <div class="mark-cross" style="top:866px;right:min(25vw,360px)"></div>
+    <div class="mark-label" style="top:884px;right:26px">R³ · resources → reports → records</div>
+  </div>
+
+  <div class="frame">
+    <nav class="nav" aria-label="Site">
+      <a class="lockup" href="#" aria-label="MindLab home">
+        <svg viewBox="0 0 500 500" fill="currentColor" aria-hidden="true"><path d="M115.71,222.28c8.77-3.98,17.36-1.26,26.27-5.96,23.42-12.35,10.68-31.61,23.52-46.81,15.02-17.78,41.88-13.37,51.13,7.84,3.62,8.3,1.21,16.44,5.29,24.89,11.07,22.93,43.96,23.42,55.82.92,7.07-13.42-.78-24.45,14.03-37.37,24.5-21.37,60.72,7.41,46.99,35.52-12.36,25.33-34.16,10.87-49.66,26.37-12.2,12.2-5.55,24.83-12.99,37.24-13.13,21.89-43.74,19.66-53.92-3.69-3.62-8.3-1.21-16.44-5.29-24.89-12.65-26.2-51.84-22.05-58.51,6.45-.84,3.6-.33,7.6-.9,11.06-4.35,26.64-37.11,35.78-53.97,14.29-12.33-15.71-5.67-37.78,12.19-45.87ZM164.81,329.45c25.44,32.41,72.07-6.77,47.56-36.87-25.51-31.34-71.21,6.75-47.56,36.87ZM348.63,231.05c-24.51,30.11,22.13,69.28,47.56,36.87,23.64-30.13-22.05-68.21-47.56-36.87ZM287.61,292.57c-24.38,30.06,21.78,69.22,47.57,36.87,23.7-29.72-22.03-68.36-47.57-36.87Z"/></svg>
+        <span class="wordmark">MindLab</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#">How it works</a></li>
+        <li><a href="#">Security</a></li>
+        <li><a href="#">FAQ</a></li>
+      </ul>
+      <a class="btn small" href="#">Bring one live deal</a>
+    </nav>
+
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="kicker">For private equity deal teams</p>
+        <h1>AI prepares.<br><span class="gate">Humans approve.</span><br>MindLab remembers.</h1>
+        <p class="subhead">MindLab turns CIMs, data rooms, spreadsheets, and portfolio updates into source-backed research your team reviews, approves, and reuses — so the next deal starts from everything the firm already knows.</p>
+        <div class="cta-row">
+          <a class="btn" href="#">Bring one live deal <span aria-hidden="true">→</span></a>
+          <a class="link-2" href="#">See the workflow</a>
+        </div>
+        <p class="hero-note">
+          <span><i></i>drafts cite their sources</span>
+          <span><i></i>a named human signs every record</span>
+          <span><i></i>memory compounds per company</span>
+        </p>
+      </div>
+
+      <!-- floating product window -->
+      <div class="window" role="img" aria-label="MindLab approvals screen: a review queue and a target brief with cited claims, a flagged source gap, and an Approve action signed by a named reviewer.">
+        <div class="win-chrome">
+          <div class="win-dots"><i></i><i></i><i></i></div>
+          <span class="win-url">app.mindlab.io/approvals</span>
+        </div>
+        <div class="win-body">
+          <div class="win-queue">
+            <p class="wq-h">Review queue · 3</p>
+            <div class="wq-row active">
+              <span class="t">Screening brief — first pass</span>
+              <span class="m">Meridian Componentry · J. Tran</span>
+              <span class="wq-status">In review</span>
+            </div>
+            <div class="wq-row">
+              <span class="t">Covenant analysis</span>
+              <span class="m">Cascara Foods · D. Pham</span>
+              <span class="wq-status">Approved 14:32</span>
+            </div>
+            <div class="wq-row">
+              <span class="t">What changed — weekly</span>
+              <span class="m">Alto Logistics</span>
+              <span class="wq-status">Draft</span>
+            </div>
+          </div>
+          <div class="win-detail">
+            <p class="wd-title">Meridian Componentry Pte Ltd</p>
+            <p class="wd-sub">Target Brief · precision manufacturing, Singapore</p>
+            <dl class="wd-rows">
+              <div class="wd-row"><dt>Revenue FY25</dt><dd>$42.0M <span class="chip">CIM p.34</span></dd></div>
+              <div class="wd-row"><dt>EBITDA · margin</dt><dd>$8.1M · 19.3% <span class="chip">Q3-model.xlsx</span></dd></div>
+              <div class="wd-row"><dt>Founded · FTE</dt><dd>2009 · 310 <span class="chip">CIM p.6</span></dd></div>
+            </dl>
+            <p class="wd-gap"><span class="gap-tag">SOURCE GAP</span> Churn: no cohort data — added to diligence questions.</p>
+            <div class="wd-approve">
+              <button class="btn small" type="button">Approve</button>
+              <p class="wd-sign">Reviewer — J. Tran<span class="t">today, 14:32</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+  </div>
+</div>
+
+<!-- stat -->
+<section class="stat">
+  <div class="frame stat-inner">
+    <p class="stat-fig">59%</p>
+    <div class="stat-body">
+      <p class="lead">of finance professionals still manually re&#8209;verify or re&#8209;do AI outputs.</p>
+      <p class="kick">That’s not an AI problem. It’s a workflow problem.</p>
+      <p class="src">Hebbia “Diligence Paradox” survey · 510 US finance professionals · Apr–May 2026</p>
+    </div>
+  </div>
+</section>
+
+<!-- scenes -->
+<section class="scenes">
+  <div class="frame">
+    <h2>You don’t have a data shortage. <b>You have a memory problem.</b></h2>
+    <div class="scene-grid">
+      <article class="scene">
+        <h3><span class="sc">Scene 1.</span> The third first-look</h3>
+        <p>The target you screened in 2024 is back with a new banker. Nobody can find the old work. An associate rebuilds it from scratch.</p>
+        <p class="echo">→ fixed by Company Records</p>
+      </article>
+      <article class="scene">
+        <h3><span class="sc">Scene 2.</span> The update that vanished</h3>
+        <p>The portco flagged margin pressure in March. It resurfaced in September — in a partner’s memory, not in the record.</p>
+        <p class="echo">→ fixed by Portfolio Pulse</p>
+      </article>
+      <article class="scene">
+        <h3><span class="sc">Scene 3.</span> The unanswerable question</h3>
+        <p>IC asks: “where’s that churn number from?” The answer is a 17-tab spreadsheet and an analyst who left in June.</p>
+        <p class="echo">→ fixed by cited claims</p>
+      </article>
+    </div>
+    <p class="coda">Your analysts are not slow. <b>The workflow is slow.</b></p>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="frame foot-inner">
+    <span class="mantra">AI PREPARES · HUMANS APPROVE · MINDLAB REMEMBERS</span>
+    <a class="btn" href="#">Bring one live deal <span aria-hidden="true">→</span></a>
+  </div>
+</footer>
+
+</main>
+</body>
+</html>

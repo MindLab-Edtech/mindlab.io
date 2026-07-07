@@ -1,0 +1,72 @@
+[
+  {
+    "file": "01-freshroute-lead-qualification.png",
+    "assetPath": "/product/freshroute-lead-qualification.png",
+    "sourceUrl": "https://www.mindlab.io/product/freshroute-lead-qualification.png",
+    "bytes": 104469,
+    "naturalSize": "422x239",
+    "pages": [
+      "/workflows"
+    ],
+    "alt": "MindLab company qualification dashboard with rubric fields, evidence state, and score context",
+    "nearestHeading": "Diligence, memo prep, monitoring, and reporting without rebuilding context.",
+    "surroundingText": "Workflows Diligence, memo prep, monitoring, and reporting without rebuilding context. MindLab helps teams gather the right material, monitor what changed, compare the evidence, and produce source-backed work without losing reviewer control. Diligence dashboard FreshRoute AI is a fictional sample company built with non-client sample data.",
+    "allContexts": [
+      {
+        "page": "/workflows",
+        "yPct": 4,
+        "heading": "Diligence, memo prep, monitoring, and reporting without rebuilding context.",
+        "alt": "MindLab company qualification dashboard with rubric fields, evidence state, and score context"
+      }
+    ]
+  },
+  {
+    "file": "02-freshroute-settings.png",
+    "assetPath": "/product/freshroute-settings.png",
+    "sourceUrl": "https://www.mindlab.io/product/freshroute-settings.png",
+    "bytes": 114912,
+    "naturalSize": "603x405",
+    "pages": [
+      "/",
+      "/platform"
+    ],
+    "alt": "MindLab dashboard configuration settings",
+    "nearestHeading": "Firm memory layer",
+    "surroundingText": "Configurable dashboards Product evidence: dashboard modules, source categories, evidence checks, and reviewer needs can be configured around the firm process. FreshRoute AI is a fictional sample company built with non-client sample data.",
+    "allContexts": [
+      {
+        "page": "/",
+        "yPct": 58,
+        "heading": "Approval state",
+        "alt": "MindLab settings showing configurable dashboard modules"
+      },
+      {
+        "page": "/platform",
+        "yPct": 30,
+        "heading": "Firm memory layer",
+        "alt": "MindLab dashboard configuration settings"
+      }
+    ]
+  },
+  {
+    "file": "03-mindlab-dashboard-snapshot.png",
+    "assetPath": "/product/mindlab-dashboard-snapshot.png",
+    "sourceUrl": "https://www.mindlab.io/product/mindlab-dashboard-snapshot.png",
+    "bytes": 217027,
+    "naturalSize": "422x315",
+    "pages": [
+      "/platform"
+    ],
+    "alt": "MindLab operating dashboard with opportunities, portfolio health, AI summary, and workbench snapshot",
+    "nearestHeading": "A configurable operating layer for investment research.",
+    "surroundingText": "Platform A configurable operating layer for investment research. MindLab maps to the way your team already evaluates companies: source systems, research intake, online research, discrepancy checks, monitoring needs, scoring rubrics, report formats, dashboards, reviewers, permissions, and memory rules. Operating surface",
+    "allContexts": [
+      {
+        "page": "/platform",
+        "yPct": 6,
+        "heading": "A configurable operating layer for investment research.",
+        "alt": "MindLab operating dashboard with opportunities, portfolio health, AI summary, and workbench snapshot"
+      }
+    ]
+  }
+]

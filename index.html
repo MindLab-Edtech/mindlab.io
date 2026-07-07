@@ -1,0 +1,2630 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MindLab — The human-approved research system for private equity</title>
+<meta name="description" content="MindLab turns CIMs, data rooms, and portfolio updates into source-backed research your team reviews and approves. Nothing becomes firm record until a named person signs it.">
+<link rel="icon" href="design/assets/mindlab-favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@200..700&family=Spline+Sans+Mono:wght@400..600&display=swap">
+<style>
+:root{
+  --bg:#0B0D0C;
+  --bg-raise:#111413;
+  --panel:#141817;
+  --panel-2:#181D1B;
+  --line:rgba(236,239,234,.08);
+  --line-2:rgba(236,239,234,.14);
+  --ink:#ECEFEA;
+  --ink-2:#A8B0A9;
+  --ink-3:#7E867F;
+  --green:#4CC896;
+  --green-btn:#3ECF96;
+  --green-btn-ink:#07130D;
+  --green-deep:#12805C;
+  --gold:#C9A452;
+  --amber:#D9A83C;
+  --flag:#E06A5A;
+  --font:'Archivo',-apple-system,'Helvetica Neue',Arial,sans-serif;
+  --mono:'Spline Sans Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --z-nav:10;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:84px}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.5;overflow-x:hidden}
+img,svg{max-width:100%;display:block}
+h1,h2,h3{text-wrap:balance}
+p{text-wrap:pretty}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--green);outline-offset:3px}
+.frame{max-width:1240px;margin:0 auto;padding-inline:clamp(22px,4.5vw,56px)}
+.skip{position:absolute;left:-9999px;top:0;background:var(--green-btn);color:var(--green-btn-ink);
+  padding:12px 18px;border-radius:0 0 8px 0;font-weight:650;z-index:99}
+.skip:focus{left:0}
+
+.glow{position:absolute;inset:0 0 auto 0;height:820px;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(58% 46% at 50% -6%, rgba(76,200,150,.16), transparent 62%),
+    radial-gradient(34% 30% at 74% 4%, rgba(201,164,82,.05), transparent 70%);
+}
+main{position:relative;z-index:1}
+
+/* ---------- nav ---------- */
+.nav-wrap{position:sticky;top:0;z-index:var(--z-nav);transition:background-color .2s var(--ease), border-color .2s var(--ease)}
+.nav-wrap.stuck{background:rgba(11,13,12,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:32px;padding-block:20px}
+.nav-wrap.stuck .nav{padding-block:12px}
+.lockup{display:flex;align-items:center;gap:10px;text-decoration:none}
+.lockup svg{width:28px;height:28px;color:var(--ink)}
+.wordmark{font-weight:600;font-size:17px;letter-spacing:-.01em}
+.nav-links{display:flex;gap:28px;margin-left:auto;list-style:none}
+.nav-links a{font-size:14px;font-weight:500;color:var(--ink-2);text-decoration:none;padding:10px 0}
+.nav-links a:hover{color:var(--ink)}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.5em;
+  font-family:var(--font);font-size:15px;font-weight:650;line-height:1;
+  background:var(--green-btn);color:var(--green-btn-ink);
+  border:none;border-radius:8px;padding:14px 22px;text-decoration:none;cursor:pointer;
+  transition:filter .16s var(--ease), transform .16s var(--ease);
+}
+.btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.btn.small{font-size:13.5px;padding:10px 16px}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line-2)}
+.btn.ghost:hover{border-color:rgba(236,239,234,.3);filter:none}
+.link-2{font-size:15px;font-weight:550;color:var(--ink-2);text-decoration:none}
+.link-2:hover{color:var(--ink)}
+.link-2 .ar{color:var(--green)}
+.nav .btn{margin-left:8px}
+@media (max-width:760px){.nav-links{display:none}}
+
+/* ---------- reveal (additive; fully visible without JS) ---------- */
+.rv{opacity:1;transform:none}
+.js .rv{opacity:0;transform:translateY(6px);transition:opacity .6s var(--ease), transform .6s var(--ease)}
+.js .rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .js .rv{opacity:1!important;transform:none!important;transition:none!important}
+  *,*::before,*::after{transition:none!important;animation:none!important}
+  html{scroll-behavior:auto}
+}
+
+/* ---------- hero ---------- */
+.hero{padding-block:clamp(48px,7vw,96px) 0;position:relative}
+.hero-kicker{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--green);margin-bottom:26px}
+.hero h1{font-weight:550;font-size:clamp(2.3rem,4.9vw,4.15rem);line-height:1.05;letter-spacing:-.025em;max-width:21ch}
+.hero h1 em{font-style:normal;color:var(--green)}
+.subhead{font-size:1.11rem;line-height:1.65;color:var(--ink-2);max-width:56ch;margin-top:26px}
+.subhead b{color:var(--ink);font-weight:600}
+.cta-row{display:flex;align-items:center;gap:22px;margin-top:38px;flex-wrap:wrap}
+
+/* ---------- product monument ---------- */
+.monument{margin-top:clamp(56px,7vw,92px);position:relative}
+.monument::after{content:"";position:absolute;inset:auto 0 0 0;height:90px;
+  background:linear-gradient(to bottom, transparent, var(--bg) 92%);pointer-events:none}
+.app{
+  background:var(--bg-raise);border:1px solid var(--line-2);border-bottom:none;
+  border-radius:14px 14px 0 0;overflow:hidden;
+  box-shadow:0 -1px 0 rgba(236,239,234,.05), 0 -30px 120px -40px rgba(76,200,150,.14);
+  display:grid;grid-template-columns:220px minmax(0,1fr);
+}
+.side{border-right:1px solid var(--line);padding:16px 0;background:rgba(0,0,0,.25)}
+.side .lockup{padding:4px 18px 16px}
+.side .lockup svg{width:22px;height:22px}
+.side .wordmark{font-size:14.5px}
+.snav{list-style:none;font-size:13px}
+.snav li{display:flex;align-items:center;gap:10px;padding:8px 18px;color:var(--ink-2)}
+.snav li.on{color:var(--ink);background:rgba(76,200,150,.09)}
+.snav li.on .dot{background:var(--green)}
+.snav .dot{width:5px;height:5px;border-radius:50%;background:var(--ink-3);flex:none}
+.snav .count{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--green)}
+.snav .sec{padding:16px 18px 6px;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;color:var(--ink-3);text-transform:uppercase}
+.workarea{display:grid;grid-template-rows:auto 1fr;min-width:0}
+.topbar{display:flex;align-items:center;gap:16px;padding:12px 20px;border-bottom:1px solid var(--line)}
+.topbar .crumb{font-size:13px;color:var(--ink-2)}
+.topbar .crumb b{color:var(--ink);font-weight:600}
+.topbar .cmdk{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ink-3);
+  border:1px solid var(--line);border-radius:6px;padding:5px 10px}
+.topbar .avatar{width:26px;height:26px;border-radius:50%;background:var(--green-deep);
+  color:#fff;font-size:10.5px;font-weight:650;display:grid;place-items:center}
+.split{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);min-height:0}
+.queue{border-right:1px solid var(--line);padding-top:6px;min-width:0}
+.q-h{display:flex;justify-content:space-between;align-items:baseline;padding:12px 20px 10px}
+.q-h .t{font-size:14px;font-weight:650}
+.q-h .m{font-family:var(--mono);font-size:10px;color:var(--ink-3)}
+.q-row{padding:12px 20px;border-top:1px solid var(--line)}
+.q-row .t{font-size:13px;font-weight:600;display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.q-row .m{font-size:11.5px;color:var(--ink-3);margin-top:3px}
+.q-row.on{background:rgba(76,200,150,.07)}
+.pill{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;
+  border:1px solid var(--line-2);border-radius:5px;padding:2.5px 7px;color:var(--ink-2);white-space:nowrap}
+.pill.ok{color:var(--green);border-color:rgba(76,200,150,.4)}
+.pill.warn{color:var(--amber);border-color:rgba(217,168,60,.4)}
+.pill.flag{color:var(--flag);border-color:rgba(224,106,90,.4)}
+.detail{padding:18px 22px 24px;display:flex;flex-direction:column;min-width:0}
+.d-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+.d-title{font-size:16px;font-weight:650;letter-spacing:-.01em}
+.d-sub{font-size:12px;color:var(--ink-3);margin-top:3px}
+.d-rows{margin-top:16px;border-top:1px solid var(--line)}
+.d-row{display:flex;justify-content:space-between;gap:14px;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px}
+.d-row dt{color:var(--ink-2)}
+.d-row dd{font-family:var(--mono);font-size:12px;display:flex;gap:10px;align-items:baseline;white-space:nowrap}
+.chip{font-family:var(--mono);font-size:9px;color:var(--green);
+  border:1px solid rgba(76,200,150,.35);border-radius:5px;padding:2px 7px;white-space:nowrap}
+.d-gap{display:flex;gap:10px;align-items:baseline;font-size:12px;color:var(--ink-2);padding:12px 0 0}
+.gap-tag{font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;color:var(--amber);
+  border:1px solid rgba(217,168,60,.4);border-radius:5px;padding:2.5px 7px;white-space:nowrap}
+.d-approve{margin-top:20px;padding-top:18px;display:flex;align-items:center;gap:14px;border-top:1px solid var(--line)}
+.d-sign{margin-left:auto;text-align:right;font-size:11.5px;color:var(--ink-2);line-height:1.5}
+.d-sign .t{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);display:block}
+/* hero one-time state change: draft -> approved */
+.app .flip-a{display:inline}
+.app .flip-b{display:none}
+.app.approved .flip-a{display:none}
+.app.approved .flip-b{display:inline}
+.app.approved .q-row.on{background:rgba(76,200,150,.11)}
+
+/* ---------- shared section chrome ---------- */
+section{position:relative}
+.sec-pad{padding-block:clamp(88px,11vw,150px)}
+.sec-pad-s{padding-block:clamp(72px,9vw,110px)}
+h2.sec{font-weight:550;font-size:clamp(1.9rem,3.3vw,2.8rem);letter-spacing:-.022em;max-width:24ch}
+.sec-sub{color:var(--ink-2);margin-top:14px;max-width:62ch;font-size:1.02rem}
+.sec-kicker{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--green);margin-bottom:18px}
+.hr{border-top:1px solid var(--line)}
+
+/* ---------- problem scenes ---------- */
+.scenes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:20px;margin-top:clamp(40px,5vw,60px)}
+.scene{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:24px 24px 26px}
+.scene h3{font-size:15px;font-weight:650}
+.scene h3 .sc{color:var(--green);font-weight:600}
+.scene p{font-size:13.5px;line-height:1.62;color:var(--ink-2);margin-top:10px}
+.scene .echo{font-family:var(--mono);font-size:10px;color:var(--ink-3);margin-top:16px;letter-spacing:.05em}
+.coda{margin-top:clamp(48px,5vw,72px);font-weight:300;font-size:clamp(1.2rem,1.9vw,1.55rem)}
+.coda b{font-weight:600;color:var(--green)}
+
+/* ---------- R3 flow ---------- */
+.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:18px;align-items:stretch;margin-top:clamp(40px,5vw,64px)}
+.stage{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px 20px 22px;min-width:0}
+.stage .cap{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.stage h3{font-size:15.5px;font-weight:650;margin-top:10px}
+.stage .mantra{color:var(--green);font-weight:600;font-size:13px;margin-top:4px}
+.stage .body{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.srcchip{font-family:var(--mono);font-size:11px;color:var(--ink-2);
+  border:1px solid var(--line-2);border-radius:6px;padding:6px 10px;width:max-content;max-width:100%;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.draftline{font-size:12.5px;color:var(--ink-2);display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.recline{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);line-height:1.7}
+.recline b{color:var(--ink);font-weight:600}
+.arrow{display:grid;place-items:center;color:var(--ink-3);font-size:18px}
+.stage.gate{border-color:rgba(76,200,150,.45);background:linear-gradient(180deg, rgba(76,200,150,.08), rgba(76,200,150,.02))}
+.stage.gate .cap{color:var(--green)}
+.gate-actions{display:flex;gap:10px;margin-top:14px}
+.gate-sign{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);font-size:11.5px;color:var(--ink-2)}
+.gate-sign .t{font-family:var(--mono);color:var(--ink-3)}
+.flow-note{margin-top:26px;font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:.05em}
+.flow-note b{color:var(--green);font-weight:500}
+.flow-caps{list-style:none;display:flex;gap:26px;flex-wrap:wrap;margin-top:18px;font-size:13px;color:var(--ink-2)}
+.flow-caps li{display:flex;gap:9px;align-items:baseline}
+.flow-caps .n{font-family:var(--mono);font-size:10.5px;color:var(--green)}
+
+/* ---------- feature (workflow) sections ---------- */
+.feature{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(36px,5vw,72px);align-items:center}
+.feature.rev{grid-template-columns:minmax(0,7fr) minmax(0,5fr)}
+.feature.rev .f-copy{order:2}
+.feature.rev .f-visual{order:1}
+.f-label{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--green);margin-bottom:16px}
+.f-copy h2{font-weight:550;font-size:clamp(1.7rem,2.8vw,2.4rem);letter-spacing:-.02em;max-width:20ch}
+.f-copy p{color:var(--ink-2);margin-top:16px;max-width:52ch;font-size:15.5px;line-height:1.65}
+.f-micro{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-top:20px;letter-spacing:.05em}
+.panel-card{
+  background:var(--bg-raise);border:1px solid var(--line-2);border-radius:12px;overflow:hidden;
+  box-shadow:0 20px 70px -30px rgba(0,0,0,.7), 0 0 60px -30px rgba(76,200,150,.12);
+}
+.pc-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 18px;border-bottom:1px solid var(--line)}
+.pc-title{font-size:13px;font-weight:650}
+.pc-meta{font-family:var(--mono);font-size:10px;color:var(--ink-3)}
+.pc-body{padding:16px 18px 18px}
+.brief-sec{padding:9px 0;border-bottom:1px solid var(--line);font-size:12.5px;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.brief-sec:last-child{border-bottom:none}
+.brief-sec .k{color:var(--ink-3);font-size:11px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.1em;flex:none;width:118px}
+.brief-sec .v{color:var(--ink-2);min-width:0}
+.brief-sec .v b{color:var(--ink);font-weight:600}
+.port-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.port-row:last-child{border-bottom:none}
+.port-row .t{font-size:13.5px;font-weight:650}
+.port-row .m{grid-column:1;font-size:12px;color:var(--ink-2);line-height:1.55}
+.port-row .m .num{font-variant-numeric:tabular-nums}
+.port-row .pill{grid-row:1;grid-column:2}
+.timeline{list-style:none}
+.timeline li{position:relative;padding:0 0 18px 26px;border-left:1px solid var(--line-2);margin-left:6px}
+.timeline li:last-child{padding-bottom:0;border-left-color:transparent}
+.timeline li::before{content:"";position:absolute;left:-4.5px;top:4px;width:8px;height:8px;border-radius:50%;
+  background:var(--bg-raise);border:2px solid var(--ink-3)}
+.timeline li.hot::before{border-color:var(--green);background:var(--green)}
+.timeline .y{font-family:var(--mono);font-size:11px;color:var(--green);letter-spacing:.06em}
+.timeline .e{font-size:13px;color:var(--ink-2);margin-top:3px;line-height:1.55}
+.timeline .e b{color:var(--ink);font-weight:600}
+.pull{margin-top:clamp(40px,5vw,60px);font-weight:300;font-size:clamp(1.15rem,1.8vw,1.45rem);max-width:44ch}
+.pull b{font-weight:600;color:var(--green)}
+
+/* ---------- stat ---------- */
+.stat{border-block:1px solid var(--line)}
+.stat-inner{display:flex;align-items:center;gap:clamp(28px,6vw,90px);padding-block:clamp(56px,7vw,96px);flex-wrap:wrap}
+.stat-fig{font-weight:200;font-size:clamp(4.6rem,10vw,8.5rem);line-height:.9;letter-spacing:-.03em;
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+.stat-body{max-width:46ch}
+.stat-body .lead{font-size:clamp(1.1rem,1.6vw,1.35rem);line-height:1.5;font-weight:300}
+.stat-body .kick{font-size:1rem;font-weight:650;margin-top:14px;color:var(--green)}
+.stat-body .src{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-top:12px}
+
+/* ---------- trust ---------- */
+.trust-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2px;
+  background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:clamp(40px,5vw,60px)}
+.trust-cell{background:var(--bg-raise);padding:24px 26px}
+.trust-cell h3{font-size:14.5px;font-weight:650}
+.trust-cell p{font-size:13px;color:var(--ink-2);margin-top:8px;line-height:1.6}
+.trust-lines{margin-top:26px;max-width:74ch}
+.trust-lines p{font-size:13.5px;color:var(--ink-2);line-height:1.65}
+.trust-lines .honest{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);margin-top:12px}
+
+/* ---------- engagement ---------- */
+.steps{margin-top:clamp(40px,5vw,64px);border-top:1px solid var(--line)}
+.step{display:grid;grid-template-columns:64px minmax(0,2fr) minmax(0,3fr);gap:18px;align-items:baseline;
+  padding:26px 0;border-bottom:1px solid var(--line)}
+.step .n{font-family:var(--mono);font-size:13px;color:var(--green)}
+.step h3{font-size:17px;font-weight:650;letter-spacing:-.01em}
+.step .d{font-size:14px;color:var(--ink-2);line-height:1.6}
+.step .d b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+.steps-note{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-top:18px;letter-spacing:.04em}
+
+/* ---------- fit ---------- */
+.fit-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-top:clamp(40px,5vw,60px)}
+.fit-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:26px 28px}
+.fit-card.yes{border-color:rgba(76,200,150,.35)}
+.fit-card h3{font-size:14px;font-weight:650}
+.fit-card.yes h3{color:var(--green)}
+.fit-card ul{list-style:none;margin-top:14px}
+.fit-card li{font-size:14px;color:var(--ink-2);padding:8px 0;border-top:1px solid var(--line);line-height:1.55}
+.fit-card li:first-child{border-top:none}
+
+/* ---------- FAQ ---------- */
+.faq{max-width:840px;margin-top:clamp(36px,4vw,52px)}
+.faq details{border-top:1px solid var(--line)}
+.faq details:last-child{border-bottom:1px solid var(--line)}
+.faq summary{
+  list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:18px;align-items:center;
+  padding:19px 4px;font-size:15.5px;font-weight:600;min-height:44px;
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .ind{font-family:var(--mono);color:var(--green);font-size:15px;flex:none;width:16px;text-align:center}
+.faq details[open] summary .ind::before{content:"−"}
+.faq details:not([open]) summary .ind::before{content:"+"}
+.faq .a{padding:0 4px 22px;font-size:14.5px;color:var(--ink-2);line-height:1.65;max-width:68ch}
+
+/* ---------- close + form ---------- */
+.close-grid{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:clamp(40px,6vw,90px);align-items:start}
+.close-grid h2{font-weight:550;font-size:clamp(2rem,3.6vw,3rem);letter-spacing:-.022em}
+.close-grid .p{color:var(--ink-2);margin-top:16px;max-width:48ch}
+.form{background:var(--bg-raise);border:1px solid var(--line-2);border-radius:14px;padding:28px 28px 30px}
+.form .f-h{font-size:15px;font-weight:650}
+.form .f-s{font-size:12.5px;color:var(--ink-3);margin-top:4px}
+.field{margin-top:18px}
+.field label{display:block;font-size:12.5px;font-weight:600;color:var(--ink-2);margin-bottom:7px}
+.field input,.field select{
+  width:100%;background:var(--panel);border:1px solid var(--line-2);border-radius:8px;
+  color:var(--ink);font-family:var(--font);font-size:14px;padding:12px 14px;min-height:44px;
+}
+.field input::placeholder{color:#8A928B}
+.field input:focus-visible,.field select:focus-visible{outline:2px solid var(--green);outline-offset:1px;border-color:transparent}
+.field .err{display:none;font-size:12px;color:var(--flag);margin-top:6px}
+.field.bad input{border-color:rgba(224,106,90,.6)}
+.field.bad .err{display:block}
+.form .btn{width:100%;margin-top:22px;padding-block:15px}
+.form .fine{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);margin-top:14px;text-align:center;letter-spacing:.03em}
+.form .done{display:none;padding:14px;border:1px solid rgba(76,200,150,.4);border-radius:8px;
+  color:var(--green);font-size:13.5px;margin-top:20px;text-align:center}
+.form.sent .done{display:block}
+.form.sent .btn{display:none}
+
+/* ---------- footer ---------- */
+.foot{border-top:1px solid var(--line);padding-block:44px 60px}
+.foot-grid{display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap}
+.foot .mantra{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--ink-3);margin-top:14px}
+.foot .links{display:flex;gap:22px;font-size:13.5px;color:var(--ink-2);margin-left:auto;padding-top:6px}
+.foot .links a{text-decoration:none}
+.foot .links a:hover{color:var(--ink)}
+.newsletter{margin-left:auto;max-width:340px}
+.newsletter label{display:block;font-size:12.5px;color:var(--ink-2);margin-bottom:8px}
+.newsletter .row{display:flex;gap:8px}
+.newsletter input{flex:1;background:var(--panel);border:1px solid var(--line-2);border-radius:8px;
+  color:var(--ink);font-size:13px;padding:10px 12px;min-height:44px;font-family:var(--font)}
+.newsletter input::placeholder{color:#8A928B}
+.legal{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);margin-top:34px;letter-spacing:.03em}
+
+/* ---------- responsive ---------- */
+@media (max-width:1024px){
+  .app{grid-template-columns:1fr}
+  .side{display:none}
+  .flow{grid-template-columns:1fr;gap:12px}
+  .arrow{transform:rotate(90deg);padding:2px 0}
+  .feature,.feature.rev{grid-template-columns:1fr}
+  .feature.rev .f-copy{order:1}
+  .feature.rev .f-visual{order:2}
+  .close-grid{grid-template-columns:1fr}
+  .step{grid-template-columns:44px 1fr}
+  .step .d{grid-column:2}
+}
+@media (max-width:760px){
+  .split{grid-template-columns:1fr}
+  .queue{display:none}
+  .stat-fig{font-size:clamp(4rem,15vw,6.5rem)}
+  .newsletter{margin-left:0}
+  .foot .links{margin-left:0}
+}
+</style>
+<style>
+/* ================= appended sections (why · intake · pipelines · gate) ================= */
+.x-state{font-weight:550;font-size:clamp(1.5rem,2.8vw,2.35rem);line-height:1.3;letter-spacing:-.02em;max-width:62ch}
+.x-state .dim{color:var(--ink-3)}
+.x-figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:clamp(56px,7vw,96px)}
+.x-fig{padding:0 clamp(20px,3vw,40px)}
+.x-fig+.x-fig{border-left:1px solid var(--line)}
+.x-fig:first-child{padding-left:0}
+.x-figcap{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--ink-3)}
+.x-fig svg{margin:30px 0 34px;opacity:.85}
+.x-fig h3{font-size:15px;font-weight:650}
+.x-fig p{font-size:13.5px;color:var(--ink-2);line-height:1.62;margin-top:9px;max-width:38ch}
+
+.x-head{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(32px,5vw,90px);align-items:start;margin-bottom:clamp(40px,5vw,64px)}
+.x-lead{color:var(--ink-2);font-size:1.05rem;line-height:1.65;max-width:52ch}
+.x-index{font-family:var(--mono);font-size:12px;color:var(--ink-2);margin-top:30px;letter-spacing:.04em}
+.x-index b{color:var(--green);font-weight:500;margin-right:10px}
+.x-demo-tag{font-family:var(--mono);font-size:9px;letter-spacing:.12em;color:var(--green)}
+.x-reset{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);background:none;border:none;cursor:pointer;
+  text-decoration:underline;text-underline-offset:3px;padding:10px}
+.x-reset:hover{color:var(--ink)}
+
+/* intake demo */
+.x-intake-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:0}
+.x-col{padding:18px 22px 22px;min-width:0}
+.x-col+.x-col{border-left:1px solid var(--line)}
+.x-lab{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:12px}
+.x-lab b{color:var(--green);font-weight:500}
+.x-file{display:none;justify-content:space-between;gap:12px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);font-size:12.5px}
+.x-file.show{display:flex}
+.x-file .n{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.x-count{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);margin-top:12px}
+.x-input{width:100%;background:var(--panel);border:1px solid var(--line-2);border-radius:8px;color:var(--ink);
+  font-family:var(--font);font-size:13.5px;padding:11px 13px;min-height:44px}
+.x-input:focus-visible{outline:2px solid var(--green);outline-offset:1px;border-color:transparent}
+.x-tpls{display:flex;gap:8px;flex-wrap:wrap}
+.x-tpl{background:var(--panel);border:1px solid var(--line-2);border-radius:8px;color:var(--ink-2);
+  font-family:var(--font);font-size:13px;font-weight:600;padding:10px 14px;cursor:pointer;min-height:44px}
+.x-tpl[aria-pressed="true"]{border-color:rgba(76,200,150,.55);color:var(--ink);background:rgba(76,200,150,.08)}
+.x-tpl:hover{border-color:rgba(236,239,234,.3)}
+.x-intake-foot{grid-column:1/-1;display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  padding:16px 22px;border-top:1px solid var(--line)}
+.x-status{font-family:var(--mono);font-size:11px;color:var(--ink-2);letter-spacing:.03em}
+.x-status.hot{color:var(--green)}
+.x-mt18{margin-top:18px}.x-mt26{margin-top:26px}
+
+/* pipelines */
+.x-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.x-tab{background:transparent;border:1px solid var(--line-2);border-radius:8px;color:var(--ink-2);
+  font-family:var(--font);font-size:13.5px;font-weight:600;padding:11px 16px;cursor:pointer;min-height:44px}
+.x-tab[aria-pressed="true"]{background:var(--panel-2);border-color:rgba(76,200,150,.55);color:var(--ink)}
+.x-stages{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.x-stage{text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:10px;
+  padding:14px 16px;cursor:pointer;font-family:var(--font);color:var(--ink);min-width:0}
+.x-stage .sn{font-family:var(--mono);font-size:10px;color:var(--green);letter-spacing:.1em}
+.x-stage .ss{display:block;font-size:14px;font-weight:650;margin-top:7px}
+.x-stage .sr{display:block;font-size:11.5px;color:var(--ink-3);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.x-stage .pill{margin-top:10px;display:inline-block}
+.x-stage[aria-pressed="true"]{border-color:rgba(76,200,150,.55);background:rgba(76,200,150,.06)}
+.x-stage:hover{border-color:rgba(236,239,234,.28)}
+.x-preview{margin-top:14px}
+.x-mods{list-style:none}
+.x-mods li{display:flex;justify-content:space-between;gap:14px;align-items:baseline;padding:9px 0;
+  border-bottom:1px solid var(--line);font-size:13px;color:var(--ink-2)}
+.x-mods li:last-child{border-bottom:none}
+.x-mods .mv{font-family:var(--mono);font-size:11.5px;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
+.x-prev-foot{display:flex;justify-content:space-between;gap:14px;align-items:baseline;padding:12px 18px;
+  border-top:1px solid var(--line);font-size:11.5px;color:var(--ink-2);flex-wrap:wrap}
+.x-prev-foot .t{font-family:var(--mono);font-size:10.5px;color:var(--ink-3)}
+.x-lock{font-family:var(--mono);font-size:10.5px;color:var(--amber)}
+
+/* gate */
+.x-actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:2px;
+  background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:clamp(36px,4vw,54px)}
+.x-act{background:var(--bg-raise);padding:18px 20px}
+.x-act h3{font-size:13.5px;font-weight:650}
+.x-act h3 .k{color:var(--green)}
+.x-act p{font-size:12px;color:var(--ink-2);margin-top:6px;line-height:1.55}
+.x-claim{display:flex;justify-content:space-between;gap:14px;align-items:baseline;padding:10px 0;
+  border-bottom:1px solid var(--line);font-size:13px}
+.x-claim dt{color:var(--ink-2)}
+.x-claim dd{font-family:var(--mono);font-size:12px;display:flex;gap:10px;align-items:baseline;white-space:nowrap}
+.x-chipbtn{font-family:var(--mono);font-size:9px;color:var(--green);background:none;
+  border:1px solid rgba(76,200,150,.35);border-radius:5px;padding:2px 7px;white-space:nowrap;cursor:pointer}
+.x-chipbtn:hover,.x-chipbtn.lit{background:rgba(76,200,150,.14)}
+.x-old{display:none}
+.diff .x-old{display:inline;color:var(--flag);text-decoration:line-through;margin-right:8px}
+.diff .x-new{color:var(--green)}
+.x-strip{display:none;margin-top:14px;padding:12px 14px;border:1px solid rgba(76,200,150,.35);border-radius:8px;
+  font-family:var(--mono);font-size:11px;color:var(--ink-2);line-height:1.6}
+.x-strip.show{display:block}
+.x-strip .q{color:var(--green)}
+.x-strip.warn{border-color:rgba(217,168,60,.4)}
+.x-strip.warn .q{color:var(--amber)}
+.x-playbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:16px 18px;border-top:1px solid var(--line)}
+.x-playbar .x-reset{margin-left:auto}
+.x-signrow{display:none;justify-content:space-between;gap:12px;align-items:baseline;margin-top:14px;
+  padding-top:12px;border-top:1px solid var(--line);font-size:12px;color:var(--ink-2)}
+.x-signrow.show{display:flex}
+.x-signrow .t{font-family:var(--mono);font-size:10.5px;color:var(--green)}
+
+@media (max-width:1024px){
+  .x-head{grid-template-columns:1fr;gap:18px}
+  .x-intake-grid{grid-template-columns:1fr}
+  .x-col+.x-col{border-left:none;border-top:1px solid var(--line)}
+  .x-stages{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .x-stages{grid-template-columns:1fr}
+  .x-fig{padding:0}
+  .x-fig+.x-fig{border-left:none;border-top:1px solid var(--line);padding-top:26px;margin-top:26px}
+}
+</style>
+<style>
+/* ================= product-true vignettes (light, matching the real MindLab UI) ================= */
+.lt{background:#F7F9FA;color:#22303C;border:1px solid rgba(255,255,255,.16);border-radius:14px;overflow:hidden;
+  box-shadow:0 30px 90px -30px rgba(0,0,0,.8), 0 0 60px -28px rgba(76,200,150,.15)}
+.lt .cap{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#6E7C89;font-weight:500}
+.lt-head{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 16px;border-bottom:1px solid rgba(20,35,45,.09)}
+.lt-title{font-size:13px;font-weight:700;color:#16202A}
+.lt-btn{display:inline-flex;align-items:center;gap:.5em;background:#17824A;color:#fff;border:none;border-radius:8px;
+  font-family:var(--font);font-size:12.5px;font-weight:650;padding:10px 15px;cursor:pointer;line-height:1}
+.lt-btn:hover{filter:brightness(1.1)}
+.lt-btn.gh{background:#fff;color:#22303C;border:1px solid rgba(20,35,45,.18)}
+.lt-btn.gh:hover{border-color:rgba(20,35,45,.35);filter:none}
+.lt .pill{border-color:rgba(20,35,45,.25);color:#4C5A66}
+.lt .pill.ok{color:#147A43;border-color:rgba(20,122,67,.45)}
+.lt .pill.warn{color:#B45309;border-color:rgba(180,83,9,.45)}
+.lt .pill.flag{color:#C0392B;border-color:rgba(192,57,43,.4)}
+.lt-ref{font-family:var(--mono);font-size:9px;color:#4C5A66;background:#EDF1F4;border-radius:4px;padding:1.5px 5px}
+/* cockpit (hero) */
+.lt-cockpit{padding:20px 22px 26px}
+.lt-topline{display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.lt-hi{font-size:18px;font-weight:700;color:#16202A}
+.lt-hi span{display:block;font-size:11.5px;font-weight:500;color:#5C6B77;margin-top:2px}
+.lt-roles{display:flex;gap:3px;background:#fff;border:1px solid rgba(20,35,45,.12);border-radius:9px;padding:3px}
+.lt-role{font-size:11.5px;font-weight:600;color:#5C6B77;padding:6px 10px;border-radius:7px;white-space:nowrap}
+.lt-role.sel{background:#E9F1FE;color:#1D4ED8}
+.lt-grid{display:grid;grid-template-columns:minmax(0,8fr) minmax(0,4fr);gap:12px;align-items:start}
+.lt-main{display:flex;flex-direction:column;gap:12px;min-width:0}
+.lt-card{background:#fff;border:1px solid rgba(20,35,45,.09);border-radius:12px;padding:13px 16px 14px}
+.lt-card.focus{border-color:#A7C6F9;box-shadow:0 0 0 3px rgba(37,99,235,.08)}
+.lt-need{display:flex;gap:10px;align-items:baseline;padding:9px 0;border-top:1px solid rgba(20,35,45,.07);font-size:12.5px}
+.lt-card .lt-need:first-of-type{border-top:none}
+.lt-need .dot{width:7px;height:7px;border-radius:50%;background:#F59E0B;flex:none;align-self:center}
+.lt-need b{font-weight:650;color:#16202A}
+.lt-need .sub{color:#5C6B77;font-size:11.5px}
+.lt-need .go{margin-left:auto;font-size:11.5px;font-weight:650;color:#1D4ED8;white-space:nowrap}
+.lt-stages{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:10px}
+.lt-comp{display:flex;justify-content:space-between;align-items:center;gap:8px;background:#fff;border:1px solid rgba(20,35,45,.13);
+  border-radius:8px;padding:7px 9px;font-size:11px;font-weight:600;color:#22303C;margin-top:6px;min-width:0}
+.lt-comp .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lt-comp .sc{font-family:var(--mono);font-size:10px;color:#5C6B77;flex:none}
+.lt-comp.sel{border-color:#93BBFA;background:#E9F1FE;color:#1D4ED8}
+.lt-comp.sel .sc{color:#1D4ED8}
+.lt-brief p{font-size:12px;color:#33424F;line-height:1.6;margin-top:8px}
+.lt-brief .meta{font-family:var(--mono);font-size:9.5px;color:#6E7C89;float:right}
+.lt-rail{display:flex;flex-direction:column;gap:12px;min-width:0}
+.lt-sig{display:flex;gap:9px;align-items:baseline;padding:8px 0;border-top:1px solid rgba(20,35,45,.07);font-size:11.5px;color:#33424F}
+.lt-card .lt-sig:first-of-type{border-top:none}
+.lt-sig .dot{width:6px;height:6px;border-radius:50%;flex:none;align-self:center}
+.lt-sig .dot.red{background:#DC2626}.lt-sig .dot.amb{background:#F59E0B}
+.lt-sig b{color:#16202A;font-weight:650}
+.lt-sig .lvl{margin-left:auto;font-family:var(--mono);font-size:9px;letter-spacing:.06em;flex:none}
+.lt-sig .lvl.crit{color:#C0392B}.lt-sig .lvl.hvy{color:#B45309}
+.lt-tag{font-size:9px;font-family:var(--mono);letter-spacing:.06em;border:1px solid rgba(20,35,45,.2);border-radius:5px;padding:2px 6px;color:#5C6B77;white-space:nowrap}
+/* deal record pieces */
+.lt-tabs{display:flex;gap:16px;border-bottom:1px solid rgba(20,35,45,.09);font-size:12px;color:#5C6B77;padding:0 16px;overflow-x:auto}
+.lt-tab{padding:11px 0;white-space:nowrap}
+.lt-tab.on{color:#1D4ED8;box-shadow:inset 0 -2px 0 #2563EB;font-weight:650}
+.lt-vers{display:flex;align-items:flex-start;gap:16px;padding:16px;flex-wrap:wrap}
+.lt-vers .vd{display:flex;flex-direction:column;align-items:center;gap:5px;font-family:var(--mono);font-size:9px;color:#6E7C89}
+.lt-vers .vd i{width:9px;height:9px;border-radius:50%;background:#fff;border:2px solid #B6C2CC;display:block}
+.lt-vers .vd.primary i{background:#2563EB;border-color:#2563EB}
+.lt-vers .vd.primary{color:#1D4ED8;font-weight:600}
+.lt-vers .vlab{font-family:var(--mono);font-size:9.5px;color:#6E7C89;margin-right:2px;align-self:center}
+.lt-vers .sp{flex:1}
+.lt-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;padding:0 16px 16px}
+.lt-metric{background:#fff;border:1px solid rgba(20,35,45,.09);border-radius:10px;padding:12px 14px;min-width:0}
+.lt-metric .v{font-size:21px;font-weight:700;color:#16202A;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.lt-metric .u{font-size:11px;color:#5C6B77;font-weight:600;margin-left:2px}
+.lt-metric .note{font-size:10.5px;color:#5C6B77;margin-top:4px;line-height:1.45}
+.lt-metric .note.up{color:#147A43}
+.lt-metric .refs{margin-top:8px;display:flex;gap:4px;flex-wrap:wrap}
+.lt-note{padding:0 16px 14px;font-size:11px;color:#5C6B77}
+.lt-note b{color:#1D4ED8;font-weight:650}
+/* demo overrides on light panels */
+.panel-card.lt{background:#F7F9FA;border-color:rgba(255,255,255,.16)}
+.lt .pc-head{border-color:rgba(20,35,45,.09)}
+.lt .pc-title{color:#16202A}
+.lt .x-lab{color:#6E7C89}
+.lt .x-lab b{color:#1D4ED8}
+.lt .x-col+.x-col{border-color:rgba(20,35,45,.09)}
+.lt .x-file{border-color:rgba(20,35,45,.08)}
+.lt .x-file .n{color:#33424F}
+.lt .x-count,.lt .x-status{color:#5C6B77}
+.lt .x-status.hot{color:#147A43}
+.lt .x-input{background:#fff;border-color:rgba(20,35,45,.16);color:#16202A}
+.lt .x-input::placeholder{color:#7E8B97}
+.lt .x-tpl{background:#fff;border-color:rgba(20,35,45,.16);color:#4C5A66}
+.lt .x-tpl[aria-pressed="true"]{border-color:#93BBFA;background:#E9F1FE;color:#1D4ED8}
+.lt .x-intake-foot,.lt .x-playbar{border-color:rgba(20,35,45,.09)}
+.lt .x-reset{color:#6E7C89}
+.lt .x-claim{border-color:rgba(20,35,45,.08);color:#16202A}
+.lt .x-claim dt{color:#5C6B77}
+.lt .x-chipbtn{color:#1D4ED8;border-color:rgba(37,99,235,.35);background:#F4F8FE}
+.lt .x-chipbtn.lit{background:#E2EDFD}
+.lt .chip{color:#1D4ED8;border-color:rgba(37,99,235,.3)}
+.lt .gap-tag{color:#B45309;border-color:rgba(180,83,9,.45)}
+.lt .diff .x-old{color:#C0392B}
+.lt .diff .x-new{color:#147A43}
+.lt .x-strip{border-color:rgba(37,99,235,.3);background:#F7FAFE;color:#33424F}
+.lt .x-strip .q{color:#1D4ED8}
+.lt .x-strip.warn{border-color:rgba(180,83,9,.4);background:#FEFAF3}
+.lt .x-strip.warn .q{color:#B45309}
+.lt .x-signrow{border-color:rgba(20,35,45,.09);color:#33424F}
+.lt .x-signrow .t{color:#147A43}
+.lt .sub{color:#5C6B77;font-size:11.5px;font-weight:500}
+.f-copy,.f-visual{min-width:0}
+.lt{min-width:0;max-width:100%}
+/* hero flip on the cockpit */
+#heroapp .flip-a{display:inline}
+#heroapp .flip-b{display:none}
+#heroapp.approved .flip-a{display:none}
+#heroapp.approved .flip-b{display:inline}
+/* pipelines: allow 5 stages */
+.x-stages{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+@media (max-width:1024px){
+  .lt-grid{grid-template-columns:1fr}
+  .lt-rail{display:none}
+  .lt-stages{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:760px){
+  .lt-roles{display:none}
+  .lt-brief{display:none}
+  .lt-stages{grid-template-columns:1fr}
+}
+</style>
+<style>
+/* ================= iteration 2: spacing fixes · copilot workday · dashboard config · firm knowledge ================= */
+.lt-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
+.lt-vers{gap:10px 14px}
+.lt-vers .vbtns{display:flex;gap:8px;margin-left:auto;flex-wrap:wrap}
+.lt-btn.sm{padding:8px 12px;font-size:11px}
+
+/* workday (copilot loop) */
+.wd-grid{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:18px;align-items:start}
+.wd-steps{display:flex;flex-direction:column;gap:8px}
+.wd-step{text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:10px;
+  padding:13px 16px;cursor:pointer;color:var(--ink);font-family:var(--font);min-width:0}
+.wd-step .n{font-family:var(--mono);font-size:10px;color:var(--green);letter-spacing:.1em}
+.wd-step h3{font-size:14px;font-weight:650;margin-top:5px}
+.wd-step p{font-size:12px;color:var(--ink-2);margin-top:4px;line-height:1.5}
+.wd-step[aria-pressed="true"]{border-color:rgba(76,200,150,.55);background:rgba(76,200,150,.06)}
+.wd-step:hover{border-color:rgba(236,239,234,.28)}
+.lt .wd-step{background:#fff;border-color:rgba(20,35,45,.11);color:#16202A}
+.lt .wd-step h3{color:#16202A}
+.lt .wd-step p{color:#5C6B77}
+.lt .wd-step .n{color:#147A43}
+.lt .wd-step:hover{border-color:rgba(20,35,45,.32)}
+.lt .wd-step[aria-pressed="true"]{border-color:rgba(23,130,74,.55);background:#F4FBF7}
+.wd-panel{display:none}
+.wd-panel.on{display:block}
+.wd-chat{display:flex;flex-direction:column;gap:10px;padding:16px}
+.wd-msg{max-width:88%;border-radius:10px;padding:11px 14px;font-size:12.5px;line-height:1.6}
+.wd-msg.user{align-self:flex-end;background:#E9F1FE;color:#1D4ED8;font-weight:600}
+.wd-msg.ai{align-self:flex-start;background:#fff;border:1px solid rgba(20,35,45,.09);color:#33424F}
+.wd-msg.ai b{color:#16202A}
+.wd-actions{display:flex;gap:8px;padding:0 16px 16px;flex-wrap:wrap}
+.wd-drop{margin:16px;border:1.5px dashed rgba(37,99,235,.4);border-radius:10px;padding:26px 22px;
+  display:grid;place-items:center;gap:10px;background:#F7FAFE;text-align:center}
+.wd-drop .hint{font-size:12px;color:#5C6B77}
+.wd-note{background:#fff;border:1px solid rgba(20,35,45,.12);border-radius:8px;padding:10px 14px;
+  font-size:12px;font-weight:600;color:#33424F;box-shadow:0 6px 18px rgba(0,0,0,.08)}
+.wd-note .sub{display:block;font-weight:500;font-size:10.5px;color:#6E7C89;margin-top:2px}
+.wd-drop.dropped{border-style:solid;border-color:rgba(20,122,67,.5);background:#F4FBF7}
+.wd-drop.dropped .hint{color:#147A43;font-weight:600}
+
+/* dashboard configurator */
+.x-stageline{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin:4px 0 16px;letter-spacing:.05em}
+.x-stageline b{color:var(--green);font-weight:500}
+.cfg-grid{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:0}
+.cfg-side{padding:16px 18px}
+.cfg-side+.cfg-side{border-left:1px solid rgba(20,35,45,.09)}
+.cfg-list{display:flex;flex-direction:column;gap:8px}
+.cfg-row{display:flex;align-items:center;gap:10px;padding:9px 12px;border:1px solid rgba(20,35,45,.11);
+  border-radius:9px;background:#fff;font-size:13px;font-weight:600;color:#16202A;min-width:0}
+.cfg-row .grip{font-family:var(--mono);color:#9AA6B0}
+.cfg-row .ord{font-family:var(--mono);font-size:10px;color:#6E7C89;flex:none}
+.cfg-row .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cfg-row .rm{margin-left:auto;font-size:12px;color:#6E7C89;background:none;border:none;cursor:pointer;
+  padding:6px 8px;font-family:var(--font)}
+.cfg-row .rm:hover{color:#C0392B}
+.cfg-avail{display:flex;flex-wrap:wrap;gap:8px}
+.cfg-chip{background:#fff;border:1px dashed rgba(37,99,235,.45);color:#1D4ED8;border-radius:8px;
+  font-size:12px;font-weight:600;padding:9px 13px;cursor:pointer;font-family:var(--font)}
+.cfg-chip:hover{background:#E9F1FE}
+.cfg-note{padding:13px 18px;border-top:1px solid rgba(20,35,45,.09);font-size:11.5px;color:#5C6B77;line-height:1.65}
+.cfg-note b{color:#16202A}
+
+/* firm knowledge browser */
+.fk-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr)}
+.fk-list{border-right:1px solid rgba(20,35,45,.09);padding:8px;display:flex;flex-direction:column;gap:2px}
+.fk-col{display:flex;justify-content:space-between;gap:10px;width:100%;text-align:left;background:none;
+  border:none;border-radius:8px;padding:9px 11px;font-size:12px;font-weight:600;color:#33424F;
+  cursor:pointer;font-family:var(--font);min-height:36px;align-items:center}
+.fk-col:hover{background:#EFF3F5}
+.fk-col[aria-pressed="true"]{background:#E9F1FE;color:#1D4ED8}
+.fk-col .ct{font-family:var(--mono);font-size:10px;color:#6E7C89;flex:none}
+.fk-files{padding:12px 16px 8px;min-width:0}
+.fk-file{display:flex;gap:9px;align-items:baseline;padding:7.5px 0;border-bottom:1px solid rgba(20,35,45,.07);
+  font-family:var(--mono);font-size:10.5px;color:#33424F;min-width:0}
+.fk-file:last-child{border-bottom:none}
+.fk-file .fn{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fk-file .tp{margin-left:auto;color:#6E7C89;flex:none}
+.fk-why{margin:8px 16px 16px;padding:11px 14px;border:1px solid rgba(20,122,67,.35);background:#F4FBF7;
+  border-radius:8px;font-size:11.5px;color:#33424F;line-height:1.6}
+.fk-why b{color:#147A43}
+
+/* the journey (setup → result) */
+.jr-bar{display:flex;align-items:center;margin:6px 0 20px;flex-wrap:wrap;row-gap:10px}
+.jr-step{display:flex;align-items:center;gap:10px;background:none;border:none;cursor:pointer;
+  font-family:var(--font);color:var(--ink-3);padding:6px 0;min-width:0}
+.jr-step .num{width:27px;height:27px;border-radius:50%;border:1.5px solid var(--line-2);
+  display:grid;place-items:center;font-family:var(--mono);font-size:11px;color:var(--ink-2);flex:none}
+.jr-step .lbl{font-size:13.5px;font-weight:600;white-space:nowrap}
+.jr-step .con{width:clamp(14px,3.5vw,50px);height:1px;background:var(--line-2);margin:0 12px;flex:none}
+.jr-step:hover{color:var(--ink)}
+.jr-step[aria-current="step"]{color:var(--ink)}
+.jr-step[aria-current="step"] .num{border-color:var(--green);color:var(--green)}
+.jr-step.done{color:var(--ink-2)}
+.jr-step.done .num{background:var(--green);border-color:var(--green);color:var(--green-btn-ink)}
+.jr-panel{display:none}
+.jr-panel.on{display:block}
+.lt-btn:disabled{opacity:.4;cursor:default}
+.lt-btn:disabled:hover{filter:none;transform:none}
+[hidden]{display:none!important}
+/* opportunity form (real record header fields) */
+.op-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:16px}
+.op-field .cap{display:block;margin-bottom:7px}
+.op-desc{grid-column:1/-1}
+textarea.x-input{min-height:74px;resize:none;line-height:1.55}
+.x-input[readonly]{background:#FBFCFC}
+.x-input.filled{border-color:rgba(23,130,74,.5)}
+/* fake progress (transform-based, no layout animation) */
+.jr-prog{height:5px;background:rgba(20,35,45,.08);border-radius:3px;overflow:hidden;margin:12px 16px 16px}
+.jr-prog i{display:block;height:100%;background:#17824A;transform-origin:left;transform:scaleX(0);
+  transition:transform .9s var(--ease)}
+/* stage: ambient product capture + interactive card on top (Linear pattern) */
+.jr-stage{position:relative;height:clamp(400px,46vw,560px);overflow:hidden;background:#EDF1F3}
+.jr-stage .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;filter:saturate(.92)}
+.jr-stage .bgwrap{position:absolute;inset:0;overflow-y:auto;overscroll-behavior:contain;
+  transition:opacity .5s var(--ease);scrollbar-width:thin;scrollbar-color:rgba(20,35,45,.22) transparent}
+.jr-stage .bgwrap img{width:100%;height:auto;display:block;filter:saturate(.92)}
+.jr-stage .bgwrap.off{opacity:0;pointer-events:none}
+.jr-stage .bgwrap::-webkit-scrollbar{width:8px}
+.jr-stage .bgwrap::-webkit-scrollbar-thumb{background:rgba(20,35,45,.2);border-radius:4px}
+.jr-stage .veil{position:absolute;inset:0;pointer-events:none;background:
+  linear-gradient(90deg, rgba(247,249,250,.94) 0%, rgba(247,249,250,.72) 34%, rgba(247,249,250,.12) 66%, rgba(247,249,250,.28) 100%)}
+.jr-float{position:absolute;left:clamp(16px,4.5%,52px);top:50%;transform:translateY(-50%);
+  width:min(410px,88%);background:#fff;border:1px solid rgba(20,35,45,.12);border-radius:14px;
+  box-shadow:0 30px 80px -26px rgba(8,24,18,.5), 0 2px 8px rgba(8,24,18,.08);overflow:hidden}
+.jr-float .fh{padding:13px 18px;border-bottom:1px solid rgba(20,35,45,.08);display:flex;flex-direction:column;gap:2px}
+.jr-float .fh b{font-size:13px;color:#16202A;font-weight:700}
+.jr-float .fh .cap{font-size:9px}
+.jr-drop{margin:14px 14px 8px;border:1.5px dashed rgba(37,99,235,.4);border-radius:10px;padding:16px 14px;
+  display:grid;gap:5px;place-items:center;background:#F7FAFE;cursor:pointer;text-align:center;
+  transition:background-color .2s var(--ease), border-color .2s var(--ease)}
+.jr-drop .d1{font-size:12.5px;font-weight:650;color:#16202A}
+.jr-drop .d2{font-size:10.5px;color:#5C6B77}
+.jr-drop.over{background:#E9F1FE;border-color:#2563EB}
+.jr-drop.done{border-style:solid;border-color:rgba(20,122,67,.5);background:#F4FBF7;cursor:default}
+.jr-drop.done .d1{color:#147A43}
+.jr-frows{padding:2px 0 6px}
+.jr-frow{display:flex;align-items:center;gap:9px;padding:6.5px 18px;font-family:var(--mono);font-size:10.5px;color:#33424F;
+  opacity:0;transform:translateY(5px);transition:opacity .4s var(--ease), transform .4s var(--ease);min-width:0}
+.jr-frow.in{opacity:1;transform:none}
+.jr-frow .fn{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.jr-frow .tick{width:15px;height:15px;border-radius:50%;flex:none;display:grid;place-items:center;
+  font-size:9px;line-height:1;color:#fff;background:#B6C2CC;transition:background-color .3s var(--ease)}
+.jr-frow.ok .tick{background:#17824A}
+.jr-frow .sz{margin-left:auto;color:#8A97A3;font-size:9.5px;flex:none}
+.jr-fstat{padding:8px 18px 14px;font-family:var(--mono);font-size:10.5px;color:#5C6B77}
+.jr-fstat.hot{color:#147A43}
+.jr-stage.rt .veil{background:
+  linear-gradient(270deg, rgba(247,249,250,.94) 0%, rgba(247,249,250,.72) 34%, rgba(247,249,250,.12) 66%, rgba(247,249,250,.28) 100%)}
+.jr-float.right{left:auto;right:clamp(16px,4.5%,52px)}
+.jr-fields{padding:4px 0}
+.jr-field{display:flex;justify-content:space-between;gap:12px;padding:7px 18px;font-size:11.5px;min-width:0}
+.jr-field .k{color:#5C6B77;font-weight:600;flex:none}
+.jr-field .v{font-family:var(--mono);font-size:10.5px;color:#BCC6CD;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap;transition:color .35s var(--ease)}
+.jr-field.on .v{color:#16202A}
+.jr-actions{display:flex;gap:12px;align-items:center;padding:10px 14px 14px;flex-wrap:wrap}
+.jr-actions .jr-fstat{padding:0}
+.jr-qchips{display:flex;gap:6px;flex-wrap:wrap;padding:12px 14px 0}
+.jr-qchip{font-family:var(--font);font-size:10.5px;font-weight:650;color:#1D4ED8;background:#F4F8FE;
+  border:1px solid rgba(37,99,235,.35);border-radius:999px;padding:7px 11px;cursor:pointer}
+.jr-qchip:hover{background:#E9F1FE}
+.jr-qchip[aria-pressed="true"]{background:#E2EDFD;border-color:#2563EB}
+.jr-qchip.act{color:#147A43;border-color:rgba(23,130,74,.4);background:#F4FBF7}
+.jr-qchip.act:hover{background:#EAF7EF}
+.jr-gf{display:flex;flex-wrap:wrap;gap:6px;padding:8px 14px 0}
+.jr-gchip{font-family:var(--mono);font-size:9.5px;color:#33424F;background:#F3F6F8;
+  border:1px solid rgba(20,35,45,.1);border-radius:6px;padding:4px 8px}
+.jr-gchip.hot{color:#147A43;border-color:rgba(23,130,74,.4);background:#F4FBF7}
+.jr-custom{display:flex;gap:8px;padding:10px 14px 0;align-items:center}
+.jr-custom .jr-inp{margin:0;flex:1}
+.cfg-row .ctag{font-family:var(--mono);font-size:8px;letter-spacing:.08em;color:#1D4ED8;
+  border:1px solid rgba(37,99,235,.35);border-radius:4px;padding:1.5px 5px;margin-left:6px;flex:none}
+.jr-engrow{padding:10px 14px 0}
+.jr-dashlist{display:flex;flex-direction:column;gap:6px;padding:8px 14px 0}
+.jr-dbtn{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid rgba(20,35,45,.12);
+  border-radius:9px;padding:8px 12px;font-family:var(--font);font-size:12px;font-weight:600;color:#16202A;
+  cursor:pointer;text-align:left;min-width:0}
+.jr-dbtn .ok2{margin-left:auto;color:#147A43;font-family:var(--mono);font-size:10px;flex:none}
+.jr-dbtn[aria-pressed="true"]{border-color:#93BBFA;background:#E9F1FE;color:#1D4ED8}
+.bgwrap.ph{display:grid;place-items:center;overflow:hidden;padding-left:min(40%,470px);
+  background:repeating-linear-gradient(45deg,#F3F6F7 0 16px,#EDF1F3 16px 32px)}
+@media (max-width:760px){.bgwrap.ph{padding-left:0}}
+.ph-label{font-family:var(--mono);font-size:13px;color:#5C6B77;border:1.5px dashed rgba(20,35,45,.28);
+  border-radius:10px;padding:14px 22px;background:#fff;text-align:center}
+.jr-jump{position:absolute;right:18px;bottom:20px;z-index:5;
+  display:flex;align-items:center;
+  background:none;border:none;padding:0;cursor:pointer;
+  opacity:0;pointer-events:none;transition:opacity .4s var(--ease)}
+.jr-jump.show{opacity:1;pointer-events:auto}
+.jr-spiral{width:clamp(150px,20vw,224px);height:auto;color:#147A43;flex:none;margin-right:-10px;
+  filter:drop-shadow(0 3px 6px rgba(8,24,18,.14));
+  animation:jrnudge 1.8s var(--ease) infinite;transform-origin:right center}
+.jr-jump-pill{background:#fff;border:1px solid rgba(20,35,45,.15);border-radius:12px;
+  padding:10px 14px;box-shadow:0 22px 55px -16px rgba(8,24,18,.55);transition:border-color .2s var(--ease)}
+.jr-jump:hover .jr-jump-pill{border-color:rgba(23,130,74,.55)}
+.jr-jump-pill img{width:min(330px,52vw);height:auto;display:block}
+@keyframes jrnudge{0%,100%{transform:translateX(0)}50%{transform:translateX(7px)}}
+@media (prefers-reduced-motion:reduce){.jr-spiral{animation:none}}
+@media (max-width:640px){.jr-spiral{display:none}.jr-jump{right:12px;bottom:12px}}
+.jr-recap{list-style:none;margin:0;padding:6px 0 2px}
+.jr-recap li{display:flex;gap:11px;align-items:flex-start;padding:8px 18px;
+  opacity:0;transform:translateY(5px);transition:opacity .4s var(--ease),transform .4s var(--ease)}
+.jr-recap li.in{opacity:1;transform:none}
+.jr-recap .rk{width:18px;height:18px;border-radius:50%;background:#17824A;color:#fff;flex:none;
+  display:grid;place-items:center;font-size:10px;margin-top:1px}
+.jr-recap .rt{display:block;color:#16202A;font-weight:650;font-size:12.5px}
+.jr-recap .rv{display:block;color:#5C6B77;font-weight:500;font-size:11px;margin-top:2px;line-height:1.45}
+.jr-close{padding:12px 18px 6px;border-top:1px solid rgba(20,35,45,.08);margin-top:4px}
+.jr-close .mantra{font-size:12px;color:#33424F;line-height:1.55}
+.jr-close .mantra b{color:#147A43}
+.jr-cta{display:inline-flex;align-items:center;gap:.5em;background:#17824A;color:#fff;border:none;
+  border-radius:8px;font-family:var(--font);font-size:13.5px;font-weight:650;padding:12px 18px;
+  text-decoration:none;cursor:pointer;margin-top:12px}
+.jr-cta:hover{filter:brightness(1.08)}
+@media (prefers-reduced-motion:reduce){.jr-recap li{transition:none}}
+.jr-r5done{display:flex;flex-wrap:wrap;gap:6px 14px;padding:10px 18px 2px}
+.jr-r5done span{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:#5C6B77;font-weight:600}
+.jr-r5done i{width:14px;height:14px;border-radius:50%;background:#17824A;color:#fff;display:grid;place-items:center;font-size:8px;font-style:normal}
+.jr-cap5{display:flex;flex-wrap:wrap;gap:6px;padding:8px 14px 0}
+.jr-ex5{margin:10px 14px 0;background:#F7FAFE;border:1px solid rgba(37,99,235,.16);border-radius:10px;padding:11px 13px;min-height:78px}
+.jr-ex5 .q{font-size:12px;font-weight:650;color:#1D4ED8}
+.jr-ex5 .a{font-size:11.5px;color:#33424F;line-height:1.55;margin-top:5px}
+.jr-ex5 .a:first-child{margin-top:0}
+.jr-ex5 .r{font-family:var(--mono);font-size:9.5px;color:#147A43;background:#EDF7F1;border-radius:4px;padding:1px 5px;white-space:nowrap}
+.jr-ex5 .n{font-size:10.5px;color:#6E7C89;margin-top:7px;line-height:1.5}
+.jr-ex5 .pills{display:flex;gap:6px;margin-top:9px}
+.jr-ex5 .pills span{font-family:var(--mono);font-size:9px;letter-spacing:.06em;border-radius:5px;padding:3px 8px;border:1px solid}
+.jr-ex5 .go{color:#147A43;border-color:rgba(20,122,67,.4);background:#F4FBF7}
+.jr-ex5 .cond{color:#B45309;border-color:rgba(180,83,9,.45);background:#FEFAF3;font-weight:700}
+.jr-ex5 .pass{color:#8A97A3;border-color:rgba(20,35,45,.18)}
+.jr-ex5 .sig{font-size:11px;color:#33424F;margin-top:9px;padding-top:8px;border-top:1px solid rgba(20,35,45,.08)}
+.jr-ex5 .sig b{color:#147A43}
+@keyframes k4pulse{0%{box-shadow:0 0 0 0 rgba(23,130,74,.5)}70%{box-shadow:0 0 0 9px rgba(23,130,74,0)}100%{box-shadow:0 0 0 0 rgba(23,130,74,0)}}
+.lt-btn.blink{animation:k4pulse 1.5s var(--ease) infinite}
+@media (prefers-reduced-motion:reduce){.lt-btn.blink{animation:none}}
+
+/* radar (sentry mode) — reuses the journey shell (.jr-*), adds the severity fan-out */
+.rd-mission{margin:8px 16px 4px;min-height:62px;background:#F7FAFE;border:1px solid rgba(37,99,235,.16);
+  border-radius:10px;padding:11px 13px;font-size:11.5px;line-height:1.55;color:#16202A}
+.rd-mission:empty::before{content:attr(data-empty);color:#8A97A3}
+.rd-cfgline{display:flex;flex-wrap:wrap;gap:16px;padding:11px 16px 0;font-size:11px;color:#5C6B77}
+.rd-cfgline b{color:#16202A;font-weight:650}
+.rd-cfgline b.x{color:#147A43}
+.rd-badge{font-family:var(--mono);font-size:8.5px;letter-spacing:.05em;color:#147A43;border:1px solid rgba(23,130,74,.4);
+  background:#F4FBF7;border-radius:5px;padding:3px 7px;flex:none;align-self:flex-start;white-space:nowrap}
+/* signal-vs-noise triage (step 2) */
+.rd-triage{padding:2px 0}
+.rd-trow{display:flex;align-items:center;gap:9px;padding:9px 16px;font-size:11.5px;
+  opacity:0;transform:translateY(6px);transition:opacity .4s var(--ease),transform .4s var(--ease)}
+.rd-trow.in{opacity:1;transform:none}
+.rd-trow .verdict{font-family:var(--mono);font-size:8.5px;letter-spacing:.05em;border-radius:5px;padding:3px 7px;border:1px solid;flex:none}
+.verdict.noise{color:#8A97A3;border-color:rgba(20,35,45,.18);background:#F3F6F8}
+.verdict.signal{color:#147A43;border-color:rgba(23,130,74,.4);background:#F4FBF7}
+.rd-trow[data-kind=noise] .rd-twho{color:#94A2AD;text-decoration:line-through;text-decoration-color:rgba(20,35,45,.25)}
+.rd-trow[data-kind=signal] .rd-twho{color:#33424F}
+.rd-trow .rd-twho{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.rd-trow .rd-twho b{color:#16202A}
+.rd-meterwrap{padding:8px 16px 0;display:flex;align-items:center;gap:10px}
+.rd-meter{flex:1;height:6px;background:rgba(20,35,45,.08);border-radius:3px;overflow:hidden}
+.rd-meter i{display:block;height:100%;background:#17824A;transform-origin:left;transform:scaleX(0);transition:transform 1s var(--ease)}
+.rd-meterlab{font-family:var(--mono);font-size:9.5px;color:#5C6B77;flex:none}
+/* the cross-asset fan-out (step 3) — the money shot */
+.rd-signal{margin:10px 16px 2px;background:#FEF3F2;border:1px solid rgba(180,35,24,.18);border-radius:10px;padding:10px 12px}
+.rd-sigtag{font-family:var(--mono);font-size:8.5px;letter-spacing:.07em;color:#B42318}
+.rd-signal b{display:block;font-size:12px;color:#16202A;margin-top:4px;line-height:1.4}
+.rd-fan{padding:2px 0}
+.rd-row{display:flex;align-items:center;gap:10px;padding:9px 16px;border-top:1px solid rgba(20,35,45,.06);
+  opacity:0;transform:translateY(6px);transition:opacity .45s var(--ease),transform .45s var(--ease)}
+.rd-row:first-child{border-top:none}
+.rd-row.in{opacity:1;transform:none}
+.rd-score{font-family:var(--mono);font-size:11px;font-weight:600;color:#16202A;flex:none;width:44px;display:flex;flex-direction:column;gap:3px}
+.rd-score i{display:block;height:3px;border-radius:2px;transform-origin:left;background:#B42318}
+.rd-sev{font-family:var(--mono);font-size:8.5px;letter-spacing:.04em;border-radius:5px;padding:3px 5px;border:1px solid;flex:none;width:60px;text-align:center}
+.rd-sev.crit{color:#B42318;border-color:rgba(180,35,24,.4);background:#FEF3F2}
+.rd-sev.heavy{color:#C2410C;border-color:rgba(194,65,12,.4);background:#FEF6EE}
+.rd-sev.med{color:#B45309;border-color:rgba(180,83,9,.35);background:#FEFAF3}
+.rd-sev.light{color:#64748B;border-color:rgba(20,35,45,.18);background:#F3F6F8}
+.rd-row.sev-crit .rd-score i{background:#B42318}
+.rd-row.sev-heavy .rd-score i{background:#C2410C}
+.rd-row.sev-med .rd-score i{background:#B45309}
+.rd-row.sev-light .rd-score i{background:#94A2AD}
+.rd-who{min-width:0}
+.rd-who b{display:block;font-size:12px;color:#16202A;font-weight:650;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rd-who span{display:block;font-size:10.5px;color:#5C6B77;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* draft & decide (step 4) */
+.rd-draft{padding:12px 16px 0}
+.rd-facts{margin-top:8px;display:flex;flex-direction:column;gap:7px}
+.rd-fact{display:flex;gap:8px;align-items:baseline;font-size:11.5px;color:#33424F;line-height:1.45;min-width:0}
+.rd-fact .rd-ref{font-family:var(--mono);font-size:9px;color:#147A43;background:#EDF7F1;border-radius:4px;padding:1px 5px;white-space:nowrap;flex:none;margin-left:auto}
+.rd-decide{display:flex;gap:6px;padding:8px 16px 0}
+/* overwatch board (step 5) */
+.rd-boards{padding:8px 16px 0;display:grid;gap:12px}
+.rd-blab{font-family:var(--mono);font-size:9px;letter-spacing:.06em;color:#5C6B77;display:block;margin-bottom:5px}
+.rd-brow{display:flex;align-items:center;gap:8px;padding:6px 0;font-size:11px;border-top:1px solid rgba(20,35,45,.06);
+  opacity:0;transform:translateY(5px);transition:opacity .4s var(--ease),transform .4s var(--ease)}
+.rd-brow.in{opacity:1;transform:none}
+.rd-brow:first-of-type{border-top:none}
+.rd-brow b{color:#16202A;font-weight:650;flex:none}
+.rd-brow>span:last-child{color:#6E7C89;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rd-brow .rd-sev{width:auto;font-size:8px;padding:2px 5px}
+.rd-pct{font-family:var(--mono);font-size:10px;font-weight:600;color:#B45309;flex:none;width:20px}
+/* pipeline connectors (verbs on the step bar) + the baton hand-off */
+.rd-con{display:inline-flex;align-items:center;margin:0 6px;flex:none}
+.rd-con::before{content:'';width:clamp(10px,2.2vw,26px);height:1.5px;background:var(--line-2);border-radius:1px}
+.rd-con em{font-family:var(--mono);font-size:8px;letter-spacing:.03em;color:var(--ink-3);font-style:normal;padding:0 5px;white-space:nowrap}
+.rd-con::after{content:'▸';font-size:8px;color:var(--line-2)}
+.jr-step.done .rd-con::before,.jr-step[aria-current="step"] .rd-con::before{background:var(--green)}
+.jr-step.done .rd-con em{color:var(--ink-2)}
+.jr-step.done .rd-con::after,.jr-step[aria-current="step"] .rd-con::after{color:var(--green)}
+@media (max-width:860px){.rd-con em{display:none}}
+.rd-carry{display:flex;align-items:center;gap:9px;margin:11px 16px 2px;padding:8px 11px;border-radius:9px;
+  background:#F1FAF5;border:1px solid rgba(20,122,67,.24);
+  opacity:0;transform:translateY(-6px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.rd-carry.in{opacity:1;transform:none}
+.rd-carry .ci{font-size:12px;color:#147A43;flex:none;line-height:1}
+.rd-carry .ck{font-family:var(--mono);font-size:8px;letter-spacing:.08em;color:#147A43;flex:none}
+.rd-carry .cv{font-size:11px;font-weight:650;color:#16202A;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rd-row.pick{background:#F4FBF7}
+.rd-row.pick .rd-who b{color:#147A43}
+.rd-take{margin-left:auto;font-family:var(--mono);font-size:8px;letter-spacing:.04em;color:#147A43;
+  border:1px solid rgba(20,122,67,.4);background:#fff;border-radius:5px;padding:3px 7px;flex:none;
+  opacity:0;transition:opacity .45s var(--ease)}
+.rd-row.pick .rd-take{opacity:1}
+.jr-ans{margin:10px 14px 0;background:#F3F6F8;border:1px solid rgba(20,35,45,.08);border-radius:10px;
+  padding:10px 12px;font-size:11.5px;color:#33424F;line-height:1.6;display:none}
+.jr-ans.show{display:block}
+.jr-float .jr-prog{margin:10px 14px 4px}
+.jr-float .fh.row{flex-direction:row;align-items:center;justify-content:space-between;gap:12px}
+.jr-float .fh.row>div{display:flex;flex-direction:column;gap:2px;min-width:0}
+.jr-float .fh .cap.ok{color:#147A43}
+.jr-formgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px 14px 2px}
+.jr-lab{display:block;font-size:10px;font-weight:650;color:#5C6B77;letter-spacing:.02em}
+.jr-lab.full{grid-column:1/-1}
+.jr-inp{display:block;width:100%;background:#fff;border:1px solid rgba(20,35,45,.16);border-radius:8px;
+  font-family:var(--font);font-size:12px;color:#16202A;padding:8px 10px;margin-top:4px;min-height:34px;
+  transition:border-color .3s var(--ease), background-color .3s var(--ease)}
+.jr-inp::placeholder{color:#93A0AA}
+.jr-inp.filled{border-color:rgba(23,130,74,.45);background:#FBFEFC}
+.jr-float .cfg-row{padding:7px 10px;font-size:12px}
+.jr-float .cfg-row .rm{font-size:11px;padding:4px 6px}
+.jr-float .cfg-chip{padding:6px 10px;font-size:11px}
+.jr-cfglist{display:flex;flex-direction:column;gap:6px;padding:12px 14px 0}
+.jr-cfgavail{display:flex;flex-wrap:wrap;gap:6px;padding:10px 14px 0}
+.jr-stage .bg{transition:opacity .5s var(--ease)}
+.jr-stage .bg.off{opacity:0}
+.jr-chat{display:flex;flex-direction:column;gap:8px;padding:12px 14px;max-height:230px;overflow-y:auto}
+.jr-msg{border-radius:10px;padding:9px 12px;font-size:11.5px;line-height:1.55;max-width:94%}
+.jr-msg.u{align-self:flex-end;background:#E9F1FE;color:#1D4ED8;font-weight:600}
+.jr-msg.a{align-self:flex-start;background:#F3F6F8;border:1px solid rgba(20,35,45,.08);color:#33424F}
+.jr-chatin{display:flex;gap:8px;padding:10px 14px 14px;border-top:1px solid rgba(20,35,45,.08)}
+.jr-chatin .jr-inp{margin:0;flex:1}
+@media (prefers-reduced-motion:reduce){.jr-stage .bg{transition:none}}
+@media (max-width:760px){
+  .jr-stage{height:auto;min-height:430px}
+  .jr-float,.jr-float.right{position:relative;left:auto;right:auto;top:auto;transform:none;margin:18px auto;width:min(410px,92%)}
+}
+@media (prefers-reduced-motion:reduce){
+  .jr-frow{transition:none}
+}
+/* real product captures in the journey */
+.jr-sub{display:flex;gap:8px;padding:12px 16px;border-bottom:1px solid rgba(20,35,45,.08);flex-wrap:wrap}
+.jr-sub .lt-btn[aria-pressed="true"]{border-color:#93BBFA;background:#E9F1FE;color:#1D4ED8}
+.jr-view{display:none}
+.jr-view.on{display:block}
+.jr-shot{display:block;width:100%;border-bottom:1px solid rgba(20,35,45,.06)}
+/* full report view */
+.rp-doc{margin:16px;background:#fff;border:1px solid rgba(20,35,45,.1);border-radius:10px;padding:18px 20px}
+.rp-doc h4{font-size:13px;font-weight:700;color:#16202A;display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.rp-doc p{font-size:12.5px;color:#33424F;line-height:1.7;margin-top:10px;max-width:78ch}
+.rp-doc p b{color:#16202A}
+.lt .lt-ref.kref{color:#147A43;background:#EDF7F1}
+.lt-tab .pill{margin-left:6px}
+@media (max-width:900px){.op-grid{grid-template-columns:1fr}}
+
+@media (max-width:900px){
+  .wd-grid,.cfg-grid,.fk-grid{grid-template-columns:1fr}
+  .jr-step .con{width:10px;margin:0 6px}
+  .cfg-side+.cfg-side{border-left:none;border-top:1px solid rgba(20,35,45,.09)}
+  .fk-list{border-right:none;border-bottom:1px solid rgba(20,35,45,.09);flex-direction:row;flex-wrap:wrap}
+  .lt-metrics{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="glow" aria-hidden="true"></div>
+
+<div class="nav-wrap" id="navwrap">
+  <div class="frame">
+    <nav class="nav" aria-label="Site">
+      <a class="lockup" href="#" aria-label="MindLab home">
+        <svg viewBox="0 0 500 500" fill="currentColor" aria-hidden="true"><path d="M115.71,222.28c8.77-3.98,17.36-1.26,26.27-5.96,23.42-12.35,10.68-31.61,23.52-46.81,15.02-17.78,41.88-13.37,51.13,7.84,3.62,8.3,1.21,16.44,5.29,24.89,11.07,22.93,43.96,23.42,55.82.92,7.07-13.42-.78-24.45,14.03-37.37,24.5-21.37,60.72,7.41,46.99,35.52-12.36,25.33-34.16,10.87-49.66,26.37-12.2,12.2-5.55,24.83-12.99,37.24-13.13,21.89-43.74,19.66-53.92-3.69-3.62-8.3-1.21-16.44-5.29-24.89-12.65-26.2-51.84-22.05-58.51,6.45-.84,3.6-.33,7.6-.9,11.06-4.35,26.64-37.11,35.78-53.97,14.29-12.33-15.71-5.67-37.78,12.19-45.87ZM164.81,329.45c25.44,32.41,72.07-6.77,47.56-36.87-25.51-31.34-71.21,6.75-47.56,36.87ZM348.63,231.05c-24.51,30.11,22.13,69.28,47.56,36.87,23.64-30.13-22.05-68.21-47.56-36.87ZM287.61,292.57c-24.38,30.06,21.78,69.22,47.57,36.87,23.7-29.72-22.03-68.36-47.57-36.87Z"/></svg>
+        <span class="wordmark">MindLab</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#security">Security</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+      <a class="btn small" href="#close">Bring one live deal</a>
+    </nav>
+  </div>
+</div>
+
+<main id="main">
+
+<!-- S1 · hero -->
+<div class="frame">
+  <header class="hero">
+    <p class="hero-kicker">For private equity deal teams</p>
+    <h1>The <em>human-approved</em> research system for private equity.</h1>
+    <p class="subhead">Point MindLab at a data room. It returns an IC-ready draft in your firm’s memo format, every claim cited. <b>Nothing becomes firm record until a named person approves it.</b> Every approved deal makes the next one faster.</p>
+    <div class="cta-row">
+      <a class="btn" href="#close">Bring one live deal <span aria-hidden="true">→</span></a>
+      <a class="link-2" href="#how">See the workflow <span class="ar" aria-hidden="true">→</span></a>
+    </div>
+
+    <div class="monument">
+      <div class="lt lt-cockpit" id="heroapp" role="img" aria-label="The MindLab home cockpit: role switcher, a NEEDS-YOU queue with blocking questions and approvals, the live deal pipeline by stage with radar scores, and today’s AI briefing.">
+        <div class="lt-topline">
+          <p class="lt-hi">Good afternoon<span>Your live deals + sourcing · Meridian Growth Fund I</span></p>
+          <div class="lt-roles" aria-hidden="true">
+            <span class="lt-role sel">Deal lead</span><span class="lt-role">Operating partner</span><span class="lt-role">MD / IC</span><span class="lt-role">Analyst</span>
+          </div>
+        </div>
+        <div class="lt-grid">
+          <div class="lt-main">
+            <div class="lt-card">
+              <p class="cap">Needs you</p>
+              <div class="lt-need"><span class="dot"></span><span><b>2 blocking questions</b> <span class="sub">FreshRoute AI · 2 analysis runs</span></span><span class="go">Run →</span></div>
+              <div class="lt-need"><span class="dot"></span><span><b><span class="flip-a">6 approvals</span><span class="flip-b">5 approvals</span></b> <span class="sub"><span class="flip-a">FreshRoute AI · open to action all</span><span class="flip-b">Company Profile v Jun 24 approved · set primary</span></span></span><span class="go">Approval →</span></div>
+            </div>
+            <div class="lt-card focus">
+              <p class="cap">Pipeline · live deals by stage</p>
+              <div class="lt-stages">
+                <div><p class="cap">Sourcing · 2</p><div class="lt-comp"><span class="nm">MedLedger ClinicPay</span><span class="sc">52</span></div><div class="lt-comp"><span class="nm">GreenCrate Exch…</span><span class="sc">45</span></div></div>
+                <div><p class="cap">Triage · 1</p><div class="lt-comp"><span class="nm">ColdHub Johor</span><span class="sc">50</span></div></div>
+                <div><p class="cap">NDA/IOI · 1</p><div class="lt-comp"><span class="nm">KitchenLoop Pro</span><span class="sc">48</span></div></div>
+                <div><p class="cap">DD · 2</p><div class="lt-comp"><span class="nm">PraxiaFlow Health</span><span class="sc">61</span></div><div class="lt-comp"><span class="nm">ChillFleet Systems</span><span class="sc">58</span></div></div>
+                <div><p class="cap">IC · 1</p><div class="lt-comp sel"><span class="nm">FreshRoute AI</span><span class="sc">62</span></div></div>
+              </div>
+            </div>
+            <div class="lt-card lt-brief">
+              <p class="cap">Today’s briefing <span class="meta">updated 22h ago · via claude</span></p>
+              <p>Six approvals and two blocking questions are waiting on you. Pipeline remains concentrated in sourcing, the portfolio is on Watch with no covenant breaches, and Meridian Family Evergreen HoldCo is tracking a 1.08x TVPI on $44M deployed at a 20.8% IRR.</p>
+            </div>
+          </div>
+          <div class="lt-rail">
+            <div class="lt-card">
+              <p class="cap">Upcoming · 7 days</p>
+              <div class="lt-sig"><b>16× Management deep-dive</b><span class="lvl"><span class="lt-tag">MEETING</span></span></div>
+              <div class="lt-sig"><b>16× Data room opened</b><span class="lvl"><span class="lt-tag">MILESTONE</span></span></div>
+            </div>
+            <div class="lt-card">
+              <p class="cap">Cross-asset signals</p>
+              <div class="lt-sig"><span class="dot red"></span><span><b>PraxiaFlow Health</b> <span class="sub">direct hit on active thesis</span></span><span class="lvl crit">CRITICAL</span></div>
+              <div class="lt-sig"><span class="dot amb"></span><span><b>PraxiaFlow Health</b> <span class="sub">four convergent 2026 signals</span></span><span class="lvl hvy">HEAVY</span></div>
+              <div class="lt-sig"><span class="dot amb"></span><span><b>MedOps AI</b> <span class="sub">confirms existing rejection</span></span><span class="lvl hvy">HEAVY</span></div>
+            </div>
+            <div class="lt-card">
+              <p class="cap">Per-asset signals</p>
+              <div class="lt-sig"><span><b>FreshRoute AI</b> <span class="sub">live-deal diligence watch · via Radar</span></span><span class="lvl">38</span></div>
+              <div class="lt-sig"><span><b>ClinicFlow</b> <span class="sub">margin &amp; onboarding watch</span></span><span class="lvl">35</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+
+<!-- S2 · stat -->
+<section class="stat" aria-label="The re-verification tax">
+  <div class="frame stat-inner">
+    <p class="stat-fig rv">59%</p>
+    <div class="stat-body rv">
+      <p class="lead">of finance professionals still manually re&#8209;verify or re&#8209;do AI outputs.</p>
+      <p class="kick">That’s not an AI problem. It’s a workflow problem.</p>
+      <p class="src">Hebbia “Diligence Paradox” survey · 510 US finance professionals · Apr–May 2026</p>
+    </div>
+  </div>
+</section>
+
+<!-- S3 · problem scenes -->
+<section class="sec-pad">
+  <div class="frame">
+    <h2 class="sec rv">You don’t have a data shortage. You have a memory problem.</h2>
+    <div class="scenes-grid">
+      <article class="scene rv">
+        <h3><span class="sc">Scene 1.</span> The third first-look</h3>
+        <p>The target you screened in 2024 is back with a new banker. Nobody can find the old work. An associate rebuilds it from scratch.</p>
+        <p class="echo">→ fixed by Company Records</p>
+      </article>
+      <article class="scene rv">
+        <h3><span class="sc">Scene 2.</span> The update that vanished</h3>
+        <p>The portco flagged margin pressure in March. It resurfaced in September — in a partner’s memory, not in the record.</p>
+        <p class="echo">→ fixed by Portfolio Pulse</p>
+      </article>
+      <article class="scene rv">
+        <h3><span class="sc">Scene 3.</span> The unanswerable question</h3>
+        <p>IC asks: “where’s that churn number from?” The answer is a 17-tab spreadsheet and an analyst who left in June.</p>
+        <p class="echo">→ fixed by cited claims</p>
+      </article>
+    </div>
+    <p class="coda rv">Your analysts are not slow. <b>The workflow is slow.</b></p>
+  </div>
+</section>
+
+<!-- S4 · R3 mechanism -->
+<section class="sec-pad hr" id="how">
+  <div class="frame">
+    <p class="sec-kicker rv">The mechanism</p>
+    <h2 class="sec rv">Nothing becomes a record until a human approves it.</h2>
+    <p class="sec-sub rv">MindLab runs on one pipeline: Resources → Reports → Records. AI drafts reports from your sources. Your team reviews, edits, and approves. Only approved work updates the firm’s records.</p>
+    <div class="flow">
+      <div class="stage rv">
+        <p class="cap">01 · Resources</p>
+        <h3>Your sources, untouched</h3>
+        <p class="mantra">AI prepares.</p>
+        <div class="body">
+          <span class="srcchip">FreshRoute_SeriesA_deck.pdf</span>
+          <span class="srcchip">data room /freshroute/</span>
+          <span class="srcchip">Meridian model.xlsx</span>
+          <span class="srcchip">Mgmt call notes · 12 May</span>
+        </div>
+      </div>
+      <div class="arrow" aria-hidden="true">→</div>
+      <div class="stage gate rv">
+        <p class="cap">02 · Reports · the gate</p>
+        <h3>Draft, cited, reviewed</h3>
+        <p class="mantra">Humans approve.</p>
+        <div class="body">
+          <p class="draftline">ARR $1.8M <span class="chip">§4.3 · §0.4</span></p>
+          <p class="draftline">Gross margin 58% <span class="chip">§4.3 · §5.1</span> <span class="gap-tag">NOT GAAP-ATTESTED</span></p>
+          <p class="draftline"><span class="gap-tag">BLOCKING QUESTION</span> ARR basis: contracted or recognized?</p>
+        </div>
+        <div class="gate-actions">
+          <button class="btn small" type="button" tabindex="-1">Approve</button>
+          <button class="btn small ghost" type="button" tabindex="-1">Edit</button>
+        </div>
+        <p class="gate-sign">Approved by J. Tran <span class="t">· v Jun 24 set primary · logged</span></p>
+      </div>
+      <div class="arrow" aria-hidden="true">→</div>
+      <div class="stage rv">
+        <p class="cap">03 · Records</p>
+        <h3>Firm memory, compounding</h3>
+        <p class="mantra">MindLab remembers.</p>
+        <div class="body recline">
+          <b>Jun 19</b> · first Company Profile drafts (v1–v3)<br>
+          <b>Jun 24</b> · v6 approved · set primary · advanced to IC<br>
+          <b>What changed</b> · ARR plan $1.6M → $1.8M · YoY 45% → 58%
+        </div>
+      </div>
+    </div>
+    <ul class="flow-caps rv">
+      <li><span class="n">1</span>AI never silently writes to your records.</li>
+      <li><span class="n">2</span>Every claim carries its source.</li>
+      <li><span class="n">3</span>Every approval is logged.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- appended · why (Fast / Defensible / Lean) -->
+<section class="sec-pad hr" id="why">
+  <div class="frame">
+    <p class="x-state rv">Not another copilot. <span class="dim">MindLab is a governed research system, purpose-built for deal teams: the approval gate at its core, the firm’s memory underneath, and research capacity headcount alone could never reach.</span></p>
+    <div class="x-figs">
+      <div class="x-fig rv">
+        <p class="x-figcap">FIG 1.1 · FAST</p>
+        <svg viewBox="0 0 220 170" width="220" height="170" fill="none" stroke="#7E867F" stroke-width="1.2" aria-hidden="true">
+          <g transform="translate(34 28) skewY(-12)">
+            <rect x="0"   y="102" width="13" height="28"/>
+            <rect x="24"  y="88"  width="13" height="42"/>
+            <rect x="48"  y="72"  width="13" height="58"/>
+            <rect x="72"  y="54"  width="13" height="76"/>
+            <rect x="96"  y="34"  width="13" height="96"/>
+            <rect x="120" y="12"  width="13" height="118"/>
+            <line x1="-8" y1="130" x2="152" y2="130" opacity=".5"/>
+          </g>
+        </svg>
+        <h3>Your process, at machine speed</h3>
+        <p>The loop you already run: meetings, research, the template, the memo. Same steps, hours instead of weeks; judgment becomes the only thing on the critical path.</p>
+      </div>
+      <div class="x-fig rv">
+        <p class="x-figcap">FIG 1.2 · UNLOCKED</p>
+        <svg viewBox="0 0 220 170" width="220" height="170" fill="none" stroke="#7E867F" stroke-width="1.2" aria-hidden="true">
+          <g>
+            <path d="M150 34 L196 61 L196 115 L150 142 L104 115 L104 61 Z"/>
+            <path d="M150 88 L196 61 M150 88 L104 61 M150 88 L150 142"/>
+            <path d="M52 106 L74 119 L74 145 L52 158 L30 145 L30 119 Z"/>
+            <path d="M52 132 L74 119 M52 132 L30 119 M52 132 L52 158"/>
+            <line x1="80" y1="130" x2="96" y2="122" stroke-dasharray="2 4" opacity=".6"/>
+          </g>
+        </svg>
+        <h3>What you couldn’t do before</h3>
+        <p>A thousand documents read, cross-checked, and cited for a single screening; whole-market sweeps you would never have staffed, at a fraction of the cost of one analyst-week.</p>
+      </div>
+      <div class="x-fig rv">
+        <p class="x-figcap">FIG 1.3 · DEFENSIBLE</p>
+        <svg viewBox="0 0 220 170" width="220" height="170" fill="none" stroke="#7E867F" stroke-width="1.2" aria-hidden="true">
+          <g transform="translate(52 18) skewY(-8)">
+            <rect x="0" y="0"   width="116" height="18" rx="3"/>
+            <circle cx="58" cy="9" r="5"/>
+            <rect x="0" y="34"  width="116" height="16" rx="3"/>
+            <rect x="0" y="58"  width="116" height="16" rx="3"/>
+            <rect x="0" y="82"  width="116" height="16" rx="3"/>
+            <rect x="0" y="106" width="116" height="16" rx="3"/>
+            <line x1="0" y1="26" x2="116" y2="26" stroke-dasharray="2 4" opacity=".6"/>
+          </g>
+        </svg>
+        <h3>Quality that survives examination</h3>
+        <p>Cited, gap-flagged, signed. The bar is not “sounds right”: it is work you can defend to the IC, an LP, or an examiner, months later.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S5 · workflow one -->
+<section class="sec-pad hr" id="workflows">
+  <div class="frame feature">
+    <div class="f-copy rv">
+      <p class="f-label">Workflow 01 · Target Brief</p>
+      <h2>From data room to IC-ready first pass.</h2>
+      <p>Point MindLab at a name, a website, or a data room. It returns a structured screening brief in your firm’s memo format: business snapshot, market context, competitors, risk flags, and the diligence questions worth asking. Every claim cited, and gaps flagged as gaps.</p>
+      <p class="f-micro">Where the blank page used to be.</p>
+    </div>
+    <div class="f-visual rv">
+      <div class="lt">
+        <div class="lt-head"><span class="lt-title">FreshRoute AI</span><span class="cap">Opportunity · Stage IC · via Advisors</span></div>
+        <div class="lt-tabs" aria-hidden="true"><span class="lt-tab">Overview</span><span class="lt-tab on">Company Profile</span><span class="lt-tab">Financials</span><span class="lt-tab">Comparables</span><span class="lt-tab">Valuation</span><span class="lt-tab">Risks</span><span class="lt-tab">Settings</span></div>
+        <div class="lt-vers"><span class="vlab">Report versions</span>
+          <span class="vd"><i></i>Jun 19</span><span class="vd"><i></i>Jun 19</span><span class="vd"><i></i>Jun 21</span><span class="vd primary"><i></i>Jun 24 · primary</span>
+          <span class="vbtns"><button class="lt-btn gh sm" type="button" tabindex="-1">Refresh from report</button><button class="lt-btn gh sm" type="button" tabindex="-1">Re-run</button></span>
+        </div>
+        <div class="lt-metrics">
+          <div class="lt-metric"><p class="cap">Total revenue</p><p class="v">3.9<span class="u">$M</span></p><p class="note">FY26E plan (Meridian model)</p><p class="refs"><span class="lt-ref">4.1</span><span class="lt-ref">4.2</span><span class="lt-ref">4.3</span></p></div>
+          <div class="lt-metric"><p class="cap">ARR</p><p class="v">1.8<span class="u">$M</span></p><p class="note up">+58% YoY (FY25→FY26E plan)</p><p class="refs"><span class="lt-ref">4.3</span><span class="lt-ref">0.4</span></p></div>
+          <div class="lt-metric"><p class="cap">YoY growth</p><p class="v">58<span class="u">%</span></p><p class="note">FY25 to FY26E plan (ARR uplift)</p><p class="refs"><span class="lt-ref">4.1</span><span class="lt-ref">4.3</span></p></div>
+          <div class="lt-metric"><p class="cap">Gross margin</p><p class="v">58<span class="u">%</span></p><p class="note">company-stated; not yet GAAP-attested</p><p class="refs"><span class="lt-ref">4.3</span><span class="lt-ref">5.1</span></p></div>
+        </div>
+        <p class="lt-note">Built from this report — <b>open the full Company Profile report →</b></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S6 · workflow two -->
+<section class="sec-pad hr">
+  <div class="frame feature rev">
+    <div class="f-copy rv">
+      <p class="f-label">Workflow 02 · Portfolio Pulse</p>
+      <h2>Know what changed before the Monday meeting.</h2>
+      <p>MindLab watches your portfolio’s updates, documents, and external signals, and drafts recurring what-changed briefs: covenant flags, narrative shifts, watch items. Each lands in the review queue; nothing enters the record until someone signs it.</p>
+    </div>
+    <div class="f-visual rv">
+      <div class="lt">
+        <div class="lt-head"><span class="lt-title">Portfolio · signals &amp; briefing</span><span class="cap">via Radar · drafted for Monday</span></div>
+        <div class="pc-body">
+          <p class="cap">Cross-asset signals</p>
+          <div class="lt-sig"><span class="dot red"></span><span><b>PraxiaFlow Health</b> <span class="sub">direct hit: HIMSS-2026 Agent Factory + 50 native PAs</span></span><span class="lvl crit">CRITICAL</span></div>
+          <div class="lt-sig"><span class="dot amb"></span><span><b>PraxiaFlow Health</b> <span class="sub">four convergent 2026 signals hit the active thesis</span></span><span class="lvl hvy">HEAVY</span></div>
+          <div class="lt-sig"><span class="dot amb"></span><span><b>MedOps AI</b> <span class="sub">confirmatory of the existing rejection</span></span><span class="lvl hvy">HEAVY</span></div>
+          <p class="cap" style="margin-top:16px">Per-asset watch</p>
+          <div class="lt-sig"><span><b>FreshRoute AI</b> <span class="sub">live-deal diligence watch · via Radar · 21h ago</span></span><span class="lvl">38</span></div>
+          <div class="lt-sig"><span><b>ClinicFlow</b> <span class="sub">margin &amp; onboarding watch · 9d ago</span></span><span class="lvl">35</span></div>
+          <p class="cap" style="margin-top:16px">Funds</p>
+          <div class="lt-sig"><span><b>Meridian Family Evergreen HoldCo</b> <span class="sub">TVPI 1.08x · IRR 20.8% · DPI 0.0 · $44M deployed</span></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S7 · firm memory -->
+<section class="sec-pad hr">
+  <div class="frame feature">
+    <div class="f-copy rv">
+      <p class="f-label">Firm memory</p>
+      <h2>Every deal makes the next one faster.</h2>
+      <p>Approved briefs, memos, and updates become Company Records: versioned, sourced, and searchable. When a target comes back two years later, the work is already there. What you concluded, why you passed, what changed since.</p>
+      <div class="cta-row">
+        <a class="btn" href="#close">Bring one live deal <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+    <div class="f-visual rv">
+      <div class="lt">
+        <div class="lt-head"><span class="lt-title">Firm Memory · Meridian House Capital</span><span class="cap">16 collections · 150+ approved files · seeded demo workspace</span></div>
+        <div class="fk-grid">
+          <div class="fk-list">
+            <button class="fk-col" type="button" data-fk="lessons" aria-pressed="true">Rejected-deal lessons <span class="ct">16</span></button>
+            <button class="fk-col" type="button" data-fk="standards" aria-pressed="false">Scoring &amp; output standards <span class="ct">10</span></button>
+            <button class="fk-col" type="button" data-fk="portfolio" aria-pressed="false">Portfolio memory <span class="ct">17</span></button>
+            <button class="fk-col" type="button" data-fk="core" aria-pressed="false">Firm core &amp; strategy <span class="ct">19</span></button>
+            <button class="fk-col" type="button" data-fk="sector" aria-pressed="false">Sector research &amp; theses <span class="ct">14</span></button>
+            <button class="fk-col" type="button" data-fk="ic" aria-pressed="false">IC &amp; approval workflow <span class="ct">2</span></button>
+          </div>
+          <div>
+            <div class="fk-files" id="fk-files"></div>
+            <p class="fk-why" id="fk-why"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="frame">
+    <p class="pull rv">The first brief saves hours. <b>The record saves them every time the company comes back.</b></p>
+  </div>
+</section>
+
+<!-- appended · the journey: setup → signed record -->
+<section class="sec-pad hr" id="journey">
+  <div class="frame">
+    <div class="x-head">
+      <h2 class="sec rv">From setup to signed record, in one sitting.</h2>
+      <div class="rv">
+        <p class="x-lead">Not a feature tour. This is the workflow itself, in the live product. Set your firm’s standards once, and every deal runs the same path: documents in, a source-backed draft out, a named approval, and a record that makes the next deal faster. Step through it below.</p>
+      </div>
+    </div>
+    <div class="jr-bar rv" aria-label="Product journey steps">
+      <button class="jr-step" type="button" data-jr="1"><span class="num">1</span><span class="lbl">Firm knowledge</span><span class="con" aria-hidden="true"></span></button>
+      <button class="jr-step" type="button" data-jr="2"><span class="num">2</span><span class="lbl">New opportunity</span><span class="con" aria-hidden="true"></span></button>
+      <button class="jr-step" type="button" data-jr="3"><span class="num">3</span><span class="lbl">Build dashboards</span><span class="con" aria-hidden="true"></span></button>
+      <button class="jr-step" type="button" data-jr="4"><span class="num">4</span><span class="lbl">Review &amp; approve</span><span class="con" aria-hidden="true"></span></button>
+      <button class="jr-step" type="button" data-jr="5"><span class="num">✓</span><span class="lbl">The result</span></button>
+    </div>
+    <div class="panel-card lt rv">
+      <div class="pc-head"><span class="pc-title" id="jr-title">Firm Knowledge · Meridian — Scoring &amp; Output Standards</span><span class="x-demo-tag">CAPTURED FROM THE LIVE PRODUCT · MERIDIAN DEMO DATA</span></div>
+
+      <div class="jr-panel on" id="jr-p1">
+        <div class="jr-stage">
+          <div class="bgwrap"><img src="assets/product/01-firm-knowledge.png" alt="MindLab Firm Knowledge: the Meridian scoring-and-output-standards collection with the firm scoring rubric, IC memo writing standard, and two sector theses uploaded as sources."></div>
+          <div class="veil" aria-hidden="true"></div>
+          <div class="jr-float">
+            <div class="fh"><b>Add to Firm Knowledge</b><span class="cap">Meridian — Scoring &amp; Output Standards</span></div>
+            <div class="jr-drop" id="k1-drop" role="button" tabindex="0" aria-label="Add the firm's documents">
+              <span class="d1" id="k1-d1">Drop the firm’s documents</span>
+              <span class="d2" id="k1-d2">rubric · memo standard · theses — or click to add the samples</span>
+            </div>
+            <div class="jr-frows" id="k1-rows">
+              <div class="jr-frow"><span class="tick" aria-hidden="true">✓</span><span class="fn">01_EXPANDED_Firm_Scoring_Rubric.md</span><span class="sz">5.2 KB</span></div>
+              <div class="jr-frow"><span class="tick" aria-hidden="true">✓</span><span class="fn">02_EXPANDED_IC_Memo_Template_and_Writing_Standard.md</span><span class="sz">4.2 KB</span></div>
+              <div class="jr-frow"><span class="tick" aria-hidden="true">✓</span><span class="fn">01_Food_Supply_Chain_Thesis.md</span><span class="sz">1.6 KB</span></div>
+              <div class="jr-frow"><span class="tick" aria-hidden="true">✓</span><span class="fn">02_Logistics_Software_Thesis.md</span><span class="sz">1.6 KB</span></div>
+            </div>
+            <p class="jr-fstat" id="k1-stat" aria-live="polite">Waiting for documents</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="jr-panel" id="jr-p2">
+        <div class="jr-stage rt">
+          <div class="bgwrap"><img src="assets/product/02-opportunities.png" alt="MindLab Opportunities: deals grouped by stage tabs with size, dashboards, and activity columns, and an Add target button."></div>
+          <div class="veil" aria-hidden="true"></div>
+          <div class="jr-float right">
+            <div class="fh"><b>Add Target</b><span class="cap">Drop the data room to draft it with AI, or fill it in manually · only a name is required</span></div>
+            <div class="jr-drop" id="k2-drop" role="button" tabindex="0" aria-label="Start from documents: drop a data room, deck, or files and AI drafts the opportunity">
+              <span class="d1" id="k2-d1">Start from documents</span>
+              <span class="d2" id="k2-d2">drop a data room, deck, or files · AI drafts the opportunity below</span>
+            </div>
+            <div class="jr-formgrid">
+              <label class="jr-lab full">Target name *<input class="jr-inp" id="k2-name" placeholder="Acme Payments" readonly></label>
+              <label class="jr-lab">Website or domain<input class="jr-inp" id="k2-web" placeholder="http://acme.com" readonly></label>
+              <label class="jr-lab">Headquarters country<input class="jr-inp" id="k2-hq" placeholder="United States" readonly></label>
+              <label class="jr-lab full">Short description<input class="jr-inp" id="k2-desc" placeholder="API-first payments platform for marketplaces." readonly></label>
+            </div>
+            <div class="jr-actions">
+              <button class="lt-btn sm" type="button" id="k2-create" disabled>Create opportunity →</button>
+              <p class="jr-fstat" id="k2-stat" aria-live="polite">Nothing is saved until you create it.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="jr-panel" id="jr-p3">
+        <div class="jr-stage rt" id="k3-stage">
+          <div class="bgwrap" id="k3-bg-a"><img src="assets/product/03-dashboards-settings.png" alt="MindLab deal settings, Dashboards tab: reorderable list of research dashboards with Hide and Remove, and an available-to-add row."></div>
+          <div class="bgwrap off" id="k3-bg-b"><img src="assets/product/03a-dashboard-empty.png" alt="A dashboard tab in its empty state: Not built yet, with a Build dashboard action that opens Run Analysis preselected to this dashboard's pack."></div>
+          <div class="bgwrap off" id="k3-bg-c"><img src="assets/product/03b-company-profile.png" alt="The FreshRoute AI Company Profile dashboard fully built: Re-run and Refresh-from-report actions, the report versions timeline with a primary version, and cited metric cards."></div>
+          <div class="bgwrap ph off" id="k3-bg-d" aria-hidden="true"><span class="ph-label" id="k3-ph-label">Financials · capture coming</span></div>
+          <div class="veil" aria-hidden="true"></div>
+          <button class="jr-jump" id="k3-jump" type="button" aria-label="Built from this report: open the full Company Profile report">
+            <svg class="jr-spiral" viewBox="0 0 300 160" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M30 58 C50 74 52 82 70 82 C94 82 94 54 74 54 C60 54 62 74 84 82 C108 90 112 108 128 100 C150 90 152 48 180 52 C210 56 210 102 178 108 C158 112 150 100 158 90 C176 118 222 122 254 106 C266 100 276 92 286 82"/>
+              <path d="M286 82 L262 86"/>
+              <path d="M286 82 L278 104"/>
+            </svg>
+            <span class="jr-jump-pill"><img src="assets/product/built-from-report.png" alt=""></span>
+          </button>
+          <div class="jr-float right" id="k3-float">
+            <div class="fh"><b id="k3-t">Settings → Dashboards</b><span class="cap" id="k3-c">Choose which dashboards this deal shows · each becomes a tab</span></div>
+            <div id="k3-ph1">
+              <div class="jr-cfglist" id="k3-list"></div>
+              <div class="jr-cfgavail" id="k3-avail"></div>
+              <div class="jr-custom">
+                <input class="jr-inp" id="k3-cin" value="AI Industry" aria-label="Custom dashboard name">
+                <button class="lt-btn gh sm" type="button" id="k3-cadd">+ Custom</button>
+              </div>
+              <div class="jr-actions">
+                <button class="lt-btn sm" type="button" id="k3-apply">Apply</button>
+                <p class="jr-fstat" id="k3-stat1" aria-live="polite">In tab order · reorder, remove, add, or invent your own</p>
+              </div>
+            </div>
+            <div id="k3-ph2" hidden>
+              <span class="x-lab" style="padding:12px 18px 0;display:block">Grounded files · from intake</span>
+              <div class="jr-gf">
+                <span class="jr-gchip">FreshRoute_SeriesA_deck.pdf</span>
+                <span class="jr-gchip">data room /freshroute/</span>
+                <span class="jr-gchip">Meridian model.xlsx</span>
+                <span class="jr-gchip">Mgmt call notes · 12 May</span>
+                <span class="jr-gchip hot" id="k3-meet" hidden>1st meeting summary · Fathom AI</span>
+              </div>
+              <div class="jr-drop" id="k3-drop" role="button" tabindex="0" aria-label="Drag and drop files to update Company Profile">
+                <span class="d1" id="k3-d1">Drag &amp; drop files to update Company Profile</span>
+                <span class="d2" id="k3-d2">meeting summaries · updated models · new documents</span>
+              </div>
+              <div class="jr-engrow">
+                <label class="jr-lab">Engine
+                  <select class="jr-inp" id="k3-eng">
+                    <option>Anthropic Claude</option>
+                    <option>OpenAI GPT</option>
+                    <option>Native Engine</option>
+                  </select>
+                </label>
+              </div>
+              <span class="x-lab" style="padding:10px 18px 0;display:block">Also run · depends on Company Profile</span>
+              <div class="jr-gf" id="k3-deps"></div>
+              <div class="jr-actions"><button class="lt-btn sm" type="button" id="k3-run">↻ Re-run Company Profile</button></div>
+            </div>
+            <div id="k3-ph3" hidden>
+              <p class="jr-fstat hot" id="k3-msg" style="padding:14px 18px 0">…</p>
+              <div class="jr-prog"><i id="k3-bar"></i></div>
+              <span class="x-lab" style="padding:8px 18px 0;display:none" id="k3-builtlab">Built · click to view each dashboard</span>
+              <div class="jr-dashlist" id="k3-built"></div>
+              <div class="jr-actions">
+                <button class="lt-btn gh sm" type="button" id="k3-open" hidden>Open the full report →</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="jr-panel" id="jr-p4">
+        <div class="jr-stage rt">
+          <div class="bgwrap"><img src="assets/product/04-report.png" alt="The full FreshRoute AI Company Profile report, version 9, marked primary and waiting approval, with an Approve button, PDF, DOCX and MD export, and an Ask-about-this-report AI bar."></div>
+          <div class="veil" aria-hidden="true"></div>
+          <div class="jr-float right">
+            <div class="fh row">
+              <div><b>PE Analyst · report copilot</b><span class="cap" id="k4-badge">Company Profile · v9 · WAITING APPROVAL</span></div>
+              <button class="lt-btn sm" type="button" id="k4-approve">Approve</button>
+            </div>
+            <div class="jr-qchips" role="group" aria-label="Suggested questions">
+              <button class="jr-qchip" type="button">What are the open concerns &amp; items?</button>
+              <button class="jr-qchip" type="button">Which numbers have weak evidence?</button>
+              <button class="jr-qchip" type="button">Key risks and their mitigations?</button>
+              <button class="jr-qchip act" type="button" id="k4-act">✎ Add a summary mindmap in the executive summary</button>
+            </div>
+            <div class="jr-chat" id="k4-chat" aria-live="polite">
+              <p class="jr-msg a">Ask about this report, or pick a question above. Every answer cites the report and its sources.</p>
+            </div>
+            <div class="jr-chatin">
+              <input class="jr-inp" id="k4-in" placeholder="Ask about this report…" aria-label="Ask about this report">
+              <button class="lt-btn sm" type="button" id="k4-send" aria-label="Send">→</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="jr-panel" id="jr-p5">
+        <div class="jr-stage">
+          <div class="bgwrap"><img src="assets/product/02-opportunities.png" alt="MindLab Opportunities: the firm's deals across pipeline stages, one system of record."></div>
+          <div class="veil" aria-hidden="true"></div>
+          <div class="jr-float">
+            <div class="fh"><b>The result</b><span class="cap">One deal · setup to signed record</span></div>
+            <div class="jr-r5done">
+              <span><i aria-hidden="true">✓</i>Firm taught</span><span><i aria-hidden="true">✓</i>Deal opened</span><span><i aria-hidden="true">✓</i>Dashboards built</span><span><i aria-hidden="true">✓</i>Report approved</span>
+            </div>
+            <span class="x-lab" style="padding:12px 16px 2px;display:block">Now the record works for you</span>
+            <div class="jr-cap5" role="group" aria-label="What you can do next">
+              <button class="jr-qchip" type="button" data-c5="ask" aria-pressed="true">Ask the analyst</button>
+              <button class="jr-qchip" type="button" data-c5="decide" aria-pressed="false">Decide</button>
+              <button class="jr-qchip" type="button" data-c5="watch" aria-pressed="false">Set a radar</button>
+              <button class="jr-qchip" type="button" data-c5="promote" aria-pressed="false">Promote</button>
+            </div>
+            <div class="jr-ex5" id="k5ex" aria-live="polite"></div>
+            <div class="jr-close">
+              <p class="mantra"><b>MindLab remembers.</b> The next FreshRoute deal starts from this record, not a blank page.</p>
+              <a class="jr-cta" href="#close">Bring one live deal <span aria-hidden="true">→</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="x-playbar">
+        <button class="lt-btn gh sm" type="button" id="jr-prev">← Back</button>
+        <button class="lt-btn sm" type="button" id="jr-next">Next step →</button>
+        <button class="lt-btn gh sm" type="button" id="jr-play">Play it through</button>
+        <button class="lt-btn gh sm" type="button" id="jr-reset">↺ Reset</button>
+        <span class="x-status" id="jr-cap" aria-live="polite"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S7b · radar / sentry mode -->
+<section class="sec-pad hr" id="radar">
+  <div class="frame">
+    <div class="x-head">
+      <h2 class="sec rv">Sentry mode for the whole book.</h2>
+      <div class="rv">
+        <p class="x-lead">The deal closing isn’t the finish line — the book keeps moving. So the system stays on watch. You arm a radar with a standing mission in your firm’s words, scope it to a single holding or a whole theme, and it runs while you don’t: suppressing the noise, raising only what moves the thesis, and mapping every signal to exactly which holdings it hits. You focus on what matters; the book watches itself.</p>
+      </div>
+    </div>
+    <div class="jr-bar rv" aria-label="Radar system steps">
+      <button class="jr-step" type="button" data-rd="1"><span class="num">1</span><span class="lbl">Arm a radar</span><span class="rd-con" aria-hidden="true"><em>runs</em></span></button>
+      <button class="jr-step" type="button" data-rd="2"><span class="num">2</span><span class="lbl">Signal vs noise</span><span class="rd-con" aria-hidden="true"><em>maps</em></span></button>
+      <button class="jr-step" type="button" data-rd="3"><span class="num">3</span><span class="lbl">Every asset it touches</span><span class="rd-con" aria-hidden="true"><em>drafts</em></span></button>
+      <button class="jr-step" type="button" data-rd="4"><span class="num">4</span><span class="lbl">Draft &amp; decide</span><span class="rd-con" aria-hidden="true"><em>rolls up</em></span></button>
+      <button class="jr-step" type="button" data-rd="5"><span class="num">✓</span><span class="lbl">Overwatch</span></button>
+    </div>
+    <div class="panel-card lt rv">
+      <div class="pc-head"><span class="pc-title" id="rd-title">Arm a radar · a standing mission in your words</span><span class="x-demo-tag">CAPTURED FROM THE LIVE PRODUCT · MERIDIAN DEMO DATA</span></div>
+
+      <div class="jr-panel on" id="rd-p1">
+        <div class="jr-stage">
+          <div class="bgwrap"><img src="assets/product/radar-1-mission.png" alt="MindLab Intelligence Radar Center: the Create Topic Radar form with a mission-instructions field, context URLs and a run frequency, above the firm's list of cross-asset radars."></div>
+          <div class="veil" aria-hidden="true"></div>
+          <div class="jr-float">
+            <div class="fh"><b>Arm a radar</b><span class="cap">A standing mission in your firm’s words — not a keyword alert</span></div>
+            <span class="x-lab" style="padding:12px 16px 0">Mission mandate</span>
+            <div class="rd-mission" id="rd-mtext" data-empty="What should this radar watch — and what impact should it flag?"></div>
+            <span class="x-lab" style="padding:8px 16px 0">Start from a sample</span>
+            <div class="jr-qchips" style="padding-top:0">
+              <button class="jr-qchip" type="button" data-m="cold">Cold-chain · SE Asia</button>
+              <button class="jr-qchip" type="button" data-m="clinic">Clinic-ops reimbursement</button>
+              <button class="jr-qchip" type="button" data-m="saas">SaaS implementation burden</button>
+            </div>
+            <div class="rd-cfgline" id="rd-cfg" hidden>
+              <span>Scope <b class="x" id="rd-scope">Cross-asset · radar</b></span>
+              <span>Cadence <b id="rd-cad">Weekly</b></span>
+              <span>Threshold <b id="rd-thr">55</b></span>
+            </div>
+            <div class="jr-gf" id="rd-links" hidden></div>
+            <div class="jr-actions">
+              <button class="lt-btn sm" type="button" id="rd-arm" disabled>Arm radar →</button>
+              <p class="jr-fstat" id="rd-p1stat" aria-live="polite">Pick a sample, or write your own.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="jr-panel" id="rd-p2">
+        <div class="jr-stage rt">
+          <div class="bgwrap"><img src="assets/product/radar-hub.png" alt="The MindLab Intelligence Radar Center: the firm's cross-asset radars listed with coverage, run frequency, latest signal strength and last-run status."></div>
+          <div class="veil" aria-hidden="true"></div>
+          <div class="jr-float right">
+            <div class="fh row">
+              <div><b>Cold-chain radar · this week’s pulse</b><span class="cap">The same radar you armed — it ran while you were away</span></div>
+              <span class="rd-badge" id="rd-p2badge">WEEKLY · ACTIVE</span>
+            </div>
+            <div class="rd-carry" id="rd-carry2"><span class="ci" aria-hidden="true">◀</span><span class="ck">FROM STEP 1</span><span class="cv">Cold-chain radar · 4 holdings</span></div>
+            <span class="x-lab" style="padding:12px 16px 0">This run · signal vs noise</span>
+            <div class="rd-triage" id="rd-triage"></div>
+            <div class="rd-meterwrap" id="rd-meterwrap" hidden>
+              <div class="rd-meter"><i id="rd-meter"></i></div>
+              <span class="rd-meterlab" id="rd-meterlab">Signal strength</span>
+            </div>
+            <div class="jr-actions">
+              <button class="lt-btn sm" type="button" id="rd-pulse">Run the pulse</button>
+              <button class="lt-btn sm" type="button" id="rd-fwd2" hidden>Carry this signal onward →</button>
+              <p class="jr-fstat" id="rd-p2stat" aria-live="polite">The agent compares findings to your record — then decides.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="jr-panel" id="rd-p3">
+        <div class="jr-stage">
+          <div class="bgwrap"><img src="assets/product/radar-3-detail.png" alt="A cross-asset topic radar detail: the mission mandate and four linked assets — ColdLink Asia, FreshRoute AI, ChillFleet Systems and ColdHub Johor — with its latest weekly run."></div>
+          <div class="veil" aria-hidden="true"></div>
+          <div class="jr-float">
+            <div class="fh"><b>Cold-chain radar · every asset it touches</b><span class="cap">One signal, scored against every linked holding</span></div>
+            <div class="rd-carry" id="rd-carry3"><span class="ci" aria-hidden="true">◀</span><span class="ck">FROM STEP 2</span><span class="cv">Signal · SE-Asia diesel spike · 82%</span></div>
+            <div class="rd-signal">
+              <span class="rd-sigtag">THE PROMOTED SIGNAL</span>
+              <b>SE Asia diesel spike + port congestion squeeze cold-chain margins</b>
+            </div>
+            <span class="x-lab" style="padding:11px 16px 0" id="rd-fanlab">Trace it across the book →</span>
+            <div class="rd-fan" id="rd-fan"></div>
+            <div class="jr-actions">
+              <button class="lt-btn sm" type="button" id="rd-trace">Trace impact across 4 holdings</button>
+              <button class="lt-btn sm" type="button" id="rd-fwd3" hidden>Take FreshRoute to a draft →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="jr-panel" id="rd-p4">
+        <div class="jr-stage rt">
+          <div class="bgwrap"><img src="assets/product/radar-4-report.png" alt="A radar directional-impact report for PraxiaFlow Health: a governed draft, non-primary v1, with Set-as-Primary, export actions and an Ask-about-this-report bar."></div>
+          <div class="veil" aria-hidden="true"></div>
+          <div class="jr-float right">
+            <div class="fh row">
+              <div><b>FreshRoute AI · directional draft</b><span class="cap" id="rd-p4badge">Radar Directional Impact · v1 · DRAFT</span></div>
+              <button class="lt-btn sm" type="button" id="rd-log">Log decision</button>
+            </div>
+            <div class="rd-carry" id="rd-carry4"><span class="ci" aria-hidden="true">◀</span><span class="ck">FROM STEP 3</span><span class="cv">FreshRoute AI · HEAVY · 71%</span></div>
+            <div class="rd-draft">
+              <p class="jr-msg a">The cold-chain signal lands on FreshRoute’s margin case — the live deal you’re still in.</p>
+              <span class="x-lab" style="padding:12px 0 0">Key facts · aligned to firm standard</span>
+              <div class="rd-facts">
+                <div class="rd-fact">Gross margin sliding 69% → 43% under fuel + PS load<span class="rd-ref">§ KPI pack</span></div>
+                <div class="rd-fact">GRR ~84% vs the deck’s 142% NRR<span class="rd-ref">§ data room</span></div>
+                <div class="rd-fact">The 10-week ColdLink pilot ROI now at risk<span class="rd-ref">§ radar run</span></div>
+              </div>
+            </div>
+            <span class="x-lab" style="padding:12px 16px 0">Make the call</span>
+            <div class="rd-decide" role="group" aria-label="Investment decision">
+              <button class="jr-qchip" type="button" data-d="go" aria-pressed="false">GO</button>
+              <button class="jr-qchip" type="button" data-d="cond" aria-pressed="true">CONDITIONAL GO</button>
+              <button class="jr-qchip" type="button" data-d="pass" aria-pressed="false">PASS</button>
+            </div>
+            <p class="jr-fstat" id="rd-p4stat" style="padding-top:8px" aria-live="polite">Source-cited. Nothing promotes without your call.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="jr-panel" id="rd-p5">
+        <div class="jr-stage">
+          <div class="bgwrap"><img src="assets/product/radar-5-overwatch.png" alt="The MindLab home command center: an attention-first board with a Cross-asset signals panel, a Per-asset signals panel and Today's AI briefing across the book."></div>
+          <div class="veil" aria-hidden="true"></div>
+          <div class="jr-float">
+            <div class="fh"><b>Overwatch · the whole book</b><span class="cap">Sentry mode — you focus on what matters, only signal is raised</span></div>
+            <div class="rd-boards" id="rd-boards">
+              <div class="rd-board">
+                <span class="rd-blab">◎ CROSS-ASSET SIGNALS · themes hitting several holdings</span>
+                <div class="rd-brow sev-crit"><span class="rd-sev crit">CRIT</span><b>ColdLink Asia</b><span>diesel + port congestion</span></div>
+                <div class="rd-brow sev-crit"><span class="rd-sev crit">CRIT</span><b>PraxiaFlow Health</b><span>e-PA prior-auth mandate</span></div>
+                <div class="rd-brow sev-heavy"><span class="rd-sev heavy">HEAVY</span><b>ClinicFlow</b><span>prior-auth churn on margin</span></div>
+              </div>
+              <div class="rd-board">
+                <span class="rd-blab">◎ PER-ASSET SIGNALS · each holding’s own radar</span>
+                <div class="rd-brow"><span class="rd-pct">78</span><b>FreshRoute AI</b><span>live-deal diligence watch</span></div>
+                <div class="rd-brow"><span class="rd-pct">66</span><b>PraxiaFlow Health</b><span>target diligence watch</span></div>
+              </div>
+            </div>
+            <div class="jr-r5done">
+              <span><i aria-hidden="true">✓</i>Radar armed</span><span><i aria-hidden="true">✓</i>Signal triaged</span><span><i aria-hidden="true">✓</i>Book mapped</span><span><i aria-hidden="true">✓</i>Decision logged</span>
+            </div>
+            <div class="jr-close">
+              <p class="mantra"><b>Signal, not noise.</b> The suit stays on after the deal closes — the book watches itself, and only what moves the thesis reaches you.</p>
+              <a class="jr-cta" href="#close">Put a radar on your book <span aria-hidden="true">→</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="x-playbar">
+        <button class="lt-btn gh sm" type="button" id="rd-prev">← Back</button>
+        <button class="lt-btn gh sm" type="button" id="rd-next">Skip →</button>
+        <button class="lt-btn gh sm" type="button" id="rd-play">Play it through</button>
+        <button class="lt-btn gh sm" type="button" id="rd-reset">↺ Reset</button>
+        <span class="x-status" id="rd-cap" aria-live="polite"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S8 · trust -->
+<section class="sec-pad hr" id="security">
+  <div class="frame">
+    <p class="sec-kicker rv">Trust &amp; governance</p>
+    <h2 class="sec rv">Built for work that gets examined.</h2>
+    <div class="trust-grid rv">
+      <div class="trust-cell"><h3>Your workspace is isolated</h3><p>Your data serves your firm. Never other customers, never model training.</p></div>
+      <div class="trust-cell"><h3>Drafts until signed</h3><p>AI output is a draft until a named person approves it.</p></div>
+      <div class="trust-cell"><h3>Documented review trail</h3><p>Every record change has a documented review trail.</p></div>
+      <div class="trust-cell"><h3>Your data stays yours</h3><p>Role-based access. Export and deletion on request.</p></div>
+      <div class="trust-cell"><h3>Gaps are flagged</h3><p>Source gaps are flagged, not papered over. The system says what it doesn’t know.</p></div>
+      <div class="trust-cell"><h3>Oversight by design</h3><p>Documented human oversight of AI outputs is now an SEC examination focus for registered advisers. MindLab’s pipeline produces that documentation as a side effect of normal work.</p></div>
+    </div>
+    <div class="trust-lines rv">
+      <p class="honest">SOC 2 in progress · security documentation available on request</p>
+    </div>
+  </div>
+</section>
+
+<!-- S9 · engagement -->
+<section class="sec-pad hr">
+  <div class="frame">
+    <p class="sec-kicker rv">How an engagement works</p>
+    <h2 class="sec rv">Start with one workflow. Prove it on a live deal.</h2>
+    <div class="steps">
+      <div class="step rv">
+        <span class="n">Step 1</span>
+        <h3>Workflow diagnosis</h3>
+        <p class="d"><b>Free, 30 minutes.</b> Pick the workflow that hurts; map your sources and output format.</p>
+      </div>
+      <div class="step rv">
+        <span class="n">Step 2</span>
+        <h3>Implementation pilot</h3>
+        <p class="d"><b>Fixed fee, 30–90 days.</b> We install MindLab, calibrate it to your templates, and run live deals through it with you.</p>
+      </div>
+      <div class="step rv">
+        <span class="n">Step 3</span>
+        <h3>Monthly system</h3>
+        <p class="d"><b>Capacity-based plans from $2,000/month.</b> Keep it running and improving. No per-seat games.</p>
+      </div>
+    </div>
+    <p class="steps-note rv">Plans set support and usage capacity, not an artificial count of workflows.</p>
+  </div>
+</section>
+
+<!-- S10 · fit -->
+<section class="sec-pad hr">
+  <div class="frame">
+    <h2 class="sec rv">Built for lean deal teams.</h2>
+    <div class="fit-grid">
+      <div class="fit-card yes rv">
+        <h3>A fit</h3>
+        <ul>
+          <li>Lower-mid-market PE and growth equity</li>
+          <li>Independent sponsors</li>
+          <li>Family offices doing direct deals</li>
+          <li>Private credit</li>
+        </ul>
+      </div>
+      <div class="fit-card rv">
+        <h3>Not a fit, yet</h3>
+        <ul>
+          <li>Firms wanting a fully autonomous pipeline</li>
+          <li>Day-1 enterprise checklists: SSO and data residency are on the roadmap, and we’ll say so honestly</li>
+          <li>Teams that just want a chatbot</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S11 · close + FAQ -->
+<section class="sec-pad hr" id="close">
+  <div class="frame close-grid">
+    <div class="rv">
+      <h2>Bring one live deal. Leave with a source-backed brief your team can judge.</h2>
+      <p class="p">A free 30-minute workflow diagnosis: pick the workflow that hurts, map your sources and memo format, and see what MindLab returns on a deal you’re actually working.</p>
+      <h3 style="font-size:15px;font-weight:650;margin-top:56px" id="faq">Questions partners ask</h3>
+      <div class="faq">
+        <details>
+          <summary>How is this different from ChatGPT? <span class="ind" aria-hidden="true"></span></summary>
+          <p class="a">ChatGPT answers prompts; answers die in a chat history. MindLab is an installed workflow: drafts are structured to your templates, carry sources, pass through review, and become firm records you can reuse.</p>
+        </details>
+        <details>
+          <summary>How is this different from AlphaSense or Hebbia? <span class="ind" aria-hidden="true"></span></summary>
+          <p class="a">Those platforms sell content breadth and automation. MindLab is built around what happens between AI output and your firm’s record: the approval gate, the audit trail, and compounding memory of your own work.</p>
+        </details>
+        <details>
+          <summary>Is our data used to train models? <span class="ind" aria-hidden="true"></span></summary>
+          <p class="a">No. Your workspace is isolated and your data serves only your firm.</p>
+        </details>
+        <details>
+          <summary>Where does our data live? <span class="ind" aria-hidden="true"></span></summary>
+          <p class="a">In your private workspace; export and deletion on request. Deployment specifics are covered in the security documentation.</p>
+        </details>
+        <details>
+          <summary>What exactly happens in the pilot? <span class="ind" aria-hidden="true"></span></summary>
+          <p class="a">We map one workflow, configure your templates, run live deals through it with your team for 30–90 days, then you decide whether it becomes your system.</p>
+        </details>
+        <details>
+          <summary>Can it match our memo format? <span class="ind" aria-hidden="true"></span></summary>
+          <p class="a">Yes. That calibration is most of what the pilot is.</p>
+        </details>
+        <details>
+          <summary>What if we leave? <span class="ind" aria-hidden="true"></span></summary>
+          <p class="a">You export everything. The records are yours.</p>
+        </details>
+      </div>
+    </div>
+
+    <form class="form rv" id="dealform" novalidate>
+      <p class="f-h">Bring one live deal</p>
+      <p class="f-s">We reply within one business day with a calendar link.</p>
+      <div class="field">
+        <label for="f-name">Name</label>
+        <input id="f-name" name="name" type="text" autocomplete="name" required>
+        <p class="err">Please add your name.</p>
+      </div>
+      <div class="field">
+        <label for="f-firm">Firm</label>
+        <input id="f-firm" name="firm" type="text" autocomplete="organization" required>
+        <p class="err">Please add your firm.</p>
+      </div>
+      <div class="field">
+        <label for="f-role">Role</label>
+        <input id="f-role" name="role" type="text" placeholder="Partner, VP, Associate…" required>
+        <p class="err">Please add your role.</p>
+      </div>
+      <div class="field">
+        <label for="f-email">Work email</label>
+        <input id="f-email" name="email" type="email" autocomplete="email" required>
+        <p class="err">Please use a valid email address.</p>
+      </div>
+      <div class="field">
+        <label for="f-wf">The workflow that hurts</label>
+        <select id="f-wf" name="workflow">
+          <option>Target screening briefs</option>
+          <option>Portfolio monitoring</option>
+          <option>IC memo prep</option>
+          <option>Something else</option>
+        </select>
+      </div>
+      <button class="btn" type="submit">Bring one live deal <span aria-hidden="true">→</span></button>
+      <p class="done" role="status">Received. We’ll reply within one business day with a calendar link.</p>
+      <p class="fine">No deck required. One live deal is the whole agenda.</p>
+    </form>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="frame">
+    <div class="foot-grid">
+      <div>
+        <a class="lockup" href="#" aria-label="MindLab home">
+          <svg viewBox="0 0 500 500" fill="currentColor" aria-hidden="true" style="width:24px;height:24px"><path d="M115.71,222.28c8.77-3.98,17.36-1.26,26.27-5.96,23.42-12.35,10.68-31.61,23.52-46.81,15.02-17.78,41.88-13.37,51.13,7.84,3.62,8.3,1.21,16.44,5.29,24.89,11.07,22.93,43.96,23.42,55.82.92,7.07-13.42-.78-24.45,14.03-37.37,24.5-21.37,60.72,7.41,46.99,35.52-12.36,25.33-34.16,10.87-49.66,26.37-12.2,12.2-5.55,24.83-12.99,37.24-13.13,21.89-43.74,19.66-53.92-3.69-3.62-8.3-1.21-16.44-5.29-24.89-12.65-26.2-51.84-22.05-58.51,6.45-.84,3.6-.33,7.6-.9,11.06-4.35,26.64-37.11,35.78-53.97,14.29-12.33-15.71-5.67-37.78,12.19-45.87ZM164.81,329.45c25.44,32.41,72.07-6.77,47.56-36.87-25.51-31.34-71.21,6.75-47.56,36.87ZM348.63,231.05c-24.51,30.11,22.13,69.28,47.56,36.87,23.64-30.13-22.05-68.21-47.56-36.87ZM287.61,292.57c-24.38,30.06,21.78,69.22,47.57,36.87,23.7-29.72-22.03-68.36-47.57-36.87Z"/></svg>
+          <span class="wordmark" style="font-size:15px">MindLab</span>
+        </a>
+        <p class="mantra">AI PREPARES · HUMANS APPROVE · MINDLAB REMEMBERS</p>
+      </div>
+      <nav class="links" aria-label="Footer">
+        <a href="#security">Security</a><a href="#faq">FAQ</a><a href="mailto:hello@mindlab.io">Contact</a>
+      </nav>
+      <div class="newsletter">
+        <label for="nl-email">One page a month on governed AI for deal teams</label>
+        <div class="row">
+          <input id="nl-email" type="email" placeholder="you@firm.com" autocomplete="email">
+          <button class="btn small ghost" type="button" id="nl-btn">Subscribe</button>
+        </div>
+      </div>
+    </div>
+    <p class="legal">© 2026 MindLab · All company names in product views are fictional demonstration data.</p>
+  </div>
+</footer>
+
+</main>
+
+<script>
+document.documentElement.classList.add('js');
+document.body.classList.add('js');
+
+// sticky nav shrink
+const navwrap = document.getElementById('navwrap');
+addEventListener('scroll', () => navwrap.classList.toggle('stuck', scrollY > 8), {passive:true});
+
+// scroll reveals: additive, one-time, with a safety net that reveals everything
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const rvs = document.querySelectorAll('.rv');
+if (!reduced && 'IntersectionObserver' in window) {
+  const io = new IntersectionObserver(entries => {
+    for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }, {rootMargin: '0px 0px -8% 0px', threshold: 0.05});
+  rvs.forEach(el => io.observe(el));
+  setTimeout(() => rvs.forEach(el => el.classList.add('in')), 1200); // safety net
+} else {
+  rvs.forEach(el => el.classList.add('in'));
+}
+
+// hero: one slow draft -> approved state change (single, no loop)
+if (!reduced) {
+  setTimeout(() => document.getElementById('heroapp').classList.add('approved'), 2800);
+}
+
+// contact form (endpoint pending: validates, then confirms locally)
+const form = document.getElementById('dealform');
+form.addEventListener('submit', ev => {
+  ev.preventDefault();
+  let ok = true;
+  form.querySelectorAll('.field input[required]').forEach(inp => {
+    const bad = !inp.value.trim() || (inp.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inp.value));
+    inp.closest('.field').classList.toggle('bad', bad);
+    if (bad) ok = false;
+  });
+  if (ok) form.classList.add('sent');
+});
+document.getElementById('nl-btn').addEventListener('click', () => {
+  const inp = document.getElementById('nl-email');
+  if (inp.value.trim()) { inp.value = ''; inp.placeholder = 'Subscribed. One page, once a month.'; }
+});
+</script>
+<script>
+/* ===== appended interactivity: intake · pipelines · gate ===== */
+(() => {
+  if (!document.getElementById('xi-start')) return; /* superseded by the guided journey */
+  const reducedX = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- 1.0 intake ---- */
+  const files = [...document.querySelectorAll('#xi-files .x-file')];
+  const count = document.getElementById('xi-count');
+  const status = document.getElementById('xi-status');
+  const startBtn = document.getElementById('xi-start');
+  const tpls = [...document.querySelectorAll('#xintake .x-tpl')];
+  let tpl = 'Company Profile';
+
+  document.getElementById('xi-add').addEventListener('click', () => {
+    files.forEach((f, i) => setTimeout(() => {
+      f.classList.add('show');
+      count.textContent = `${i + 1} resource group${i ? 's' : ''} attached · 14 documents`;
+    }, reducedX ? 0 : i * 160));
+    setTimeout(() => { status.textContent = 'Resources attached'; }, reducedX ? 0 : files.length * 160);
+  });
+  tpls.forEach(b => b.addEventListener('click', () => {
+    tpls.forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    tpl = b.textContent.trim();
+  }));
+  startBtn.addEventListener('click', () => {
+    if (!files[0].classList.contains('show')) { status.textContent = 'Attach resources first (step 1)'; return; }
+    const steps = ['Analysis run queued', 'Reading 14 documents…', `Drafting ${tpl} dashboard · claims cited · will pause with blocking questions`];
+    status.classList.add('hot');
+    if (reducedX) { status.textContent = steps[2]; return; }
+    steps.forEach((s, i) => setTimeout(() => { status.textContent = s; }, i * 700));
+  });
+  document.getElementById('xi-reset').addEventListener('click', () => {
+    files.forEach(f => f.classList.remove('show'));
+    count.textContent = 'No resources yet';
+    status.classList.remove('hot');
+    status.textContent = 'Waiting for resources';
+    tpls.forEach((x, i) => x.setAttribute('aria-pressed', String(i === 0)));
+    tpl = 'Company Profile';
+  });
+
+  /* ---- 3.0 dashboards (the real Settings → Dashboards surface) ---- */
+  const CFG = {
+    opp:  { active: ['Company Profile', 'Financials', 'Comparables', 'Valuation', 'Risks'],
+            avail:  ['Overview', 'Unit Economics', 'Returns', 'Management', 'Structure', 'Diligence', 'Thesis', 'IC Memo'] },
+    port: { active: ['Overview', 'KPI Baseline', 'Monitoring', 'What Changed', 'Covenants'],
+            avail:  ['Unit Economics', 'Board Pack', 'Value Creation', 'Exit Readiness'] },
+  };
+  const renderCfg = key => {
+    const list = document.querySelector(`[data-cfg-list="${key}"]`);
+    const avail = document.querySelector(`[data-cfg-avail="${key}"]`);
+    list.innerHTML = CFG[key].active.map((n, i) =>
+      `<div class="cfg-row"><span class="grip" aria-hidden="true">⋮⋮</span><span class="ord">${String(i + 1).padStart(2, '0')}</span><span class="nm">${n}</span><button class="rm" type="button" data-rm="${n}" aria-label="Remove ${n}">Remove</button></div>`).join('');
+    avail.innerHTML = CFG[key].avail.map(n =>
+      `<button class="cfg-chip" type="button" data-add="${n}">+ ${n}</button>`).join('');
+    list.querySelectorAll('[data-rm]').forEach(b => b.addEventListener('click', () => {
+      CFG[key].active = CFG[key].active.filter(x => x !== b.dataset.rm);
+      CFG[key].avail.unshift(b.dataset.rm);
+      renderCfg(key);
+    }));
+    avail.querySelectorAll('[data-add]').forEach(b => b.addEventListener('click', () => {
+      CFG[key].avail = CFG[key].avail.filter(x => x !== b.dataset.add);
+      CFG[key].active.push(b.dataset.add);
+      renderCfg(key);
+    }));
+  };
+  renderCfg('opp'); renderCfg('port');
+  const tabOpp = document.getElementById('xtab-opp'), tabPort = document.getElementById('xtab-port');
+  const switchTab = key => {
+    tabOpp.setAttribute('aria-pressed', String(key === 'opp'));
+    tabPort.setAttribute('aria-pressed', String(key === 'port'));
+    document.getElementById('xset-opp').hidden = key !== 'opp';
+    document.getElementById('xset-port').hidden = key !== 'port';
+  };
+  tabOpp.addEventListener('click', () => switchTab('opp'));
+  tabPort.addEventListener('click', () => switchTab('port'));
+
+  /* ---- 3.0 the gate ---- */
+  const gBody = document.getElementById('xg-body');
+  const gStatus = document.getElementById('xg-status');
+  const gSource = document.getElementById('xg-source');
+  const gReason = document.getElementById('xg-reason');
+  const gQuestion = document.getElementById('xg-question');
+  const gSign = document.getElementById('xg-sign');
+  const gChip = document.getElementById('xg-chip');
+  const gDiff = document.getElementById('xg-diff');
+  const setStatus = (txt, cls) => { gStatus.textContent = txt; gStatus.className = 'pill ' + cls; };
+  const gate = { done: false };
+
+  document.getElementById('xg-trace').addEventListener('click', () => {
+    gSource.classList.toggle('show'); gChip.classList.toggle('lit', gSource.classList.contains('show'));
+  });
+  gChip.addEventListener('click', () => {
+    gSource.classList.add('show'); gChip.classList.add('lit');
+  });
+  gDiff.addEventListener('click', () => {
+    const on = gDiff.getAttribute('aria-pressed') !== 'true';
+    gDiff.setAttribute('aria-pressed', String(on));
+    gBody.classList.toggle('diff', on);
+    gDiff.textContent = on ? 'Hide diff' : 'Compare Jun 21 → Jun 24';
+  });
+  document.getElementById('xg-q').addEventListener('click', () => {
+    gQuestion.classList.toggle('show');
+  });
+  document.getElementById('xg-back').addEventListener('click', () => {
+    if (gate.done) return;
+    gReason.classList.add('show'); gSign.classList.remove('show');
+    setStatus('Returned to draft', 'warn');
+  });
+  document.getElementById('xg-approve').addEventListener('click', () => {
+    gate.done = true;
+    gReason.classList.remove('show'); gQuestion.classList.remove('show'); gSign.classList.add('show');
+    setStatus('Approved · primary', 'ok');
+  });
+  document.getElementById('xg-reset').addEventListener('click', () => {
+    gate.done = false;
+    gReason.classList.remove('show'); gQuestion.classList.remove('show'); gSign.classList.remove('show');
+    gSource.classList.remove('show'); gChip.classList.remove('lit');
+    gBody.classList.remove('diff'); gDiff.setAttribute('aria-pressed', 'false');
+    gDiff.textContent = 'Compare Jun 21 → Jun 24';
+    setStatus('In review', 'warn');
+  });
+})();
+</script>
+<script>
+/* ===== iteration 2: copilot workday · firm knowledge ===== */
+(() => {
+  const reduced2 = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* workday loop (section superseded by the journey; guard keeps the knowledge browser alive) */
+  if (document.getElementById('xwd')) {
+  const steps = [...document.querySelectorAll('#xwd .wd-step')];
+  const show = n => {
+    steps.forEach(s => s.setAttribute('aria-pressed', String(s.dataset.wd == n)));
+    document.querySelectorAll('#xwd .wd-panel').forEach(p => p.classList.toggle('on', p.id === 'wd-p' + n));
+  };
+  steps.forEach(s => s.addEventListener('click', () => show(s.dataset.wd)));
+  const drop = document.getElementById('wd-drop');
+  const doDrop = () => {
+    drop.classList.add('dropped');
+    document.getElementById('wd-hint').textContent = 'Attached to FreshRoute AI · analysis run started';
+  };
+  document.getElementById('wd-dropbtn').addEventListener('click', () => {
+    doDrop();
+    setTimeout(() => show(2), reduced2 ? 0 : 700);
+  });
+  document.getElementById('wd-play').addEventListener('click', () => {
+    show(1); doDrop();
+    if (reduced2) { show(4); return; }
+    setTimeout(() => show(2), 900);
+    setTimeout(() => show(3), 2200);
+    setTimeout(() => show(4), 3500);
+  });
+  document.getElementById('wd-reset').addEventListener('click', () => {
+    drop.classList.remove('dropped');
+    document.getElementById('wd-hint').textContent = 'Drop notes onto the deal, or click below';
+    show(1);
+  });
+  }
+
+  /* firm knowledge browser (collections + filenames from the live seed DB) */
+  const FK = {
+    lessons: { why: 'When MedOps AI resurfaced in 2026, this pass memo surfaced with it. The firm’s “why we said no”, on the record.',
+      files: [['08_MedOps_AI_Pass_Decision_Memo.md', 'md'], ['08_RoutePilot_Approved_Pass_Memory_Record.md', 'md'], ['09_KitchenLoop_Reusable_Lessons_Note.md', 'md'], ['02_02_EXPANDED_FleetLedger_Pass_Memo.md', 'md'], ['08_FarmBox_Direct_Pass_Decision_Memo.md', 'md']] },
+    standards: { why: 'Every draft calibrates to these: your rubric, your memo standard, your templates.',
+      files: [['01_EXPANDED_Firm_Scoring_Rubric.md', 'md'], ['02_IC_Memo_Template_and_Writing_Standard.md', 'md'], ['03_Screening_Note_Template.md', 'md'], ['07_Diligence_Plan_Template.md', 'md'], ['08_Pass_Memo_Template.md', 'md']] },
+    portfolio: { why: 'Approved monitoring memory per holding: the reusable lessons behind each company.',
+      files: [['01_EXPANDED_ColdLink_Asia_Portfolio_Memory.md', 'md'], ['06_MarketNest_Approved_Memory_Update.md', 'md'], ['09_ClinicFlow_Approved_Monitoring_Memory.md', 'md'], ['03_What_Changed_Memo_Template.md', 'md'], ['02_KPI_Comparison_Memo_Template.md', 'md']] },
+    core: { why: 'Even the weekly meeting notes compound: eight IC meetings this quarter, searchable and cited.',
+      files: [['01_EXPANDED_Meridian_Investment_Manual.md', 'md'], ['01_Annual_Investment_Plan_2026.md', 'md'], ['08_Weekly_Investment_Meeting_2026-05-22.md', 'md'], ['05_Known_Knowledge_Gaps.md', 'md'], ['05_Analyst_Onboarding_Guide.md', 'md']] },
+    sector: { why: 'The theses new deals are screened against: every opportunity meets what the firm already believes.',
+      files: [['01_Food_Supply_Chain_Thesis.md', 'md'], ['02_Logistics_Software_Thesis.md', 'md'], ['04_Route_Optimization_Competitor_Map.md', 'md'], ['08_SaaS_Margin_Quality_Note.md', 'md'], ['03_Cold_Chain_Market_Note.md', 'md']] },
+    ic: { why: 'Every decision, dated, logged, and reusable.',
+      files: [['01_IC_Calendar_and_Decision_Log.csv', 'csv'], ['09_Approval_Note_Template.md', 'md']] },
+  };
+  const cols = [...document.querySelectorAll('.fk-col')];
+  const renderFk = key => {
+    cols.forEach(c => c.setAttribute('aria-pressed', String(c.dataset.fk === key)));
+    document.getElementById('fk-files').innerHTML = FK[key].files.map(([n, t]) =>
+      `<div class="fk-file"><span class="fn">${n}</span><span class="tp">${t}</span></div>`).join('');
+    document.getElementById('fk-why').textContent = FK[key].why;
+  };
+  cols.forEach(c => c.addEventListener('click', () => renderFk(c.dataset.fk)));
+  renderFk('lessons');
+})();
+</script>
+<script>
+/* ===== the guided journey v3: real product captures, four steps ===== */
+(() => {
+  const jr = document.getElementById('journey');
+  if (!jr) return;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $ = id => document.getElementById(id);
+
+  const titles = {
+    1: 'Firm Knowledge · Meridian — Scoring & Output Standards',
+    2: 'Opportunities · Add target',
+    3: 'FreshRoute AI · Dashboards',
+    4: 'FreshRoute AI — Company Profile · v9 · waiting approval',
+    5: 'Opportunities · your firm at a glance',
+  };
+  const caps = {
+    1: 'Step 1 of 4 · Teach it the firm once: rubric, memo standard, theses. Every draft calibrates to these.',
+    2: 'Step 2 of 4 · The real Add-Target form: drop the data room, AI drafts every field, you create it.',
+    3: 'Step 3 of 4 · Configure the dashboards, apply, then build Company Profile from its tab. Versions are kept.',
+    4: 'Step 4 of 4 · Ask the copilot about the report, then Approve: primary, logged, firm memory.',
+    5: 'The result · your firm now owns this work, and the next deal starts ahead.',
+  };
+  const stepsB = [...jr.querySelectorAll('.jr-step')];
+  let cur = 1;
+  const go = n => {
+    cur = n;
+    stepsB.forEach(b => {
+      const i = +b.dataset.jr;
+      b.classList.toggle('done', i < n);
+      if (i === n) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current');
+    });
+    jr.querySelectorAll('.jr-panel').forEach(p => p.classList.toggle('on', p.id === 'jr-p' + n));
+    $('jr-title').textContent = titles[n];
+    $('jr-cap').textContent = caps[n];
+    $('jr-prev').disabled = n === 1;
+    $('jr-next').disabled = n === 5;
+    $('k4-approve').classList.toggle('blink', n === 4 && !k4done);
+    if (n === 5) k5reveal();
+  };
+  stepsB.forEach(b => b.addEventListener('click', () => go(+b.dataset.jr)));
+  const wireDrop = (el, fn) => {
+    el.addEventListener('click', fn);
+    el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fn(); } });
+    ['dragenter', 'dragover'].forEach(ev => el.addEventListener(ev, e => { e.preventDefault(); el.classList.add('over'); }));
+    el.addEventListener('dragleave', e => { e.preventDefault(); el.classList.remove('over'); });
+    el.addEventListener('drop', e => { e.preventDefault(); el.classList.remove('over'); fn(); });
+  };
+
+  /* step 1 · add-to-knowledge card over the ambient capture */
+  const k1rows = [...jr.querySelectorAll('#k1-rows .jr-frow')];
+  const k1drop = $('k1-drop');
+  let k1done = false;
+  const k1add = () => {
+    if (k1done) return;
+    k1done = true;
+    k1drop.classList.add('done');
+    $('k1-d1').textContent = 'Uploading to the collection…';
+    $('k1-d2').textContent = 'embedding for retrieval · citations stay traceable';
+    k1rows.forEach((r, i) => setTimeout(() => {
+      r.classList.add('in');
+      setTimeout(() => r.classList.add('ok'), reduced ? 0 : 420);
+    }, reduced ? 0 : 260 + i * 300));
+    setTimeout(() => {
+      $('k1-d1').textContent = 'In the firm’s memory';
+      $('k1-d2').textContent = 'available to every deal, every draft, every teammate';
+      $('k1-stat').textContent = '4 files embedded · every draft calibrates to these';
+      $('k1-stat').classList.add('hot');
+    }, reduced ? 0 : 260 + k1rows.length * 300 + 520);
+  };
+  const k1reset = () => {
+    k1done = false;
+    k1drop.classList.remove('done', 'over');
+    $('k1-d1').textContent = 'Drop the firm’s documents';
+    $('k1-d2').textContent = 'rubric · memo standard · theses — or click to add the samples';
+    k1rows.forEach(r => r.classList.remove('in', 'ok'));
+    $('k1-stat').textContent = 'Waiting for documents';
+    $('k1-stat').classList.remove('hot');
+  };
+  k1drop.addEventListener('click', k1add);
+  k1drop.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); k1add(); } });
+  ['dragenter', 'dragover'].forEach(ev => k1drop.addEventListener(ev, e => { e.preventDefault(); if (!k1done) k1drop.classList.add('over'); }));
+  k1drop.addEventListener('dragleave', e => { e.preventDefault(); k1drop.classList.remove('over'); });
+  k1drop.addEventListener('drop', e => { e.preventDefault(); k1drop.classList.remove('over'); k1add(); });
+
+  /* step 2 · the real Add Target form */
+  const K2F = [
+    ['k2-name', 'FreshRoute AI'],
+    ['k2-web', 'https://freshroute.ai'],
+    ['k2-hq', 'Singapore'],
+    ['k2-desc', 'AI route optimization & freshness-window planning for food distributors · $1.8M ARR'],
+  ];
+  const k2drop = $('k2-drop');
+  let k2done = false;
+  const k2add = () => {
+    if (k2done) return;
+    k2done = true;
+    k2drop.classList.add('done');
+    $('k2-d1').textContent = 'Drafting from the data room…';
+    $('k2-d2').textContent = '32-page deck · 11 data-room files · the model';
+    K2F.forEach(([id, v], i) => setTimeout(() => {
+      $(id).value = v; $(id).classList.add('filled');
+    }, reduced ? 0 : 560 + i * 380));
+    setTimeout(() => {
+      $('k2-d1').textContent = 'Drafted · review every field';
+      $('k2-d2').textContent = 'edit anything before it exists';
+      $('k2-stat').textContent = 'AI drafted 4 fields · you review and create';
+      $('k2-stat').classList.add('hot');
+      $('k2-create').disabled = false;
+    }, reduced ? 0 : 560 + K2F.length * 380 + 420);
+  };
+  const k2reset = () => {
+    k2done = false;
+    k2drop.classList.remove('done', 'over');
+    $('k2-d1').textContent = 'Start from documents';
+    $('k2-d2').textContent = 'drop a data room, deck, or files · AI drafts the opportunity below';
+    K2F.forEach(([id]) => { $(id).value = ''; $(id).classList.remove('filled'); });
+    $('k2-stat').textContent = 'Nothing is saved until you create it.';
+    $('k2-stat').classList.remove('hot');
+    $('k2-create').disabled = true;
+  };
+  wireDrop(k2drop, k2add);
+  $('k2-create').addEventListener('click', () => go(3));
+
+  /* step 3 · configure (right) → apply (left) → ground & re-run → built list w/ bg switching */
+  const K3CFG = {
+    active: ['Company Profile', 'Financials', 'Risks'],
+    avail: ['Comparables', 'Valuation', 'Overview', 'Unit Economics', 'IC Memo', 'Thesis'],
+  };
+  const K3CUSTOM = new Set();
+  const k3render = () => {
+    $('k3-list').innerHTML = K3CFG.active.map((n, i) =>
+      `<div class="cfg-row"><span class="grip" aria-hidden="true">⋮⋮</span><span class="ord">${String(i + 1).padStart(2, '0')}</span><span class="nm">${n}</span>${K3CUSTOM.has(n) ? '<span class="ctag">CUSTOM</span>' : ''}<button class="rm" type="button" data-rm="${n}" aria-label="Remove ${n}">Remove</button></div>`).join('');
+    $('k3-avail').innerHTML = K3CFG.avail.map(n =>
+      `<button class="cfg-chip" type="button" data-add="${n}">+ ${n}</button>`).join('');
+    $('k3-list').querySelectorAll('[data-rm]').forEach(b => b.addEventListener('click', () => {
+      K3CFG.active = K3CFG.active.filter(x => x !== b.dataset.rm);
+      if (!K3CUSTOM.has(b.dataset.rm)) K3CFG.avail.unshift(b.dataset.rm);
+      K3CUSTOM.delete(b.dataset.rm);
+      k3render();
+    }));
+    $('k3-avail').querySelectorAll('[data-add]').forEach(b => b.addEventListener('click', () => {
+      K3CFG.avail = K3CFG.avail.filter(x => x !== b.dataset.add);
+      K3CFG.active.push(b.dataset.add); k3render();
+    }));
+    $('k3-stat1').textContent = `${K3CFG.active.length} dashboards · in tab order · each becomes a tab`;
+  };
+  $('k3-cadd').addEventListener('click', () => {
+    const name = $('k3-cin').value.trim();
+    if (!name || K3CFG.active.includes(name)) return;
+    K3CFG.active.push(name);
+    K3CUSTOM.add(name);
+    $('k3-cin').value = '';
+    $('k3-cin').placeholder = 'Name another custom dashboard…';
+    k3render();
+    $('k3-stat1').textContent = `“${name}” added · dashboards are yours to shape, not fixed`;
+  });
+  let k3phase = 1, k3done = false;
+  const k3deps = () => K3CFG.active.filter(n => n !== 'Company Profile');
+  const k3apply = () => {
+    if (k3phase > 1) return;
+    k3phase = 2;
+    $('k3-stage').classList.remove('rt');
+    $('k3-float').classList.remove('right');
+    $('k3-bg-a').classList.add('off'); $('k3-bg-b').classList.remove('off');
+    $('k3-t').textContent = 'FreshRoute AI · Company Profile';
+    $('k3-c').textContent = `${K3CFG.active.length} dashboards applied · ground it, pick an engine, run`;
+    $('k3-ph1').hidden = true; $('k3-ph2').hidden = false;
+    $('k3-deps').innerHTML = k3deps().map(n =>
+      `<span class="jr-gchip">${n}${K3CUSTOM.has(n) ? ' · custom' : ''}</span>`).join('');
+  };
+  const k3addMeeting = () => {
+    if (!$('k3-meet').hidden) return;
+    $('k3-meet').hidden = false;
+    $('k3-drop').classList.add('done');
+    $('k3-d1').textContent = 'Added: 1st meeting summary with FreshRoute AI';
+    $('k3-d2').textContent = 'Fathom AI · grounding updated · the next run folds it in';
+  };
+  const k3select = name => {
+    $('k3-built').querySelectorAll('.jr-dbtn').forEach(b =>
+      b.setAttribute('aria-pressed', String(b.dataset.d === name)));
+    const isProfile = name === 'Company Profile';
+    $('k3-bg-c').classList.toggle('off', !isProfile);
+    $('k3-bg-d').classList.toggle('off', isProfile);
+    if (!isProfile) $('k3-ph-label').textContent = `${name} dashboard · capture coming`;
+  };
+  const k3run = () => {
+    if (k3done || k3phase !== 2) return;
+    k3done = true; k3phase = 3;
+    $('k3-ph2').hidden = true; $('k3-ph3').hidden = false;
+    const deps = k3deps();
+    const engine = $('k3-eng').value;
+    const seq = [
+      [`Reading ${$('k3-meet').hidden ? 14 : 15} documents · 1,124 pages · ${engine}…`, .3],
+      ['Drafting Company Profile · citing every claim…', .62],
+      [`Filling dependents: ${deps.join(', ')}…`, 1],
+    ];
+    const fin = () => {
+      $('k3-bg-b').classList.add('off');
+      $('k3-msg').textContent = 'Built · every claim cited · Jun 21 set primary pending review';
+      $('k3-builtlab').style.display = 'block';
+      $('k3-built').innerHTML = ['Company Profile', ...deps].map(n =>
+        `<button class="jr-dbtn" type="button" data-d="${n}" aria-pressed="false"><span>${n}</span><span class="ok2">✓ built</span></button>`).join('');
+      $('k3-built').querySelectorAll('.jr-dbtn').forEach(b =>
+        b.addEventListener('click', () => k3select(b.dataset.d)));
+      k3select('Company Profile');
+      $('k3-open').hidden = false;
+      $('k3-jump').classList.add('show');
+    };
+    if (reduced) { $('k3-bar').style.transform = 'scaleX(1)'; fin(); return; }
+    seq.forEach(([m, f], i) => setTimeout(() => {
+      $('k3-msg').textContent = m;
+      $('k3-bar').style.transform = `scaleX(${f})`;
+      if (i === 2) setTimeout(fin, 900);
+    }, i * 1100));
+  };
+  const k3reset = () => {
+    k3phase = 1; k3done = false;
+    K3CFG.active = ['Company Profile', 'Financials', 'Risks'];
+    K3CFG.avail = ['Comparables', 'Valuation', 'Overview', 'Unit Economics', 'IC Memo', 'Thesis'];
+    K3CUSTOM.clear();
+    $('k3-cin').value = 'AI Industry';
+    k3render();
+    $('k3-stage').classList.add('rt');
+    $('k3-float').classList.add('right');
+    $('k3-bg-a').classList.remove('off');
+    ['k3-bg-b', 'k3-bg-c', 'k3-bg-d'].forEach(id => $(id).classList.add('off'));
+    $('k3-t').textContent = 'Settings → Dashboards';
+    $('k3-c').textContent = 'Choose which dashboards this deal shows · each becomes a tab';
+    $('k3-ph1').hidden = false; $('k3-ph2').hidden = true; $('k3-ph3').hidden = true;
+    $('k3-bar').style.transform = 'scaleX(0)'; $('k3-msg').textContent = '…';
+    $('k3-meet').hidden = true;
+    $('k3-drop').classList.remove('done', 'over');
+    $('k3-d1').textContent = 'Drag & drop files to update Company Profile';
+    $('k3-d2').textContent = 'meeting summaries · updated models · new documents';
+    $('k3-eng').selectedIndex = 0;
+    $('k3-deps').innerHTML = '';
+    $('k3-built').innerHTML = '';
+    $('k3-builtlab').style.display = 'none';
+    $('k3-open').hidden = true;
+    $('k3-jump').classList.remove('show');
+  };
+  $('k3-apply').addEventListener('click', k3apply);
+  wireDrop($('k3-drop'), k3addMeeting);
+  $('k3-run').addEventListener('click', k3run);
+  $('k3-open').addEventListener('click', () => go(4));
+  $('k3-jump').addEventListener('click', () => go(4));
+  k3render();
+
+  /* step 4 · report copilot chat, approve top-right */
+  const k4chat = $('k4-chat');
+  const K4A = [
+    [/concern|item|open/i, 'Two open concerns: gross margin is company-stated (not yet GAAP-attested), and top-10 customer concentration is undisclosed. Both are already in the diligence questions. §4.3 · §5.1'],
+    [/evidence|weak|number|verif/i, 'The 60% gross margin is the weakest number: single source, company-stated. Corroborate against the audited model before IC. §4.3'],
+    [/risk|mitigat/i, 'Key risks: customer concentration, GAAP attestation, and Series A pricing against the $48M pre-money. Mitigations are drafted in the Risks section. §5.1'],
+    [/summar/i, 'Food supply-chain vertical SaaS at $1.8M ARR (+58% YoY), raising $12M at $48M pre. Strong thesis fit; margin and concentration need corroboration before IC. §0.4'],
+  ];
+  const k4say = (cls, text) => {
+    const m = document.createElement('p');
+    m.className = 'jr-msg ' + cls;
+    m.textContent = text;
+    k4chat.appendChild(m);
+    k4chat.scrollTop = k4chat.scrollHeight;
+  };
+  const k4ask = q => {
+    if (!q.trim()) return;
+    k4say('u', q);
+    const hit = K4A.find(([re]) => re.test(q));
+    setTimeout(() => k4say('a', hit ? hit[1] : 'In this demo I answer the suggested questions; in the product you can ask anything, and every answer cites the report and its sources.'), reduced ? 0 : 450);
+  };
+  jr.querySelectorAll('.jr-qchip:not(.act)').forEach(c => c.addEventListener('click', () => k4ask(c.textContent.trim())));
+  $('k4-act').addEventListener('click', () => {
+    k4say('u', 'Add a summary mindmap in the executive summary');
+    setTimeout(() => k4say('a', 'Added: a summary mindmap now opens the Executive Summary. Draft v10 created, pending your review; approve to set it primary.'), reduced ? 0 : 450);
+  });
+  $('k4-send').addEventListener('click', () => { k4ask($('k4-in').value); $('k4-in').value = ''; });
+  $('k4-in').addEventListener('keydown', e => { if (e.key === 'Enter') { k4ask($('k4-in').value); $('k4-in').value = ''; } });
+  let k4done = false;
+  $('k4-approve').addEventListener('click', () => {
+    if (k4done) return;
+    k4done = true;
+    $('k4-approve').classList.remove('blink');
+    $('k4-approve').textContent = 'Approved ✓';
+    $('k4-badge').textContent = 'Company Profile · v9 · APPROVED · PRIMARY · LOGGED';
+    $('k4-badge').classList.add('ok');
+    k4say('a', 'Approved. v9 set primary, logged, and added to firm memory.');
+    stepsB.forEach(b => b.classList.add('done'));
+    setTimeout(() => go(5), reduced ? 0 : 800);
+  });
+  const k4reset = () => {
+    k4done = false;
+    $('k4-approve').textContent = 'Approve';
+    $('k4-badge').textContent = 'Company Profile · v9 · WAITING APPROVAL';
+    $('k4-badge').classList.remove('ok');
+    $('k4-in').value = '';
+    k4chat.innerHTML = '<p class="jr-msg a">Ask about this report, or pick a question above. Every answer cites the report and its sources.</p>';
+  };
+
+  /* step 5 · recap + what you can do next */
+  const EX5 = {
+    ask: `<p class="q">“Which numbers need corroboration before IC?”</p>
+      <p class="a">Gross margin is company-stated, and top-10 concentration is undisclosed. Both are already in the diligence questions. <span class="r">§4.3 · §5.1</span></p>
+      <p class="n">Ask the PE Analyst over the whole record, or route the question to your advisors; answers stay governed and logged.</p>`,
+    decide: `<p class="a">Scored to your firm rubric and rolled into the IC memo, so the committee lands one call, with the reasons logged either way.</p>
+      <p class="pills"><span class="go">GO</span><span class="cond">CONDITIONAL GO</span><span class="pass">PASS</span></p>`,
+    watch: `<p class="a">Attach a Radar and MindLab pings the deal when something material moves: a covenant, a funding round, a convergent 2026 signal.</p>
+      <p class="sig">FreshRoute AI · live-deal diligence watch · <b>via Radar</b> · 38</p>`,
+    promote: `<p class="a">One click carries the whole record into monitoring after you invest. Portfolio Pulse drafts the what-changed briefs, and every version, approval, and decision comes along.</p>`,
+  };
+  const c5btns = [...jr.querySelectorAll('#jr-p5 .jr-cap5 .jr-qchip')];
+  const c5show = key => {
+    c5btns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.c5 === key)));
+    $('k5ex').innerHTML = EX5[key];
+  };
+  c5btns.forEach(b => b.addEventListener('click', () => c5show(b.dataset.c5)));
+  c5show('ask');
+  const k5reveal = () => c5show('ask');
+  const k5reset = () => c5show('ask');
+
+  const resetViews = () => { k1reset(); k2reset(); k3reset(); k4reset(); k5reset(); };
+  $('jr-reset').addEventListener('click', () => { resetViews(); go(1); });
+  $('jr-prev').addEventListener('click', () => go(Math.max(1, cur - 1)));
+  $('jr-next').addEventListener('click', () => go(Math.min(5, cur + 1)));
+  $('jr-play').addEventListener('click', () => {
+    resetViews(); go(1);
+    if (reduced) {
+      k1add(); k2add(); k3apply(); k3run(); go(4);
+      $('k4-approve').click(); go(5);
+      return;
+    }
+    setTimeout(k1add, 600);
+    setTimeout(() => go(2), 3600);
+    setTimeout(k2add, 4100);
+    setTimeout(() => go(3), 8200);
+    setTimeout(() => $('k3-cadd').click(), 8900);
+    setTimeout(k3apply, 9800);
+    setTimeout(k3addMeeting, 10700);
+    setTimeout(k3run, 11700);
+    setTimeout(() => go(4), 17000);
+    setTimeout(() => jr.querySelector('.jr-qchip').click(), 17600);
+    setTimeout(() => $('k4-act').click(), 19300);
+    setTimeout(() => $('k4-approve').click(), 21000);
+    setTimeout(() => go(5), 22800);
+    setTimeout(() => c5show('decide'), 24200);
+    setTimeout(() => c5show('watch'), 25600);
+  });
+
+  go(1);
+})();
+
+/* radar (sentry mode) journey */
+(() => {
+  const rd = document.getElementById('radar');
+  if (!rd) return;
+  const $ = id => document.getElementById(id);
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const steps = [...rd.querySelectorAll('.jr-step')];
+  const titles = {
+    1: 'Arm a radar · a standing mission in your words',
+    2: 'Cold-chain radar · this week’s pulse',
+    3: 'Cold-chain radar · every asset it touches',
+    4: 'FreshRoute AI · directional draft from the radar',
+    5: 'Overwatch · the whole book on one board',
+  };
+  const caps = {
+    1: 'Step 1 of 5 · write a standing mission — scope it to one holding, or a whole theme',
+    2: 'Step 2 of 5 · it runs while you’re away, and keeps only what clears the bar',
+    3: 'Step 3 of 5 · one signal, scored against every holding it touches',
+    4: 'Step 4 of 5 · a holding’s slice becomes a governed draft — you make the call',
+    5: 'Overwatch · cross-asset + per-asset signals on one attention-first board',
+  };
+  let cur = 1, logged = false, decision = 'cond', p2done = false, p3built = false, p3done = false, p5shown = false;
+  const DEC = { go: 'GO', cond: 'CONDITIONAL GO', pass: 'PASS' };
+
+  const go = n => {
+    cur = n;
+    steps.forEach(b => {
+      const s = +b.dataset.rd;
+      b.classList.toggle('done', s < n);
+      b.setAttribute('aria-current', s === n ? 'step' : 'false');
+    });
+    rd.querySelectorAll('.jr-panel').forEach(p => p.classList.toggle('on', p.id === 'rd-p' + n));
+    $('rd-title').textContent = titles[n];
+    $('rd-cap').textContent = caps[n];
+    $('rd-prev').disabled = n === 1;
+    $('rd-next').disabled = n === 5;
+    $('rd-log').classList.toggle('blink', n === 4 && !logged);
+    // the step's own action is the way forward: show the action until done, then the carry-onward button
+    $('rd-pulse').hidden = p2done; $('rd-fwd2').hidden = !p2done;
+    $('rd-trace').hidden = p3done; $('rd-fwd3').hidden = !p3done;
+    // the baton that arrived from the previous step slides in
+    const cp = $('rd-carry' + n);
+    if (cp) setTimeout(() => cp.classList.add('in'), reduced ? 0 : 140);
+    if (n === 5) revealBoards();
+  };
+
+  /* step 1 · mission mandate */
+  const MISSIONS = {
+    cold: { text: 'Watch SE Asia cold-chain & fresh-food distribution — diesel/fuel swings, port and route disruptions, reefer capacity and energy costs. Flag anything that pressures ColdLink’s route KPIs or the FreshRoute pilot case. Treat it as a margin signal, not a headline.',
+            scope: 'Cross-asset · theme', cad: 'Weekly', thr: '55', links: ['ColdLink Asia', 'FreshRoute AI', 'ChillFleet Systems', 'ColdHub Johor'] },
+    clinic: { text: 'Monitor US clinic-ops reimbursement & prior-auth: CMS fee schedules, e-PA and gold-carding rules, Medicaid redetermination. Read prior-auth churn as a margin signal across the healthcare book.',
+            scope: 'Cross-asset · theme', cad: 'Weekly', thr: '60', links: ['ClinicFlow', 'HarborMed Services', 'PraxiaFlow Health', 'MedLedger ClinicPay'] },
+    saas: { text: 'Track SaaS implementation burden & gross-margin erosion — multi-site and cold-chain rollout timelines, professional-services mix, the “claimed vs actual margin” tell. Escalate on rubric dimensions 2, 4, 5.',
+            scope: 'Cross-asset · theme', cad: 'Weekly', thr: '55', links: ['ClinicFlow', 'FreshRoute AI', 'PraxiaFlow Health', 'RoutePilot'] },
+  };
+  let typeTimer;
+  const typeMission = text => {
+    clearInterval(typeTimer);
+    const el = $('rd-mtext');
+    if (reduced) { el.textContent = text; return; }
+    el.textContent = ''; let i = 0;
+    typeTimer = setInterval(() => {
+      el.textContent = text.slice(0, i += 3);
+      if (i >= text.length) { el.textContent = text; clearInterval(typeTimer); }
+    }, 14);
+  };
+  const pickMission = key => {
+    const m = MISSIONS[key];
+    typeMission(m.text);
+    $('rd-scope').textContent = m.scope;
+    $('rd-cad').textContent = m.cad;
+    $('rd-thr').textContent = m.thr;
+    $('rd-cfg').hidden = false;
+    const lk = $('rd-links'); lk.hidden = false;
+    lk.innerHTML = m.links.map(x => '<span class="jr-gchip">' + x + '</span>').join('');
+    $('rd-arm').disabled = false;
+    $('rd-p1stat').textContent = 'Radar ready · ' + m.links.length + ' assets linked. Arm it.';
+    rd.querySelectorAll('[data-m]').forEach(b => b.setAttribute('aria-pressed', b.dataset.m === key));
+  };
+  rd.querySelectorAll('[data-m]').forEach(b => b.addEventListener('click', () => pickMission(b.dataset.m)));
+  $('rd-arm').addEventListener('click', () => go(2));
+
+  /* step 2 · asset radar pulse (signal vs noise) */
+  const TRIAGE = [
+    { kind: 'noise', v: 'NOISE · dropped', t: 'Grocery-tech funding roundup · newsletter reshare' },
+    { kind: 'signal', v: 'SIGNAL 82%', t: '<b>SE Asia diesel spike + port congestion</b> · a margin signal · promoted to a draft finding' },
+  ];
+  const buildTriage = () => {
+    $('rd-triage').innerHTML = TRIAGE.map(x =>
+      '<div class="rd-trow" data-kind="' + x.kind + '"><span class="verdict ' + x.kind + '">' + x.v + '</span><span class="rd-twho">' + x.t + '</span></div>').join('');
+  };
+  const pulse = () => {
+    buildTriage();
+    const rows = [...$('rd-triage').querySelectorAll('.rd-trow')];
+    rows.forEach((r, i) => setTimeout(() => r.classList.add('in'), reduced ? 0 : i * 500));
+    $('rd-meterwrap').hidden = false;
+    setTimeout(() => {
+      $('rd-meter').style.transform = 'scaleX(.82)';
+      $('rd-meterlab').textContent = 'Signal 82% · above threshold';
+    }, reduced ? 0 : 900);
+    p2done = true; $('rd-pulse').hidden = true; $('rd-fwd2').hidden = false;
+    $('rd-p2stat').textContent = 'One promoted · one suppressed. Only what clears the bar reaches you.';
+  };
+  $('rd-pulse').addEventListener('click', pulse);
+  $('rd-fwd2').addEventListener('click', () => go(3));
+
+  /* step 3 · the cross-asset fan-out */
+  const FAN = [
+    { who: 'ColdLink Asia', sev: 'crit', label: 'CRITICAL', score: 84, why: 'Reefer + diesel hit route economics' },
+    { who: 'FreshRoute AI', sev: 'heavy', label: 'HEAVY', score: 71, why: 'Fuel volatility pressures the 10-week pilot', take: true },
+    { who: 'ChillFleet Systems', sev: 'med', label: 'MEDIUM', score: 52, why: 'Reefer capacity crunch on the fleet' },
+    { who: 'ColdHub Johor', sev: 'light', label: 'LIGHT', score: 24, why: 'Port congestion lengthens lead times' },
+  ];
+  const trace = () => {
+    if (!p3built) {
+      p3built = true;
+      $('rd-fan').innerHTML = FAN.map(f =>
+        '<div class="rd-row sev-' + f.sev + '"><span class="rd-score">' + f.score + '%<i style="transform:scaleX(' + (f.score / 100) + ')"></i></span>' +
+        '<span class="rd-sev ' + f.sev + '">' + f.label + '</span>' +
+        '<span class="rd-who"><b>' + f.who + '</b><span>' + f.why + '</span></span>' +
+        (f.take ? '<span class="rd-take">→ to draft</span>' : '') + '</div>').join('');
+    }
+    const rows = [...$('rd-fan').querySelectorAll('.rd-row')];
+    rows.forEach((r, i) => setTimeout(() => r.classList.add('in'), reduced ? 0 : i * 230));
+    p3done = true; $('rd-trace').hidden = true;
+    $('rd-fanlab').textContent = '4 holdings hit · 1 critical · 1 heavy · 2 to watch';
+    // then pick the HEAVY live deal to carry into a draft
+    setTimeout(() => {
+      const fr = $('rd-fan').querySelectorAll('.rd-row')[1];
+      if (fr) fr.classList.add('pick');
+      $('rd-fwd3').hidden = false;
+    }, reduced ? 0 : 1200);
+  };
+  $('rd-trace').addEventListener('click', trace);
+  $('rd-fwd3').addEventListener('click', () => go(4));
+
+  /* step 4 · decide + log */
+  rd.querySelectorAll('[data-d]').forEach(b => b.addEventListener('click', () => {
+    decision = b.dataset.d;
+    rd.querySelectorAll('[data-d]').forEach(x => x.setAttribute('aria-pressed', x === b));
+    if (!logged) $('rd-p4stat').textContent = 'Call set: ' + DEC[decision] + '. Log it to write the record.';
+  }));
+  $('rd-log').addEventListener('click', () => {
+    if (logged) { go(5); return; }
+    logged = true;
+    $('rd-log').classList.remove('blink');
+    $('rd-log').textContent = 'Logged ✓';
+    $('rd-p4badge').textContent = 'DECISION LOGGED · ' + DEC[decision];
+    $('rd-p4stat').textContent = 'Written to the record. The radar keeps watching.';
+    steps.forEach(b => { if (+b.dataset.rd <= 4) b.classList.add('done'); });
+    setTimeout(() => go(5), reduced ? 0 : 800);
+  });
+
+  /* step 5 · overwatch board reveal */
+  const revealBoards = () => {
+    if (p5shown) return; p5shown = true;
+    const rows = [...$('rd-boards').querySelectorAll('.rd-brow')];
+    rows.forEach((r, i) => setTimeout(() => r.classList.add('in'), reduced ? 0 : i * 140));
+  };
+
+  /* nav + reset + play */
+  const reset = () => {
+    clearInterval(typeTimer);
+    $('rd-mtext').textContent = ''; $('rd-cfg').hidden = true; $('rd-links').hidden = true; $('rd-links').innerHTML = '';
+    $('rd-arm').disabled = true; $('rd-p1stat').textContent = 'Pick a sample, or write your own.';
+    rd.querySelectorAll('[data-m]').forEach(b => b.setAttribute('aria-pressed', 'false'));
+    $('rd-triage').innerHTML = ''; $('rd-meterwrap').hidden = true; $('rd-meter').style.transform = 'scaleX(0)';
+    $('rd-meterlab').textContent = 'Signal strength';
+    p2done = false; $('rd-pulse').hidden = false; $('rd-fwd2').hidden = true;
+    $('rd-p2stat').textContent = 'The agent compares findings to your record — then decides.';
+    p3built = false; p3done = false; $('rd-fan').innerHTML = '';
+    $('rd-trace').hidden = false; $('rd-fwd3').hidden = true;
+    $('rd-fanlab').textContent = 'Trace it across the book →';
+    logged = false; decision = 'cond'; $('rd-log').textContent = 'Log decision';
+    $('rd-p4badge').textContent = 'Radar Directional Impact · v1 · DRAFT';
+    $('rd-p4stat').textContent = 'Source-cited. Nothing promotes without your call.';
+    rd.querySelectorAll('[data-d]').forEach(x => x.setAttribute('aria-pressed', x.dataset.d === 'cond'));
+    p5shown = false; $('rd-boards').querySelectorAll('.rd-brow').forEach(r => r.classList.remove('in'));
+    rd.querySelectorAll('.rd-carry').forEach(c => c.classList.remove('in'));
+  };
+  $('rd-reset').addEventListener('click', () => { reset(); go(1); });
+  $('rd-prev').addEventListener('click', () => go(Math.max(1, cur - 1)));
+  $('rd-next').addEventListener('click', () => go(Math.min(5, cur + 1)));
+  steps.forEach(b => b.addEventListener('click', () => go(+b.dataset.rd)));
+  $('rd-play').addEventListener('click', () => {
+    reset(); go(1);
+    if (reduced) {
+      pickMission('cold'); go(2); pulse(); go(3); trace(); go(4); $('rd-log').click();
+      return;
+    }
+    // drive it through the same action→carry-onward buttons a user would click
+    setTimeout(() => pickMission('cold'), 500);
+    setTimeout(() => $('rd-arm').click(), 2800);
+    setTimeout(() => $('rd-pulse').click(), 3600);
+    setTimeout(() => $('rd-fwd2').click(), 5600);
+    setTimeout(() => $('rd-trace').click(), 6300);
+    setTimeout(() => $('rd-fwd3').click(), 8600);
+    setTimeout(() => $('rd-log').click(), 9600);
+  });
+
+  go(1);
+})();
+</script>
+</body>
+</html>
