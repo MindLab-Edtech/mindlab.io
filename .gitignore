@@ -1,0 +1,7 @@
+# OS junk
+.DS_Store
+**/.DS_Store
+
+# Tooling caches
+.impeccable/
+**/.impeccable/

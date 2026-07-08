@@ -983,6 +983,33 @@ textarea.x-input{min-height:74px;resize:none;line-height:1.55}
   .fk-list{border-right:none;border-bottom:1px solid rgba(20,35,45,.09);flex-direction:row;flex-wrap:wrap}
   .lt-metrics{grid-template-columns:1fr}
 }
+/* the compounding loop — home-page breather + doorway to the-loop.html */
+.lp-cycle{display:flex;align-items:stretch;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:40px}
+.lp-cnode{flex:1 1 158px;max-width:214px;background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:16px 16px 15px;display:flex;flex-direction:column;gap:5px}
+.lp-cnode .n{width:25px;height:25px;border-radius:50%;border:1.5px solid var(--line-2);display:grid;place-items:center;font-family:var(--mono);font-size:11px;color:var(--ink-2);margin-bottom:4px}
+.lp-cnode b{font-size:14px;color:var(--ink);font-weight:600;letter-spacing:-.01em}
+.lp-cnode .sub{font-size:11.5px;color:var(--ink-3);line-height:1.45}
+.lp-cnode.decide{border-color:rgba(76,200,150,.42);background:linear-gradient(180deg,rgba(76,200,150,.055),transparent)}
+.lp-cnode.decide .n{border-color:var(--green);color:var(--green)}
+.lp-carrow{display:flex;align-items:center;color:var(--line-2);flex:none;font-size:15px}
+.lp-crepeat{display:inline-flex;align-items:center;gap:6px;align-self:center;flex:none;font-family:var(--mono);font-size:10px;letter-spacing:.03em;color:var(--green);border:1px solid rgba(76,200,150,.32);border-radius:20px;padding:6px 11px}
+@media (max-width:840px){.lp-cycle{flex-direction:column}.lp-cnode{max-width:none}.lp-carrow{justify-content:center;transform:rotate(90deg)}.lp-crepeat{align-self:auto;justify-content:center}}
+.lp-bridge{display:flex;align-items:center;justify-content:space-between;gap:20px 32px;flex-wrap:wrap;margin-top:42px;padding:22px 26px;border-radius:16px;background:linear-gradient(100deg,rgba(76,200,150,.09),rgba(76,200,150,.02));border:1px solid rgba(76,200,150,.28)}
+.lp-bridge .txt{flex:1 1 340px;min-width:0;text-align:left}
+.lp-bridge .txt b{display:block;font-size:16.5px;color:var(--ink);font-weight:600;letter-spacing:-.01em}
+.lp-bridge .txt span{display:block;font-size:12.5px;color:var(--ink-2);margin-top:6px;line-height:1.55;max-width:64ch}
+.lp-bridge .side{display:flex;align-items:center;gap:12px;flex:none}
+.lp-bridge .mins{font-family:var(--mono);font-size:9px;letter-spacing:.08em;color:var(--green);border:1px solid rgba(76,200,150,.4);border-radius:20px;padding:5px 9px;white-space:nowrap}
+.lp-bridge .btn{flex:none}
+@media (max-width:600px){.lp-bridge{flex-direction:column;align-items:stretch;gap:16px}.lp-bridge .txt{flex:0 1 auto}.lp-bridge .side{width:100%}.lp-bridge .btn{flex:1}}
+.lp-head{text-align:center;max-width:730px;margin:0 auto clamp(38px,5vw,58px)}
+.lp-head .x-lead{max-width:none;margin-top:16px}
+.br-modes{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin:clamp(34px,4.5vw,52px) 0}
+.br-mode{background:var(--panel);padding:clamp(20px,2.4vw,30px)}
+.br-mode .bm-k{display:inline-block;font:600 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:13px}
+.br-mode h4{margin:0 0 7px;font-size:clamp(15px,1.4vw,17px);letter-spacing:-.01em;font-weight:600}
+.br-mode p{margin:0;color:var(--ink-2);font-size:13.5px;line-height:1.55}
+@media (max-width:720px){.br-modes{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -1219,97 +1246,6 @@ textarea.x-input{min-height:74px;resize:none;line-height:1.55}
   </div>
 </section>
 
-<!-- S5 · workflow one -->
-<section class="sec-pad hr" id="workflows">
-  <div class="frame feature">
-    <div class="f-copy rv">
-      <p class="f-label">Workflow 01 · Target Brief</p>
-      <h2>From data room to IC-ready first pass.</h2>
-      <p>Point MindLab at a name, a website, or a data room. It returns a structured screening brief in your firm’s memo format: business snapshot, market context, competitors, risk flags, and the diligence questions worth asking. Every claim cited, and gaps flagged as gaps.</p>
-      <p class="f-micro">Where the blank page used to be.</p>
-    </div>
-    <div class="f-visual rv">
-      <div class="lt">
-        <div class="lt-head"><span class="lt-title">FreshRoute AI</span><span class="cap">Opportunity · Stage IC · via Advisors</span></div>
-        <div class="lt-tabs" aria-hidden="true"><span class="lt-tab">Overview</span><span class="lt-tab on">Company Profile</span><span class="lt-tab">Financials</span><span class="lt-tab">Comparables</span><span class="lt-tab">Valuation</span><span class="lt-tab">Risks</span><span class="lt-tab">Settings</span></div>
-        <div class="lt-vers"><span class="vlab">Report versions</span>
-          <span class="vd"><i></i>Jun 19</span><span class="vd"><i></i>Jun 19</span><span class="vd"><i></i>Jun 21</span><span class="vd primary"><i></i>Jun 24 · primary</span>
-          <span class="vbtns"><button class="lt-btn gh sm" type="button" tabindex="-1">Refresh from report</button><button class="lt-btn gh sm" type="button" tabindex="-1">Re-run</button></span>
-        </div>
-        <div class="lt-metrics">
-          <div class="lt-metric"><p class="cap">Total revenue</p><p class="v">3.9<span class="u">$M</span></p><p class="note">FY26E plan (Meridian model)</p><p class="refs"><span class="lt-ref">4.1</span><span class="lt-ref">4.2</span><span class="lt-ref">4.3</span></p></div>
-          <div class="lt-metric"><p class="cap">ARR</p><p class="v">1.8<span class="u">$M</span></p><p class="note up">+58% YoY (FY25→FY26E plan)</p><p class="refs"><span class="lt-ref">4.3</span><span class="lt-ref">0.4</span></p></div>
-          <div class="lt-metric"><p class="cap">YoY growth</p><p class="v">58<span class="u">%</span></p><p class="note">FY25 to FY26E plan (ARR uplift)</p><p class="refs"><span class="lt-ref">4.1</span><span class="lt-ref">4.3</span></p></div>
-          <div class="lt-metric"><p class="cap">Gross margin</p><p class="v">58<span class="u">%</span></p><p class="note">company-stated; not yet GAAP-attested</p><p class="refs"><span class="lt-ref">4.3</span><span class="lt-ref">5.1</span></p></div>
-        </div>
-        <p class="lt-note">Built from this report — <b>open the full Company Profile report →</b></p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- S6 · workflow two -->
-<section class="sec-pad hr">
-  <div class="frame feature rev">
-    <div class="f-copy rv">
-      <p class="f-label">Workflow 02 · Portfolio Pulse</p>
-      <h2>Know what changed before the Monday meeting.</h2>
-      <p>MindLab watches your portfolio’s updates, documents, and external signals, and drafts recurring what-changed briefs: covenant flags, narrative shifts, watch items. Each lands in the review queue; nothing enters the record until someone signs it.</p>
-    </div>
-    <div class="f-visual rv">
-      <div class="lt">
-        <div class="lt-head"><span class="lt-title">Portfolio · signals &amp; briefing</span><span class="cap">via Radar · drafted for Monday</span></div>
-        <div class="pc-body">
-          <p class="cap">Cross-asset signals</p>
-          <div class="lt-sig"><span class="dot red"></span><span><b>PraxiaFlow Health</b> <span class="sub">direct hit: HIMSS-2026 Agent Factory + 50 native PAs</span></span><span class="lvl crit">CRITICAL</span></div>
-          <div class="lt-sig"><span class="dot amb"></span><span><b>PraxiaFlow Health</b> <span class="sub">four convergent 2026 signals hit the active thesis</span></span><span class="lvl hvy">HEAVY</span></div>
-          <div class="lt-sig"><span class="dot amb"></span><span><b>MedOps AI</b> <span class="sub">confirmatory of the existing rejection</span></span><span class="lvl hvy">HEAVY</span></div>
-          <p class="cap" style="margin-top:16px">Per-asset watch</p>
-          <div class="lt-sig"><span><b>FreshRoute AI</b> <span class="sub">live-deal diligence watch · via Radar · 21h ago</span></span><span class="lvl">38</span></div>
-          <div class="lt-sig"><span><b>ClinicFlow</b> <span class="sub">margin &amp; onboarding watch · 9d ago</span></span><span class="lvl">35</span></div>
-          <p class="cap" style="margin-top:16px">Funds</p>
-          <div class="lt-sig"><span><b>Meridian Family Evergreen HoldCo</b> <span class="sub">TVPI 1.08x · IRR 20.8% · DPI 0.0 · $44M deployed</span></span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- S7 · firm memory -->
-<section class="sec-pad hr">
-  <div class="frame feature">
-    <div class="f-copy rv">
-      <p class="f-label">Firm memory</p>
-      <h2>Every deal makes the next one faster.</h2>
-      <p>Approved briefs, memos, and updates become Company Records: versioned, sourced, and searchable. When a target comes back two years later, the work is already there. What you concluded, why you passed, what changed since.</p>
-      <div class="cta-row">
-        <a class="btn" href="#close">Bring one live deal <span aria-hidden="true">→</span></a>
-      </div>
-    </div>
-    <div class="f-visual rv">
-      <div class="lt">
-        <div class="lt-head"><span class="lt-title">Firm Memory · Meridian House Capital</span><span class="cap">16 collections · 150+ approved files · seeded demo workspace</span></div>
-        <div class="fk-grid">
-          <div class="fk-list">
-            <button class="fk-col" type="button" data-fk="lessons" aria-pressed="true">Rejected-deal lessons <span class="ct">16</span></button>
-            <button class="fk-col" type="button" data-fk="standards" aria-pressed="false">Scoring &amp; output standards <span class="ct">10</span></button>
-            <button class="fk-col" type="button" data-fk="portfolio" aria-pressed="false">Portfolio memory <span class="ct">17</span></button>
-            <button class="fk-col" type="button" data-fk="core" aria-pressed="false">Firm core &amp; strategy <span class="ct">19</span></button>
-            <button class="fk-col" type="button" data-fk="sector" aria-pressed="false">Sector research &amp; theses <span class="ct">14</span></button>
-            <button class="fk-col" type="button" data-fk="ic" aria-pressed="false">IC &amp; approval workflow <span class="ct">2</span></button>
-          </div>
-          <div>
-            <div class="fk-files" id="fk-files"></div>
-            <p class="fk-why" id="fk-why"></p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="frame">
-    <p class="pull rv">The first brief saves hours. <b>The record saves them every time the company comes back.</b></p>
-  </div>
-</section>
 
 <!-- appended · the journey: setup → signed record -->
 <section class="sec-pad hr" id="journey">
@@ -1505,6 +1441,38 @@ textarea.x-input{min-height:74px;resize:none;line-height:1.55}
   </div>
 </section>
 
+<!-- S7a3 · the compounding loop — home breather + doorway to the-loop.html -->
+<section class="sec-pad hr" id="compound">
+  <div class="frame">
+    <div class="lp-head">
+      <h2 class="sec rv">You don’t fill in a deal. You compound it.</h2>
+      <div class="rv"><p class="x-lead">The signed record isn’t the finish line. It’s version one. Every report ships with the concerns it couldn’t close, and you close them by dropping in one more document; the next version comes back sharper. Start thin, decide sure. That’s the loop running under everything above.</p></div>
+    </div>
+    <div class="lp-cycle rv" role="img" aria-label="The loop: draft from what you have, get ranked open concerns, feed it the missing artifact, get a sharper version, then repeat until decision-ready.">
+      <div class="lp-cnode"><span class="n">1</span><b>Draft</b><span class="sub">from whatever you have: web + your files</span></div>
+      <span class="lp-carrow" aria-hidden="true">→</span>
+      <div class="lp-cnode"><span class="n">2</span><b>Open concerns</b><span class="sub">AI names what’s missing, ranked</span></div>
+      <span class="lp-carrow" aria-hidden="true">→</span>
+      <div class="lp-cnode"><span class="n">3</span><b>Feed it</b><span class="sub">drop the one artifact that closes a gap</span></div>
+      <span class="lp-carrow" aria-hidden="true">→</span>
+      <div class="lp-cnode"><span class="n">4</span><b>Sharper version</b><span class="sub">numbers firm, concerns fall</span></div>
+      <span class="lp-crepeat" aria-hidden="true">⟲ repeat</span>
+      <span class="lp-carrow" aria-hidden="true">→</span>
+      <div class="lp-cnode decide"><span class="n">✓</span><b>Decide</b><span class="sub">Go · No-Go · Conditional</span></div>
+    </div>
+    <div class="lp-bridge rv">
+      <div class="txt">
+        <b>See it happen: a deal sharpening, version by version.</b>
+        <span>A two-minute interactive walk-through of one FreshRoute deal, from a thin v1 to the decision. A side trip you can take anytime; nothing here depends on it.</span>
+      </div>
+      <div class="side">
+        <span class="mins">≈ 2 MIN</span>
+        <a class="btn" href="the-loop.html">Open the deep dive <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- S7b · radar / sentry mode -->
 <section class="sec-pad hr" id="radar">
   <div class="frame">
@@ -1534,9 +1502,9 @@ textarea.x-input{min-height:74px;resize:none;line-height:1.55}
             <div class="rd-mission" id="rd-mtext" data-empty="What should this radar watch — and what impact should it flag?"></div>
             <span class="x-lab" style="padding:8px 16px 0">Start from a sample</span>
             <div class="jr-qchips" style="padding-top:0">
-              <button class="jr-qchip" type="button" data-m="cold">Cold-chain · SE Asia</button>
+              <button class="jr-qchip" type="button" data-m="ai">Healthcare AI &amp; workflow</button>
               <button class="jr-qchip" type="button" data-m="clinic">Clinic-ops reimbursement</button>
-              <button class="jr-qchip" type="button" data-m="saas">SaaS implementation burden</button>
+              <button class="jr-qchip" type="button" data-m="cold">Cold-chain · SE Asia</button>
             </div>
             <div class="rd-cfgline" id="rd-cfg" hidden>
               <span>Scope <b class="x" id="rd-scope">Cross-asset · radar</b></span>
@@ -1558,10 +1526,10 @@ textarea.x-input{min-height:74px;resize:none;line-height:1.55}
           <div class="veil" aria-hidden="true"></div>
           <div class="jr-float right">
             <div class="fh row">
-              <div><b>Cold-chain radar · this week’s pulse</b><span class="cap">The same radar you armed — it ran while you were away</span></div>
+              <div><b>Healthcare-AI radar · this week’s pulse</b><span class="cap">The same radar you armed — it ran while you were away</span></div>
               <span class="rd-badge" id="rd-p2badge">WEEKLY · ACTIVE</span>
             </div>
-            <div class="rd-carry" id="rd-carry2"><span class="ci" aria-hidden="true">◀</span><span class="ck">FROM STEP 1</span><span class="cv">Cold-chain radar · 4 holdings</span></div>
+            <div class="rd-carry" id="rd-carry2"><span class="ci" aria-hidden="true">◀</span><span class="ck">FROM STEP 1</span><span class="cv">AI-workflow radar · 3 holdings</span></div>
             <span class="x-lab" style="padding:12px 16px 0">This run · signal vs noise</span>
             <div class="rd-triage" id="rd-triage"></div>
             <div class="rd-meterwrap" id="rd-meterwrap" hidden>
@@ -1579,20 +1547,20 @@ textarea.x-input{min-height:74px;resize:none;line-height:1.55}
 
       <div class="jr-panel" id="rd-p3">
         <div class="jr-stage">
-          <div class="bgwrap"><img src="assets/product/radar-3-detail.png" alt="A cross-asset topic radar detail: the mission mandate and four linked assets — ColdLink Asia, FreshRoute AI, ChillFleet Systems and ColdHub Johor — with its latest weekly run."></div>
+          <div class="bgwrap"><img src="assets/product/radar-3-detail.png" alt="A cross-asset topic radar detail: the Healthcare AI & workflow automation mission, its three linked holdings — PraxiaFlow Health, MedLedger ClinicPay and MedOps AI — and a run's affected-assets impact table."></div>
           <div class="veil" aria-hidden="true"></div>
           <div class="jr-float">
-            <div class="fh"><b>Cold-chain radar · every asset it touches</b><span class="cap">One signal, scored against every linked holding</span></div>
-            <div class="rd-carry" id="rd-carry3"><span class="ci" aria-hidden="true">◀</span><span class="ck">FROM STEP 2</span><span class="cv">Signal · SE-Asia diesel spike · 82%</span></div>
+            <div class="fh"><b>Healthcare-AI radar · every asset it touches</b><span class="cap">One signal, scored against every linked holding</span></div>
+            <div class="rd-carry" id="rd-carry3"><span class="ci" aria-hidden="true">◀</span><span class="ck">FROM STEP 2</span><span class="cv">Signal · Epic native ePA embed · 84%</span></div>
             <div class="rd-signal">
               <span class="rd-sigtag">THE PROMOTED SIGNAL</span>
-              <b>SE Asia diesel spike + port congestion squeeze cold-chain margins</b>
+              <b>Epic ships native ePA at 345M patient records — commoditization risk to prior-auth automation</b>
             </div>
             <span class="x-lab" style="padding:11px 16px 0" id="rd-fanlab">Trace it across the book →</span>
             <div class="rd-fan" id="rd-fan"></div>
             <div class="jr-actions">
               <button class="lt-btn sm" type="button" id="rd-trace">Trace impact across 4 holdings</button>
-              <button class="lt-btn sm" type="button" id="rd-fwd3" hidden>Take FreshRoute to a draft →</button>
+              <button class="lt-btn sm" type="button" id="rd-fwd3" hidden>Take PraxiaFlow to a draft →</button>
             </div>
           </div>
         </div>
@@ -1604,17 +1572,17 @@ textarea.x-input{min-height:74px;resize:none;line-height:1.55}
           <div class="veil" aria-hidden="true"></div>
           <div class="jr-float right">
             <div class="fh row">
-              <div><b>FreshRoute AI · directional draft</b><span class="cap" id="rd-p4badge">Radar Directional Impact · v1 · DRAFT</span></div>
+              <div><b>PraxiaFlow Health · directional draft</b><span class="cap" id="rd-p4badge">Radar Directional Impact · v1 · DRAFT</span></div>
               <button class="lt-btn sm" type="button" id="rd-log">Log decision</button>
             </div>
-            <div class="rd-carry" id="rd-carry4"><span class="ci" aria-hidden="true">◀</span><span class="ck">FROM STEP 3</span><span class="cv">FreshRoute AI · HEAVY · 71%</span></div>
+            <div class="rd-carry" id="rd-carry4"><span class="ci" aria-hidden="true">◀</span><span class="ck">FROM STEP 3</span><span class="cv">PraxiaFlow Health · CRITICAL · 86%</span></div>
             <div class="rd-draft">
-              <p class="jr-msg a">The cold-chain signal lands on FreshRoute’s margin case — the live deal you’re still in.</p>
+              <p class="jr-msg a">Epic’s native ePA embed threatens PraxiaFlow’s prior-auth automation TAM — a live deal.</p>
               <span class="x-lab" style="padding:12px 0 0">Key facts · aligned to firm standard</span>
               <div class="rd-facts">
-                <div class="rd-fact">Gross margin sliding 69% → 43% under fuel + PS load<span class="rd-ref">§ KPI pack</span></div>
-                <div class="rd-fact">GRR ~84% vs the deck’s 142% NRR<span class="rd-ref">§ data room</span></div>
-                <div class="rd-fact">The 10-week ColdLink pilot ROI now at risk<span class="rd-ref">§ radar run</span></div>
+                <div class="rd-fact">AI-extraction human-override rate 27%<span class="rd-ref">§ telemetry</span></div>
+                <div class="rd-fact">Prior-auth live in only 19 of 31 customers<span class="rd-ref">§ product data</span></div>
+                <div class="rd-fact">145% NRR concentrated in one logo<span class="rd-ref">§ KPI pack</span></div>
               </div>
             </div>
             <span class="x-lab" style="padding:12px 16px 0">Make the call</span>
@@ -1637,14 +1605,14 @@ textarea.x-input{min-height:74px;resize:none;line-height:1.55}
             <div class="rd-boards" id="rd-boards">
               <div class="rd-board">
                 <span class="rd-blab">◎ CROSS-ASSET SIGNALS · themes hitting several holdings</span>
-                <div class="rd-brow sev-crit"><span class="rd-sev crit">CRIT</span><b>ColdLink Asia</b><span>diesel + port congestion</span></div>
-                <div class="rd-brow sev-crit"><span class="rd-sev crit">CRIT</span><b>PraxiaFlow Health</b><span>e-PA prior-auth mandate</span></div>
-                <div class="rd-brow sev-heavy"><span class="rd-sev heavy">HEAVY</span><b>ClinicFlow</b><span>prior-auth churn on margin</span></div>
+                <div class="rd-brow sev-crit"><span class="rd-sev crit">CRIT</span><b>PraxiaFlow Health</b><span>Epic native ePA embed</span></div>
+                <div class="rd-brow sev-med"><span class="rd-sev med">MED</span><b>MedLedger ClinicPay</b><span>RCM squeeze · Waystar–Olive</span></div>
+                <div class="rd-brow sev-light"><span class="rd-sev light">LIGHT</span><b>MedOps AI</b><span>archive / reference case</span></div>
               </div>
               <div class="rd-board">
                 <span class="rd-blab">◎ PER-ASSET SIGNALS · each holding’s own radar</span>
-                <div class="rd-brow"><span class="rd-pct">78</span><b>FreshRoute AI</b><span>live-deal diligence watch</span></div>
-                <div class="rd-brow"><span class="rd-pct">66</span><b>PraxiaFlow Health</b><span>target diligence watch</span></div>
+                <div class="rd-brow"><span class="rd-pct">38</span><b>FreshRoute AI</b><span>live-deal diligence watch</span></div>
+                <div class="rd-brow"><span class="rd-pct">35</span><b>ClinicFlow</b><span>margin &amp; onboarding watch</span></div>
               </div>
             </div>
             <div class="jr-r5done">
@@ -1664,6 +1632,31 @@ textarea.x-input{min-height:74px;resize:none;line-height:1.55}
         <button class="lt-btn gh sm" type="button" id="rd-play">Play it through</button>
         <button class="lt-btn gh sm" type="button" id="rd-reset">↺ Reset</button>
         <span class="x-status" id="rd-cap" aria-live="polite"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S7c · second brain — home breather + doorway to second-brain.html -->
+<section class="sec-pad hr" id="brain">
+  <div class="frame">
+    <div class="lp-head">
+      <h2 class="sec rv">You bring the judgment. It brings the range.</h2>
+      <div class="rv"><p class="x-lead">One analyst can’t hold the whole book in their head, read a deal from fifteen angles at once, or be at their desk when the lead walks in. MindLab’s ask, advisors, and pocket assistant can — grounded in your record, cited to the file. Not a replacement for the thinking; a second brain that hands the time back to it.</p></div>
+    </div>
+    <div class="br-modes rv">
+      <div class="br-mode"><span class="bm-k">Ask</span><h4>Questions off the template</h4><p>Cross-asset recall, a recomputed number, a thesis stress-tested. The concerns that don’t fit a report field, grounded and cited.</p></div>
+      <div class="br-mode"><span class="bm-k">Advisors</span><h4>Fifteen ways to read it</h4><p>Investor and operator lenses hand you the sharp questions. Bring your own framework and we build a dedicated advisor.</p></div>
+      <div class="br-mode"><span class="bm-k">Anywhere</span><h4>A colleague in your pocket</h4><p>Start an opportunity from a coffee, get a cited answer from a dinner. The assistant does it; you finish in the app.</p></div>
+    </div>
+    <div class="lp-bridge rv">
+      <div class="txt">
+        <b>See the second brain work: ask, advisors, and the pocket assistant.</b>
+        <span>A short interactive walk-through of the three, grounded in one live FreshRoute deal. A side trip you can take anytime; nothing here depends on it.</span>
+      </div>
+      <div class="side">
+        <span class="mins">≈ 3 MIN</span>
+        <a class="btn" href="second-brain.html">Open the second brain <span aria-hidden="true">→</span></a>
       </div>
     </div>
   </div>
@@ -2048,30 +2041,6 @@ document.getElementById('nl-btn').addEventListener('click', () => {
   });
   }
 
-  /* firm knowledge browser (collections + filenames from the live seed DB) */
-  const FK = {
-    lessons: { why: 'When MedOps AI resurfaced in 2026, this pass memo surfaced with it. The firm’s “why we said no”, on the record.',
-      files: [['08_MedOps_AI_Pass_Decision_Memo.md', 'md'], ['08_RoutePilot_Approved_Pass_Memory_Record.md', 'md'], ['09_KitchenLoop_Reusable_Lessons_Note.md', 'md'], ['02_02_EXPANDED_FleetLedger_Pass_Memo.md', 'md'], ['08_FarmBox_Direct_Pass_Decision_Memo.md', 'md']] },
-    standards: { why: 'Every draft calibrates to these: your rubric, your memo standard, your templates.',
-      files: [['01_EXPANDED_Firm_Scoring_Rubric.md', 'md'], ['02_IC_Memo_Template_and_Writing_Standard.md', 'md'], ['03_Screening_Note_Template.md', 'md'], ['07_Diligence_Plan_Template.md', 'md'], ['08_Pass_Memo_Template.md', 'md']] },
-    portfolio: { why: 'Approved monitoring memory per holding: the reusable lessons behind each company.',
-      files: [['01_EXPANDED_ColdLink_Asia_Portfolio_Memory.md', 'md'], ['06_MarketNest_Approved_Memory_Update.md', 'md'], ['09_ClinicFlow_Approved_Monitoring_Memory.md', 'md'], ['03_What_Changed_Memo_Template.md', 'md'], ['02_KPI_Comparison_Memo_Template.md', 'md']] },
-    core: { why: 'Even the weekly meeting notes compound: eight IC meetings this quarter, searchable and cited.',
-      files: [['01_EXPANDED_Meridian_Investment_Manual.md', 'md'], ['01_Annual_Investment_Plan_2026.md', 'md'], ['08_Weekly_Investment_Meeting_2026-05-22.md', 'md'], ['05_Known_Knowledge_Gaps.md', 'md'], ['05_Analyst_Onboarding_Guide.md', 'md']] },
-    sector: { why: 'The theses new deals are screened against: every opportunity meets what the firm already believes.',
-      files: [['01_Food_Supply_Chain_Thesis.md', 'md'], ['02_Logistics_Software_Thesis.md', 'md'], ['04_Route_Optimization_Competitor_Map.md', 'md'], ['08_SaaS_Margin_Quality_Note.md', 'md'], ['03_Cold_Chain_Market_Note.md', 'md']] },
-    ic: { why: 'Every decision, dated, logged, and reusable.',
-      files: [['01_IC_Calendar_and_Decision_Log.csv', 'csv'], ['09_Approval_Note_Template.md', 'md']] },
-  };
-  const cols = [...document.querySelectorAll('.fk-col')];
-  const renderFk = key => {
-    cols.forEach(c => c.setAttribute('aria-pressed', String(c.dataset.fk === key)));
-    document.getElementById('fk-files').innerHTML = FK[key].files.map(([n, t]) =>
-      `<div class="fk-file"><span class="fn">${n}</span><span class="tp">${t}</span></div>`).join('');
-    document.getElementById('fk-why').textContent = FK[key].why;
-  };
-  cols.forEach(c => c.addEventListener('click', () => renderFk(c.dataset.fk)));
-  renderFk('lessons');
 })();
 </script>
 <script>
@@ -2251,13 +2220,28 @@ document.getElementById('nl-btn').addEventListener('click', () => {
     $('k3-d1').textContent = 'Added: 1st meeting summary with FreshRoute AI';
     $('k3-d2').textContent = 'Fathom AI · grounding updated · the next run folds it in';
   };
+  const DASH_IMG = {
+    'Company Profile': 'assets/product/03b-company-profile.png',
+    'Financials': 'assets/product/dash-financials.jpg',
+    'Comparables': 'assets/product/dash-comparables.jpg',
+    'Valuation': 'assets/product/dash-valuation.jpg',
+    'Risks': 'assets/product/dash-risks.jpg',
+  };
   const k3select = name => {
     $('k3-built').querySelectorAll('.jr-dbtn').forEach(b =>
       b.setAttribute('aria-pressed', String(b.dataset.d === name)));
-    const isProfile = name === 'Company Profile';
-    $('k3-bg-c').classList.toggle('off', !isProfile);
-    $('k3-bg-d').classList.toggle('off', isProfile);
-    if (!isProfile) $('k3-ph-label').textContent = `${name} dashboard · capture coming`;
+    const src = DASH_IMG[name];
+    if (src) {
+      const img = $('k3-bg-c').querySelector('img');
+      if (img.getAttribute('src') !== src) img.setAttribute('src', src);
+      $('k3-bg-c').scrollTop = 0;
+      $('k3-bg-c').classList.remove('off');
+      $('k3-bg-d').classList.add('off');
+    } else {
+      $('k3-bg-c').classList.add('off');
+      $('k3-bg-d').classList.remove('off');
+      $('k3-ph-label').textContent = K3CUSTOM.has(name) ? `${name} · your custom dashboard` : `${name} dashboard`;
+    }
   };
   const k3run = () => {
     if (k3done || k3phase !== 2) return;
@@ -2432,9 +2416,9 @@ document.getElementById('nl-btn').addEventListener('click', () => {
   const steps = [...rd.querySelectorAll('.jr-step')];
   const titles = {
     1: 'Arm a radar · a standing mission in your words',
-    2: 'Cold-chain radar · this week’s pulse',
-    3: 'Cold-chain radar · every asset it touches',
-    4: 'FreshRoute AI · directional draft from the radar',
+    2: 'Healthcare-AI radar · this week’s pulse',
+    3: 'Healthcare-AI radar · every asset it touches',
+    4: 'PraxiaFlow Health · directional draft from the radar',
     5: 'Overwatch · the whole book on one board',
   };
   const caps = {
@@ -2471,12 +2455,12 @@ document.getElementById('nl-btn').addEventListener('click', () => {
 
   /* step 1 · mission mandate */
   const MISSIONS = {
-    cold: { text: 'Watch SE Asia cold-chain & fresh-food distribution — diesel/fuel swings, port and route disruptions, reefer capacity and energy costs. Flag anything that pressures ColdLink’s route KPIs or the FreshRoute pilot case. Treat it as a margin signal, not a headline.',
-            scope: 'Cross-asset · theme', cad: 'Weekly', thr: '55', links: ['ColdLink Asia', 'FreshRoute AI', 'ChillFleet Systems', 'ColdHub Johor'] },
+    ai: { text: 'Monitor clinic-workflow AI & prior-authorization automation — the gap between AI marketing claims and usage-backed evidence. Flag any target whose AI claims aren’t validated by product telemetry, or where data rights and patient-data permissioning are unclear. Apply the MedOps AI rejected-deal lesson.',
+            scope: 'Cross-asset · theme', cad: 'Weekly', thr: '55', links: ['PraxiaFlow Health', 'MedLedger ClinicPay', 'MedOps AI'] },
     clinic: { text: 'Monitor US clinic-ops reimbursement & prior-auth: CMS fee schedules, e-PA and gold-carding rules, Medicaid redetermination. Read prior-auth churn as a margin signal across the healthcare book.',
             scope: 'Cross-asset · theme', cad: 'Weekly', thr: '60', links: ['ClinicFlow', 'HarborMed Services', 'PraxiaFlow Health', 'MedLedger ClinicPay'] },
-    saas: { text: 'Track SaaS implementation burden & gross-margin erosion — multi-site and cold-chain rollout timelines, professional-services mix, the “claimed vs actual margin” tell. Escalate on rubric dimensions 2, 4, 5.',
-            scope: 'Cross-asset · theme', cad: 'Weekly', thr: '55', links: ['ClinicFlow', 'FreshRoute AI', 'PraxiaFlow Health', 'RoutePilot'] },
+    cold: { text: 'Watch SE Asia cold-chain & fresh-food distribution — diesel/fuel swings, port and route disruptions, reefer capacity and energy costs. Flag anything that pressures ColdLink’s route KPIs or the FreshRoute pilot case.',
+            scope: 'Cross-asset · theme', cad: 'Weekly', thr: '55', links: ['ColdLink Asia', 'FreshRoute AI', 'ChillFleet Systems', 'ColdHub Johor'] },
   };
   let typeTimer;
   const typeMission = text => {
@@ -2507,8 +2491,8 @@ document.getElementById('nl-btn').addEventListener('click', () => {
 
   /* step 2 · asset radar pulse (signal vs noise) */
   const TRIAGE = [
-    { kind: 'noise', v: 'NOISE · dropped', t: 'Grocery-tech funding roundup · newsletter reshare' },
-    { kind: 'signal', v: 'SIGNAL 82%', t: '<b>SE Asia diesel spike + port congestion</b> · a margin signal · promoted to a draft finding' },
+    { kind: 'noise', v: 'NOISE · dropped', t: 'HealthTech funding weekly · vendor press release' },
+    { kind: 'signal', v: 'SIGNAL 84%', t: '<b>Epic ships native ePA at 345M patient records</b> · a commoditization signal · promoted to a draft finding' },
   ];
   const buildTriage = () => {
     $('rd-triage').innerHTML = TRIAGE.map(x =>
@@ -2520,8 +2504,8 @@ document.getElementById('nl-btn').addEventListener('click', () => {
     rows.forEach((r, i) => setTimeout(() => r.classList.add('in'), reduced ? 0 : i * 500));
     $('rd-meterwrap').hidden = false;
     setTimeout(() => {
-      $('rd-meter').style.transform = 'scaleX(.82)';
-      $('rd-meterlab').textContent = 'Signal 82% · above threshold';
+      $('rd-meter').style.transform = 'scaleX(.84)';
+      $('rd-meterlab').textContent = 'Signal 84% · above threshold';
     }, reduced ? 0 : 900);
     p2done = true; $('rd-pulse').hidden = true; $('rd-fwd2').hidden = false;
     $('rd-p2stat').textContent = 'One promoted · one suppressed. Only what clears the bar reaches you.';
@@ -2531,10 +2515,9 @@ document.getElementById('nl-btn').addEventListener('click', () => {
 
   /* step 3 · the cross-asset fan-out */
   const FAN = [
-    { who: 'ColdLink Asia', sev: 'crit', label: 'CRITICAL', score: 84, why: 'Reefer + diesel hit route economics' },
-    { who: 'FreshRoute AI', sev: 'heavy', label: 'HEAVY', score: 71, why: 'Fuel volatility pressures the 10-week pilot', take: true },
-    { who: 'ChillFleet Systems', sev: 'med', label: 'MEDIUM', score: 52, why: 'Reefer capacity crunch on the fleet' },
-    { who: 'ColdHub Johor', sev: 'light', label: 'LIGHT', score: 24, why: 'Port congestion lengthens lead times' },
+    { who: 'PraxiaFlow Health', sev: 'crit', label: 'CRITICAL', score: 86, why: 'In the impact zone of the new signals', take: true },
+    { who: 'MedLedger ClinicPay', sev: 'med', label: 'MEDIUM', score: 55, why: 'RCM adjacency squeezed by Waystar–Olive' },
+    { who: 'MedOps AI', sev: 'light', label: 'LIGHT', score: 20, why: 'The archive / already-rejected reference case' },
   ];
   const trace = () => {
     if (!p3built) {
@@ -2548,10 +2531,11 @@ document.getElementById('nl-btn').addEventListener('click', () => {
     const rows = [...$('rd-fan').querySelectorAll('.rd-row')];
     rows.forEach((r, i) => setTimeout(() => r.classList.add('in'), reduced ? 0 : i * 230));
     p3done = true; $('rd-trace').hidden = true;
-    $('rd-fanlab').textContent = '4 holdings hit · 1 critical · 1 heavy · 2 to watch';
-    // then pick the HEAVY live deal to carry into a draft
+    $('rd-fanlab').textContent = '3 holdings hit · 1 critical · 1 medium · 1 archived';
+    // then pick the CRITICAL live deal to carry into a draft
     setTimeout(() => {
-      const fr = $('rd-fan').querySelectorAll('.rd-row')[1];
+      const takeIdx = FAN.findIndex(f => f.take);
+      const fr = $('rd-fan').querySelectorAll('.rd-row')[takeIdx >= 0 ? takeIdx : 0];
       if (fr) fr.classList.add('pick');
       $('rd-fwd3').hidden = false;
     }, reduced ? 0 : 1200);
@@ -2610,11 +2594,11 @@ document.getElementById('nl-btn').addEventListener('click', () => {
   $('rd-play').addEventListener('click', () => {
     reset(); go(1);
     if (reduced) {
-      pickMission('cold'); go(2); pulse(); go(3); trace(); go(4); $('rd-log').click();
+      pickMission('ai'); go(2); pulse(); go(3); trace(); go(4); $('rd-log').click();
       return;
     }
     // drive it through the same action→carry-onward buttons a user would click
-    setTimeout(() => pickMission('cold'), 500);
+    setTimeout(() => pickMission('ai'), 500);
     setTimeout(() => $('rd-arm').click(), 2800);
     setTimeout(() => $('rd-pulse').click(), 3600);
     setTimeout(() => $('rd-fwd2').click(), 5600);
@@ -2625,6 +2609,43 @@ document.getElementById('nl-btn').addEventListener('click', () => {
 
   go(1);
 })();
+
+/* auto-scroll hint — reveal that tall product-capture backgrounds are scrollable */
+(() => {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const HINT = 400, MINSCROLL = 140;
+  const seen = new Map();
+  const ease = t => 1 - Math.pow(1 - t, 3);
+  const activeBg = bw => !bw.classList.contains('off') && (!bw.closest('.jr-panel') || bw.closest('.jr-panel').classList.contains('on'));
+  const inView = bw => { const r = bw.getBoundingClientRect(); return r.top < innerHeight * 0.9 && r.bottom > innerHeight * 0.1; };
+  const hint = bw => {
+    if (!activeBg(bw) || !inView(bw)) return;
+    const max = bw.scrollHeight - bw.clientHeight;
+    if (max < MINSCROLL) return;
+    const img = bw.querySelector('img'), src = img ? img.getAttribute('src') : '';
+    let s = seen.get(bw); if (!s) { s = new Set(); seen.set(bw, s); }
+    if (s.has(src)) return; s.add(src);
+    const start = bw.scrollTop, dist = Math.min(HINT, max) - start;
+    if (Math.abs(dist) < 4) return;
+    const dur = 1150, t0 = performance.now();
+    const step = now => {
+      if (!activeBg(bw)) return;
+      const p = Math.min(1, (now - t0) / dur);
+      bw.scrollTop = start + dist * ease(p);
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+  const schedule = bw => setTimeout(() => hint(bw), 620);
+  document.querySelectorAll('.jr-stage .bgwrap').forEach(bw => {
+    new IntersectionObserver(es => { for (const e of es) if (e.isIntersecting) schedule(bw); }, { threshold: 0.4 }).observe(bw);
+    const img = bw.querySelector('img');
+    if (img) new MutationObserver(() => schedule(bw)).observe(img, { attributes: true, attributeFilter: ['src'] });
+    const panel = bw.closest('.jr-panel');
+    if (panel) new MutationObserver(() => { if (panel.classList.contains('on')) schedule(bw); }).observe(panel, { attributes: true, attributeFilter: ['class'] });
+  });
+})();
+
 </script>
 </body>
 </html>
