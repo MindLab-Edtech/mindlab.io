@@ -5,3 +5,6 @@
 # Tooling caches
 .impeccable/
 **/.impeccable/
+
+# Local agent settings & worktrees (repo is public — keep these out)
+.claude/

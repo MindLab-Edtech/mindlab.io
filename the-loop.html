@@ -4,8 +4,22 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MindLab — Start thin. Decide sure. · How a deal compounds to a decision</title>
-<meta name="description" content="MindLab turns CIMs, data rooms, and portfolio updates into source-backed research your team reviews and approves. Nothing becomes firm record until a named person signs it.">
+<meta name="description" content="Follow one deal from a thin first draft to a defensible decision: each version answers open concerns, cites its sources, and sharpens the fit score. Start thin. Decide sure.">
+<link rel="canonical" href="https://mindlab-edtech.github.io/mindlab.io/the-loop.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MindLab">
+<meta property="og:title" content="MindLab — Start thin. Decide sure.">
+<meta property="og:description" content="Follow one deal from a thin first draft to a defensible decision: each version answers open concerns, cites its sources, and sharpens the fit score.">
+<meta property="og:url" content="https://mindlab-edtech.github.io/mindlab.io/the-loop.html">
+<meta property="og:image" content="https://mindlab-edtech.github.io/mindlab.io/assets/og/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MindLab — Start thin. Decide sure.">
+<meta name="twitter:description" content="Follow one deal from a thin first draft to a defensible decision: each version answers open concerns, cites its sources, and sharpens the fit score.">
+<meta name="twitter:image" content="https://mindlab-edtech.github.io/mindlab.io/assets/og/og-card.png">
 <link rel="icon" href="design/assets/mindlab-favicon.svg" type="image/svg+xml">
+<script src="assets/ml-config.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@200..700&family=Spline+Sans+Mono:wght@400..600&display=swap">
@@ -1291,19 +1305,19 @@ try{if(localStorage.getItem('ml-theme')==='dark')document.documentElement.remove
     </div>
     <div class="lp-tools rv">
       <div class="lp-tool">
-        <div class="shot"><img src="assets/product/dash-changelist.jpg" alt="A report-versions timeline with a What-Changed panel diffing the current version against the last." style="object-position:50% 19%"></div>
+        <div class="shot"><img src="assets/product/dash-changelist.jpg" loading="lazy" decoding="async" alt="A report-versions timeline with a What-Changed panel diffing the current version against the last." style="object-position:50% 19%"></div>
         <div class="body"><span class="k">Version history</span><h3>See what changed, not just what’s there.</h3><p>Every re-run diffs against the last version: what got revised, what’s new, which concerns appeared. Six weeks of a deal, readable in one panel.</p></div>
       </div>
       <div class="lp-tool">
-        <div class="shot"><img src="assets/product/dash-changelist.jpg" alt="A ranked list of open concerns, each tagged by severity and type." style="object-position:50% 27%"></div>
+        <div class="shot"><img src="assets/product/dash-changelist.jpg" loading="lazy" decoding="async" alt="A ranked list of open concerns, each tagged by severity and type." style="object-position:50% 27%"></div>
         <div class="body"><span class="k">Open concerns</span><h3>The AI names what to find next.</h3><p>Each gap is ranked by severity and typed (data gap, weak value, open question), and most clear with a single artifact. Your discovery list writes itself.</p></div>
       </div>
       <div class="lp-tool">
-        <div class="shot"><img src="assets/product/dash-valuation.jpg" alt="A grid of cited dashboard metric cards showing value, trend and confidence." style="object-position:50% 33%"></div>
+        <div class="shot"><img src="assets/product/dash-valuation.jpg" loading="lazy" decoding="async" alt="A grid of cited dashboard metric cards showing value, trend and confidence." style="object-position:50% 33%"></div>
         <div class="body"><span class="k">Report&nbsp;#&nbsp;Dashboard</span><h3>Key numbers, not twenty pages.</h3><p>The cards carry the signal — value, trend, confidence, source. Catch the movement and the key indications in seconds; open the full report only when you need to defend one.</p></div>
       </div>
       <div class="lp-tool">
-        <div class="shot"><img src="assets/product/radar-5-overwatch.png" alt="The home command board with cross-asset and per-asset radar signals." style="object-position:50% 14%"></div>
+        <div class="shot"><img src="assets/product/radar-5-overwatch.png" loading="lazy" decoding="async" alt="The home command board with cross-asset and per-asset radar signals." style="object-position:50% 14%"></div>
         <div class="body"><span class="k">Decision → Radar</span><h3>Decide, then let it watch.</h3><p>Go, No-Go, or Conditional. A Conditional Go hands its open conditions to a standing radar that auto-flags the moment one slips, so a “maybe” never quietly rots.</p></div>
       </div>
     </div>
@@ -1335,7 +1349,7 @@ try{if(localStorage.getItem('ml-theme')==='dark')document.documentElement.remove
         <p class="mantra">AI PREPARES · HUMANS APPROVE · MINDLAB REMEMBERS</p>
       </div>
       <nav class="links" aria-label="Footer">
-        <a href="index.html#security">Security</a><a href="index.html#faq">FAQ</a><a href="mailto:hello@mindlab.io">Contact</a>
+        <a href="index.html#security">Security</a><a href="index.html#faq">FAQ</a><a href="mailto:duy@mindlab.io">Contact</a>
       </nav>
       <div class="newsletter">
         <label for="nl-email">One page a month on governed AI for deal teams</label>
@@ -1362,8 +1376,31 @@ document.body.classList.add('js');
     rvs.forEach(el => io.observe(el));
     setTimeout(() => rvs.forEach(el => el.classList.add('in')), 1200);
   } else rvs.forEach(el => el.classList.add('in'));
-  const nl = document.getElementById('nl-btn');
-  if (nl) nl.addEventListener('click', () => { nl.textContent = 'Thanks ✓'; nl.disabled = true; });
+  // newsletter → Apps Script endpoint (keys in assets/ml-config.js); confirms locally while unset
+  const nl = document.getElementById('nl-btn'), nlin = document.getElementById('nl-email');
+  if (nl) nl.addEventListener('click', async () => {
+    const email = nlin.value.trim();
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { nlin.focus(); return; }
+    if (window.ML && ML.LEAD_ENDPOINT) {
+      nl.disabled = true; nl.textContent = '…';
+      try {
+        const r = await fetch(ML.LEAD_ENDPOINT, {
+          method: 'POST',
+          headers: {'Content-Type': 'text/plain;charset=utf-8'},
+          body: JSON.stringify({type: 'newsletter', email, page: location.pathname})
+        });
+        const d = await r.json().catch(() => ({ok: r.ok}));
+        if (!d.ok) throw new Error('send failed');
+      } catch (err) {
+        nl.disabled = false; nl.textContent = 'Subscribe';
+        nlin.value = ''; nlin.placeholder = 'Didn’t go through. Try again?';
+        return;
+      }
+    }
+    nl.textContent = 'Thanks ✓'; nl.disabled = true;
+    nlin.value = ''; nlin.placeholder = 'Subscribed. One page, once a month.';
+    window.mltrack && mltrack('newsletter_subscribed');
+  });
 })();
 
 /* version stepper */
