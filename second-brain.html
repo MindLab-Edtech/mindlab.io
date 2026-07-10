@@ -1205,6 +1205,17 @@ try{if(localStorage.getItem('ml-theme')==='dark')document.documentElement.remove
 .sb-sq .q{font-size:13.5px;line-height:1.45;color:var(--ink)}
 .sb-skills{display:flex;flex-wrap:wrap;gap:6px}
 .sb-sk{font:600 10.5px/1 var(--mono);color:var(--ink-3);border:1px solid var(--line);border-radius:6px;padding:5px 7px}
+/* advisor float: header is inset 18px but the rows/labels/chips below it weren't —
+   inset them to match so text doesn't run to the card edge (covers custom card too) */
+#adv-card .x-lab,#adv-card .sb-sq,#adv-card .sb-skills,#adv-card .sb-a-lead,#adv-card .step-list{padding-left:18px;padding-right:18px}
+#adv-card .sb-skills,#adv-card .step-list{padding-bottom:16px}
+/* the card is always a white surface, so pin its text to dark, theme-independent colors:
+   the faint gray labels/caption were too low-contrast on white, and the body/chip text used
+   theme vars that turn light (near-invisible) in dark mode */
+#adv-card .fh .cap,#adv-card .x-lab{color:#586069}
+#adv-card .sb-sq .q,#adv-card .sb-a-lead,#adv-card .step-list li{color:#232B26}
+#adv-card .step-list li b{color:#141A16}
+#adv-card .sb-sk{color:#3F4A44}
 .step-list{list-style:none;margin:0;padding:0}
 .step-list li{position:relative;padding:0 0 15px 30px;color:var(--ink-2);font-size:14px;line-height:1.5}
 .step-list li b{color:var(--ink);font-weight:600}

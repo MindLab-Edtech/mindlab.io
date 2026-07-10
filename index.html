@@ -105,16 +105,25 @@ main{position:relative;z-index:1}
 }
 
 /* ---------- hero ---------- */
-.hero{padding-block:clamp(48px,7vw,96px) 0;position:relative}
+.hero{padding-block:clamp(28px,3.4vw,52px) 0;position:relative}
 .hero-kicker{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--green);margin-bottom:26px}
 .hero h1{font-weight:550;font-size:clamp(2.3rem,4.9vw,4.15rem);line-height:1.05;letter-spacing:-.025em;max-width:21ch}
 .hero h1 em{font-style:normal;color:var(--green)}
 .subhead{font-size:1.11rem;line-height:1.65;color:var(--ink-2);max-width:56ch;margin-top:26px}
 .subhead b{color:var(--ink);font-weight:600}
 .cta-row{display:flex;align-items:center;gap:22px;margin-top:38px;flex-wrap:wrap}
+.hero-lead{display:grid;grid-template-columns:minmax(0,1.62fr) minmax(0,1fr);gap:clamp(30px,3vw,58px);align-items:start}
+.hero-lead h1{max-width:none;text-wrap:balance}
+.hero-aside{display:flex;flex-direction:column;align-items:flex-start;gap:clamp(22px,2vw,30px);padding-top:10px;max-width:46ch}
+.hero-aside .subhead{margin-top:0}
+.hero-aside .cta-row{margin-top:0}
+@media (max-width:1040px){
+  .hero-lead{grid-template-columns:1fr;gap:24px;align-items:start}
+  .hero-aside{max-width:60ch;gap:26px;padding-bottom:0}
+}
 
 /* ---------- product monument ---------- */
-.monument{margin-top:clamp(56px,7vw,92px);position:relative}
+.monument{margin-top:clamp(32px,3.5vw,52px);position:relative}
 .monument::after{content:"";position:absolute;inset:auto 0 0 0;height:90px;
   background:linear-gradient(to bottom, transparent, var(--bg) 92%);pointer-events:none}
 .app{
@@ -1041,8 +1050,8 @@ textarea.x-input{min-height:74px;resize:none;line-height:1.55}
 .lp-head{text-align:center;max-width:730px;margin:0 auto clamp(38px,5vw,58px)}
 .lp-head .x-lead{max-width:none;margin-top:16px}
 .br-vis{position:relative;max-width:840px;margin:clamp(38px,5vw,60px) auto 0}
-.br-vis-screen{border:1px solid var(--line-2);border-radius:14px;overflow:hidden;background:var(--panel-2);box-shadow:0 44px 100px -46px rgba(0,0,0,.85)}
-.br-vis-screen img{width:100%;display:block}
+.br-vis-screen{border:1px solid var(--line-2);border-radius:14px;overflow:hidden;background:var(--panel-2);box-shadow:0 44px 100px -46px rgba(0,0,0,.85);aspect-ratio:7/5}
+.br-vis-screen img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
 .br-vis-phone{position:absolute;right:-12px;bottom:-30px;width:clamp(112px,15vw,156px);aspect-ratio:1180/2400;border-radius:26px;background:#050605;padding:6px;box-shadow:0 34px 70px -26px rgba(0,0,0,.92),0 0 0 1px var(--line-2)}
 .br-vis-phone .scr{width:100%;height:100%;border-radius:21px;overflow:hidden;background:var(--panel-2)}
 .br-vis-phone img{width:100%;height:100%;object-fit:cover;object-position:50% 0;display:block}
@@ -1169,11 +1178,15 @@ try{if(localStorage.getItem('ml-theme')==='dark')document.documentElement.remove
 <div class="frame">
   <header class="hero">
     <p class="hero-kicker">For private equity deal teams</p>
-    <h1>The <em>human-approved</em> research system for private equity.</h1>
-    <p class="subhead">Point MindLab at a data room. It returns an IC-ready draft in your firm’s memo format, every claim cited. <b>Nothing becomes firm record until a named person approves it.</b> Every approved deal makes the next one faster.</p>
-    <div class="cta-row">
-      <a class="btn" href="#close">Bring one live deal <span aria-hidden="true">→</span></a>
-      <a class="link-2" href="#how">See the workflow <span class="ar" aria-hidden="true">→</span></a>
+    <div class="hero-lead">
+      <h1>The <em>human-approved</em> research system for private equity.</h1>
+      <div class="hero-aside">
+        <p class="subhead">Point MindLab at a data room. It returns an IC-ready draft in your firm’s memo format, every claim cited. <b>Nothing becomes firm record until a named person approves it.</b> Every approved deal makes the next one faster.</p>
+        <div class="cta-row">
+          <a class="btn" href="#close">Bring one live deal <span aria-hidden="true">→</span></a>
+          <a class="link-2" href="#how">See the workflow <span class="ar" aria-hidden="true">→</span></a>
+        </div>
+      </div>
     </div>
 
     <div class="monument">
@@ -1230,18 +1243,6 @@ try{if(localStorage.getItem('ml-theme')==='dark')document.documentElement.remove
     </div>
   </header>
 </div>
-
-<!-- S2 · stat -->
-<section class="stat" aria-label="The re-verification tax">
-  <div class="frame stat-inner">
-    <p class="stat-fig rv">59%</p>
-    <div class="stat-body rv">
-      <p class="lead">of finance professionals still manually re&#8209;verify or re&#8209;do AI outputs.</p>
-      <p class="kick">That’s not an AI problem. It’s a workflow problem.</p>
-      <p class="src">Hebbia “Diligence Paradox” survey · 510 US finance professionals · Apr–May 2026</p>
-    </div>
-  </div>
-</section>
 
 <!-- S3 · problem scenes -->
 <section class="sec-pad">
@@ -1400,7 +1401,8 @@ try{if(localStorage.getItem('ml-theme')==='dark')document.documentElement.remove
 
       <div class="jr-panel on" id="jr-p1">
         <div class="jr-stage">
-          <div class="bgwrap"><img src="assets/product/01-firm-knowledge.png" alt="MindLab Firm Knowledge: the Meridian scoring-and-output-standards collection with the firm scoring rubric, IC memo writing standard, and two sector theses uploaded as sources."></div>
+          <div class="bgwrap" id="k1-bg-a"><img src="assets/product/reel-firmknowledge.jpg" alt="MindLab Firm Knowledge: the firm's library of governed collections — compliance, firm core &amp; strategy, scoring &amp; output standards, sector theses and more."></div>
+          <div class="bgwrap off" id="k1-bg-b"><img src="assets/product/01-firm-knowledge.png" alt="MindLab Firm Knowledge: the Meridian scoring-and-output-standards collection with the firm scoring rubric, IC memo writing standard, and two sector theses uploaded as sources."></div>
           <div class="veil" aria-hidden="true"></div>
           <div class="jr-float">
             <div class="fh"><b>Add to Firm Knowledge</b><span class="cap">Meridian — Scoring &amp; Output Standards</span></div>
@@ -1414,7 +1416,10 @@ try{if(localStorage.getItem('ml-theme')==='dark')document.documentElement.remove
               <div class="jr-frow"><span class="tick" aria-hidden="true">✓</span><span class="fn">01_Food_Supply_Chain_Thesis.md</span><span class="sz">1.6 KB</span></div>
               <div class="jr-frow"><span class="tick" aria-hidden="true">✓</span><span class="fn">02_Logistics_Software_Thesis.md</span><span class="sz">1.6 KB</span></div>
             </div>
-            <p class="jr-fstat" id="k1-stat" aria-live="polite">Waiting for documents</p>
+            <div class="jr-actions">
+              <button class="lt-btn sm" type="button" id="k1-fwd" hidden>Open the new opportunity →</button>
+              <p class="jr-fstat" id="k1-stat" aria-live="polite">Waiting for documents</p>
+            </div>
           </div>
         </div>
       </div>
@@ -1447,7 +1452,7 @@ try{if(localStorage.getItem('ml-theme')==='dark')document.documentElement.remove
         <div class="jr-stage rt" id="k3-stage">
           <div class="bgwrap" id="k3-bg-a"><img src="assets/product/03-dashboards-settings.png" alt="MindLab deal settings, Dashboards tab: reorderable list of research dashboards with Hide and Remove, and an available-to-add row."></div>
           <div class="bgwrap off" id="k3-bg-b"><img src="assets/product/03a-dashboard-empty.png" alt="A dashboard tab in its empty state: Not built yet, with a Build dashboard action that opens Run Analysis preselected to this dashboard's pack."></div>
-          <div class="bgwrap off" id="k3-bg-c"><img src="assets/product/03b-company-profile.png" alt="The FreshRoute AI Company Profile dashboard fully built: Re-run and Refresh-from-report actions, the report versions timeline with a primary version, and cited metric cards."></div>
+          <div class="bgwrap off" id="k3-bg-c"><img src="assets/product/portfolio-company-profile-dashboard.webp" alt="The FreshRoute AI Company Profile dashboard fully built: Refresh-from-report and Re-run actions, the report versions timeline with a primary version, cited metric cards, a what-changed comparison, and a source-referenced executive summary."></div>
           <div class="bgwrap ph off" id="k3-bg-d" aria-hidden="true"><span class="ph-label" id="k3-ph-label">Financials · capture coming</span></div>
           <div class="veil" aria-hidden="true"></div>
           <button class="jr-jump" id="k3-jump" type="button" aria-label="Built from this report: open the full Company Profile report">
@@ -1513,7 +1518,7 @@ try{if(localStorage.getItem('ml-theme')==='dark')document.documentElement.remove
 
       <div class="jr-panel" id="jr-p4">
         <div class="jr-stage rt">
-          <div class="bgwrap"><img src="assets/product/04-report.png" alt="The full FreshRoute AI Company Profile report, version 9, marked primary and waiting approval, with an Approve button, PDF, DOCX and MD export, and an Ask-about-this-report AI bar."></div>
+          <div class="bgwrap"><img src="assets/product/full-report.webp" alt="The full FreshRoute AI Company Profile report — the Screening Pack (Lead Qualification & Knockout): executive summary, company basics, fit alignment, a knockout-criteria checklist, an initial manual screen, and red flags, with export and approval controls."></div>
           <div class="veil" aria-hidden="true"></div>
           <div class="jr-float right">
             <div class="fh row">
@@ -1564,7 +1569,7 @@ try{if(localStorage.getItem('ml-theme')==='dark')document.documentElement.remove
 
       <div class="x-playbar">
         <button class="lt-btn gh sm" type="button" id="jr-prev">← Back</button>
-        <button class="lt-btn sm" type="button" id="jr-next">Next step →</button>
+        <button class="lt-btn gh sm" type="button" id="jr-next">Skip →</button>
         <button class="lt-btn gh sm" type="button" id="jr-play">Play it through</button>
         <button class="lt-btn gh sm" type="button" id="jr-reset">↺ Reset</button>
         <span class="x-status" id="jr-cap" aria-live="polite"></span>
@@ -1778,7 +1783,7 @@ try{if(localStorage.getItem('ml-theme')==='dark')document.documentElement.remove
     </div>
     <div class="br-vis rv">
       <div class="br-vis-screen">
-        <img src="assets/product/brain-board.jpg" loading="lazy" decoding="async" alt="MindLab’s Board of Advisors: fifteen investor and operator lenses reading the same deal, grounded in its record.">
+        <img src="assets/product/chat-warren-buffet-moat.png" loading="lazy" decoding="async" alt="MindLab’s Warren Buffett advisor answering “What’s the moat?” for a live deal: a cited moat-check analysis grounded in the deal’s record.">
       </div>
       <div class="br-vis-phone">
         <div class="scr"><img src="assets/product/tg-spot.jpg" loading="lazy" decoding="async" alt="The same assistant on Telegram, identifying a company from a founder met at an AI event."></div>
@@ -2342,6 +2347,7 @@ document.getElementById('nl-btn').addEventListener('click', async () => {
     $('jr-prev').disabled = n === 1;
     $('jr-next').disabled = n === 5;
     $('k4-approve').classList.toggle('blink', n === 4 && !k4done);
+    $('k1-fwd').hidden = !k1done;
     if (n === 5) k5reveal();
   };
   stepsB.forEach(b => b.addEventListener('click', () => go(+b.dataset.jr)));
@@ -2372,6 +2378,8 @@ document.getElementById('nl-btn').addEventListener('click', async () => {
       $('k1-d2').textContent = 'available to every deal, every draft, every teammate';
       $('k1-stat').textContent = '4 files embedded · every draft calibrates to these';
       $('k1-stat').classList.add('hot');
+      $('k1-bg-a').classList.add('off'); $('k1-bg-b').classList.remove('off');
+      $('k1-fwd').hidden = false;
     }, reduced ? 0 : 260 + k1rows.length * 300 + 520);
   };
   const k1reset = () => {
@@ -2382,12 +2390,15 @@ document.getElementById('nl-btn').addEventListener('click', async () => {
     k1rows.forEach(r => r.classList.remove('in', 'ok'));
     $('k1-stat').textContent = 'Waiting for documents';
     $('k1-stat').classList.remove('hot');
+    $('k1-bg-a').classList.remove('off'); $('k1-bg-b').classList.add('off');
+    $('k1-fwd').hidden = true;
   };
   k1drop.addEventListener('click', k1add);
   k1drop.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); k1add(); } });
   ['dragenter', 'dragover'].forEach(ev => k1drop.addEventListener(ev, e => { e.preventDefault(); if (!k1done) k1drop.classList.add('over'); }));
   k1drop.addEventListener('dragleave', e => { e.preventDefault(); k1drop.classList.remove('over'); });
   k1drop.addEventListener('drop', e => { e.preventDefault(); k1drop.classList.remove('over'); k1add(); });
+  $('k1-fwd').addEventListener('click', () => go(2));
 
   /* step 2 · the real Add Target form */
   const K2F = [
@@ -2483,7 +2494,7 @@ document.getElementById('nl-btn').addEventListener('click', async () => {
     $('k3-d2').textContent = 'Fathom AI · grounding updated · the next run folds it in';
   };
   const DASH_IMG = {
-    'Company Profile': 'assets/product/03b-company-profile.png',
+    'Company Profile': 'assets/product/portfolio-company-profile-dashboard.webp',
     'Financials': 'assets/product/dash-financials.jpg',
     'Comparables': 'assets/product/dash-comparables.jpg',
     'Valuation': 'assets/product/dash-valuation.jpg',
@@ -2495,7 +2506,9 @@ document.getElementById('nl-btn').addEventListener('click', async () => {
     const src = DASH_IMG[name];
     if (src) {
       const img = $('k3-bg-c').querySelector('img');
-      if (img.getAttribute('src') !== src) img.setAttribute('src', src);
+      // Always (re)set src — even when unchanged — so the auto-scroll hint fires for the
+      // default Company Profile view too, not only the dashboards you click into.
+      img.setAttribute('src', src);
       $('k3-bg-c').scrollTop = 0;
       $('k3-bg-c').classList.remove('off');
       $('k3-bg-d').classList.add('off');
@@ -2520,7 +2533,8 @@ document.getElementById('nl-btn').addEventListener('click', async () => {
       $('k3-bg-b').classList.add('off');
       $('k3-msg').textContent = 'Built · every claim cited · Jun 21 set primary pending review';
       $('k3-builtlab').style.display = 'block';
-      $('k3-built').innerHTML = ['Company Profile', ...deps].map(n =>
+      // however many dashboards were configured, only surface the ones we actually have a capture for
+      $('k3-built').innerHTML = ['Company Profile', ...deps].filter(n => DASH_IMG[n]).map(n =>
         `<button class="jr-dbtn" type="button" data-d="${n}" aria-pressed="false"><span>${n}</span><span class="ok2">✓ built</span></button>`).join('');
       $('k3-built').querySelectorAll('.jr-dbtn').forEach(b =>
         b.addEventListener('click', () => k3select(b.dataset.d)));
